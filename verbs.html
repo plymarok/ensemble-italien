@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verbes essentiels — Italien</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module">
+    import {loadJSON, createCard, renderSearch, speak, hi, injectControls, setupQuizHost} from './app.js';
+    window.addEventListener('DOMContentLoaded', async () => {
+      injectControls();
+      const container = document.getElementById('container');
+      renderSearch(container, (q) => filter(q));
+      const data = await loadJSON('data/verbs.json');
+      const list = document.createElement('div');
+      list.className = 'grid'; container.appendChild(list);
+
+      // Flat items for quiz
+      const flat = [];
+      data.forEach(v => v.forms.forEach(f => flat.push({it:f.it, fr:f.fr})) );
+      setupQuizHost(container, flat);
+
+      let cards = [];
+      function draw(items, q=''){
+        list.innerHTML=''; cards=[];
+        items.forEach(v => {
+          const forms = v.forms.map(f => 
+            `<div class="row"><span class="it">${hi(f.it,q)}</span> — <span class="fr">${hi(f.fr,q)}</span>
+            <button class="ghost" data-it="${f.it.replace('"','&quot;')}">🔊</button></div>`).join('');
+          const card = createCard(`
+            <div class="text">
+              <div><strong>${hi(v.verb,q)}</strong> — <span class="fr">${hi(v.translation,q)}</span> <span class="small">(${v.mood})</span></div>
+              <div class="details">${forms}</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="ghost" onclick="playAll('${v.verb}')">Tout lire</button>
+            </div>
+          `);
+          list.appendChild(card);
+          cards.push({el:card, data:v});
+        });
+      }
+      function filter(q){
+        q = (q||'').toLowerCase();
+        const f = data.filter(v => 
+          v.verb.toLowerCase().includes(q) || v.translation.toLowerCase().includes(q) || 
+          v.forms.some(x => x.it.toLowerCase().includes(q) || x.fr.toLowerCase().includes(q))
+        );
+        draw(f, q);
+      }
+      draw(data);
+      window.speak = speak;
+      window.playAll = (verbName) => {
+        const v = data.find(x => x.verb === verbName);
+        if (!v) return;
+        let i = 0;
+        const sayNext = () => {
+          if (i >= v.forms.length) return;
+          speak(v.forms[i].it); i++; setTimeout(sayNext, 900);
+        };
+        sayNext();
+      };
+    });
+  </script>
+</head>
+<body data-page="verbs">
+  <header>📘 Verbes essentiels</header>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="vocab.html">Vocabulaire</a>
+    <a href="passatempi.html">Passatempi</a>
+  </nav>
+  <main id="container">
+    <h1>Conjugaisons au présent</h1>
+    <p class="small">Bouton 🔊 = prononciation immédiate. “Mode Quiz” (désactivable) pour s’entraîner.</p>
+  </main>
+</body>
+</html>
 
