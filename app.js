@@ -1,8 +1,8 @@
-// App global — TTS smartphone first: meSpeak (préchargé au 1er toucher) -> WebSpeech (fallback). Pas de bip.
+// App global — mobile-first TTS : meSpeak préchargé + lecture sur pointerdown, fallback WebSpeech
 (function(){
   var App = window.App = {};
 
-  /* -------------------------------- Utils -------------------------------- */
+  /* ------------------------------ Utils ------------------------------ */
   App.hi = function(text, q){
     if(!q) return text;
     try{
@@ -43,47 +43,42 @@
     }
   };
 
-  /* ------------------------------ Audio core ------------------------------ */
-  // meSpeak (eSpeak en JS) — fonctionne très bien sur mobile.
-  var AC = null, hasGesture=false;
-  var useMeSpeak=false, meReady=false, loading=false, queue=[];
-  function getAC(){
+  /* ------------------------- Audio (TTS robuste) ------------------------- */
+  var AC=null, audioUnlocked=false;
+  function unlockAudio(){
     try{
       AC = AC || new (window.AudioContext||window.webkitAudioContext)();
-      if (AC.state === 'suspended' && AC.resume) AC.resume();
+      if(AC.state==='suspended' && AC.resume) AC.resume();
+      audioUnlocked = true;
     }catch(e){}
-    return AC;
   }
+
+  // meSpeak préchargé au chargement de page
+  var meReady=false, useMeSpeak=false, loading=false;
   function loadScript(url){
     return new Promise(function(res,rej){
       var s=document.createElement('script'); s.src=url; s.async=true;
-      s.onload=function(){ res(true); };
-      s.onerror=function(){ rej(false); };
+      s.onload=function(){ res(true); }; s.onerror=function(){ rej(false); };
       document.head.appendChild(s);
     });
   }
-  function ensureMeSpeak(){
-    if (meReady) return Promise.resolve(true);
-    if (loading)  return new Promise(function(r){ var t=setInterval(function(){ if(!loading){ clearInterval(t); r(meReady); } }, 60); });
+  function preloadMeSpeak(){
+    if (loading || meReady) return;
     loading = true;
-
-    getAC(); // déverrouille l’audio sur geste
-
-    // charge le core puis config + voix italienne
     var coreUrls = [
       'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/mespeak.min.js',
       'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/mespeak.js'
     ];
-    var configUrl = 'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/src/mespeak_config.json';
-    var voiceUrl  = 'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/voices/it.json';
+    var configUrl='https://cdn.jsdelivr.net/npm/mespeak@2.0.2/src/mespeak_config.json';
+    var voiceUrl ='https://cdn.jsdelivr.net/npm/mespeak@2.0.2/voices/it.json';
 
     function loadCore(i){
-      if (i>=coreUrls.length) return Promise.reject(false);
+      if(i>=coreUrls.length) return Promise.reject(false);
       return loadScript(coreUrls[i]).catch(function(){ return loadCore(i+1); });
     }
-    return loadCore(0).then(function(){
+    loadCore(0).then(function(){
       if (!window.meSpeak) throw new Error('meSpeak indisponible');
-      try{ if (AC && meSpeak.setAudioContext) meSpeak.setAudioContext(AC); }catch(e){}
+      try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); if(meSpeak.setAudioContext) meSpeak.setAudioContext(AC); }catch(e){}
       return Promise.all([
         new Promise(function(r){ meSpeak.loadConfig(configUrl, function(ok){ r(!!ok); }); }),
         new Promise(function(r){ meSpeak.loadVoice(voiceUrl,  function(ok){ r(!!ok); }); })
@@ -92,24 +87,29 @@
       meReady = rs.every(Boolean);
       useMeSpeak = meReady;
       loading = false;
-      return meReady;
     }).catch(function(){
-      loading = false;
-      useMeSpeak = false; meReady = false;
-      return false;
+      meReady = false; useMeSpeak = false; loading = false;
     });
   }
+  // Précharger dès que possible (DOM prêt)
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', preloadMeSpeak);
+  }else{
+    preloadMeSpeak();
+  }
 
-  function speakMe(text){
+  function speakWithMeSpeak(text){
     try{
-      meSpeak.speak(text, { voice:'it', speed: 170, wordgap: 2, pitch: 50 });
+      if(!meReady) return false;
+      if(!audioUnlocked) unlockAudio();
+      meSpeak.speak(text, { voice:'it', speed:170, wordgap:2, pitch:50 });
       App.incRevision(1);
       return true;
     }catch(e){ return false; }
   }
-  function speakWeb(text){
+  function speakWithWebSpeech(text){
     try{
-      if (!('speechSynthesis' in window)) return false;
+      if(!('speechSynthesis' in window)) return false;
       var u=new SpeechSynthesisUtterance(text);
       u.lang="it-IT"; u.rate=1.0; u.pitch=1.0;
       speechSynthesis.speak(u);
@@ -118,54 +118,37 @@
     }catch(e){ return false; }
   }
 
-  // API publique — clic 🔊 => parle
+  // API publique
   App.speak = function(text){
     if(!text) return;
-
-    // Si meSpeak est prêt : on l’utilise direct.
+    // on essaie meSpeak (préchargé), sinon WebSpeech
     if (useMeSpeak && meReady){
-      if (speakMe(text)) return;
-      // sinon on tente WebSpeech en secours
-      speakWeb(text); return;
+      if (speakWithMeSpeak(text)) return;
     }
-
-    // Sinon : on met en file et on charge meSpeak une fois
-    queue.push(text);
-    ensureMeSpeak().then(function(ok){
-      var toSay = queue.slice(); queue.length=0;
-      if (ok){
-        // dit la dernière requête (la plus récente)
-        speakMe(toSay[toSay.length-1]);
-      } else {
-        // secours WebSpeech (silencieux si non supporté)
-        speakWeb(toSay[toSay.length-1]);
-      }
-    });
+    speakWithWebSpeech(text);
   };
 
-  // Déverrouillage au 1er geste utilisateur (mobile)
-  function onGesture(){
-    if (hasGesture) return;
-    hasGesture = true;
-    getAC(); // unlock WebAudio
-    // Précharge meSpeak discrètement pour rendre le 1er 🔊 plus rapide
-    ensureMeSpeak();
-  }
-  ['pointerdown','touchstart','click','keydown'].forEach(function(evt){
-    window.addEventListener(evt, onGesture, { once:true, passive:true });
-  });
-
-  // Délégation clic pour tous les boutons 🔊
-  document.addEventListener('click', function(e){
+  // Lecture dès POINTERDOWN sur le bouton 🔊 (meilleure compat mobile)
+  var lastSpeakTs=0;
+  function trySpeakFromEvent(e){
     var el = e.target;
     while(el && el!==document){
       if(el.tagName==='BUTTON' && el.hasAttribute('data-it')){
-        App.speak(el.getAttribute('data-it'));
+        unlockAudio(); // geste utilisateur => déverrouille l’audio
+        var now = Date.now();
+        // évite double lecture (pointerdown puis click)
+        if(now - lastSpeakTs > 250){
+          lastSpeakTs = now;
+          App.speak(el.getAttribute('data-it'));
+        }
         break;
       }
       el = el.parentNode;
     }
-  });
+  }
+  // pointerdown = prioritaire mobile, click = secours (desktop)
+  document.addEventListener('pointerdown', trySpeakFromEvent, {passive:true});
+  document.addEventListener('click',       trySpeakFromEvent, {passive:true});
 
   /* ---------------- Settings / Toggles / Compteur ---------------- */
   var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
@@ -216,7 +199,7 @@
     var el=document.getElementById('rev-count'); if(el) el.textContent = String(parseInt(localStorage.getItem(LS.countTotal)||'0'));
   };
 
-  /* -------------------------------- Quiz -------------------------------- */
+  /* ------------------------------- Quiz ------------------------------- */
   App.setupQuizHost = function(container, items){
     var askFR = true, current=null;
     var host=document.createElement('div'); host.className='quiz';
@@ -245,17 +228,4 @@
 
       var opts=document.createElement('div'); opts.className='opts';
       choices(items, current, 4).forEach(function(choice){
-        var btn=document.createElement('button'); btn.textContent = askFR ? choice.it : choice.fr;
-        btn.onclick=function(){
-          if(choice===current){ btn.classList.add('correct'); App.incRevision(2); setTimeout(function(){ current=null; draw(); }, 500); }
-          else { btn.classList.add('wrong'); }
-        };
-        opts.appendChild(btn);
-      });
-
-      content.appendChild(q); content.appendChild(tools); content.appendChild(opts);
-    }
-    draw();
-    document.addEventListener('quiz-toggle', draw);
-  };
-})();
+        var btn=document.createElement('button'); btn.textContent = a
