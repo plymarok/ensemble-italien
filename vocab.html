@@ -12,7 +12,7 @@
       const container = document.getElementById('container');
       renderSearch(container, (q) => filter(q));
 
-      const data = await loadJSON('data/vocab.json');   // ✅ chemin correct
+      const data = await loadJSON('/data/vocab.json');   // ✅ chemin absolu
       console.log("Loaded JSON vocab:", data);
 
       const list = document.createElement('div');
