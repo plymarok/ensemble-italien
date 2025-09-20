@@ -1,4 +1,4 @@
-// App global — version MINIMALE (parle sur clic 🔊, sans prime, sans cancel)
+// App global — version MINIMALE & propre (clic 🔊 => parle, sans "activation")
 (function(){
   var App = window.App = {};
 
@@ -43,31 +43,16 @@
     }
   };
 
-  /* -------- Audio ultra simple -------- */
-  var AC = null;
-  function beep(){
-    try{
-      AC = AC || new (window.AudioContext||window.webkitAudioContext)();
-      var o = AC.createOscillator(), g = AC.createGain();
-      o.type="sine"; o.frequency.value=660;
-      g.gain.value=0.08;
-      o.connect(g); g.connect(AC.destination);
-      o.start();
-      setTimeout(function(){ o.stop(); }, 120);
-    }catch(e){}
-  }
-
+  /* -------- Audio (le plus simple possible) -------- */
   App.speak = function(text){
-    if(!text) return;
+    if(!text || !('speechSynthesis' in window)) return;
     try{
-      if(!('speechSynthesis' in window)){ beep(); return; }
       var u = new SpeechSynthesisUtterance(text);
-      u.lang = "it-IT";          // ✅ pas de sélection de voix (évite les bugs mobiles)
+      u.lang = "it-IT";          // pas de sélection de voix → compatibilité max
       u.rate = 1.0; u.pitch = 1.0;
-      // ❌ pas de cancel(), pas de prime
-      speechSynthesis.speak(u);
+      speechSynthesis.speak(u);  // pas de cancel(), pas de "prime"
       App.incRevision(1);
-    }catch(e){ beep(); }
+    }catch(e){}
   };
 
   // Délégation clic pour tous les boutons 🔊
