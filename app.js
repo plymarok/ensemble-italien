@@ -1,8 +1,8 @@
-// App global (sans modules) — version mobile-safe
+// App global (sans modules) — version simplifiée sans UI d'activation
 (function(){
   var App = window.App = {};
 
-  /* ===================== Utils ===================== */
+  /* ============ Utils ============ */
   App.hi = function(text, q){
     if(!q) return text;
     try{
@@ -43,109 +43,53 @@
     }
   };
 
-  /* ================== Speech Synthesis ================== */
-  var itVoice=null, audioReady=false, primingPromise=null, queue=[];
-  function setBadge(text, warn){
-    var s=document.querySelector('#audio-state');
-    if(s){ s.textContent=text; s.className = warn===false ? 'badge' : 'badge warn'; }
-  }
+  /* ============ Audio (simple & discret) ============ */
+  var itVoice=null, audioReady=false;
 
-  function getVoicesSafe(){ try { return speechSynthesis.getVoices() || []; } catch(e){ return []; } }
   function pickItalianVoice(){
-    var voices = getVoicesSafe();
-    itVoice = null;
-    for(var i=0;i<voices.length;i++){
-      if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)){ itVoice=voices[i]; break; }
-    }
-    if(!itVoice) itVoice = voices[0] || null;
-  }
-  function waitForVoices(timeoutMs){
-    return new Promise(function(resolve){
-      var start=Date.now();
-      (function loop(){
-        var v = getVoicesSafe();
-        if (v && v.length){ return resolve(); }
-        if (Date.now()-start > (timeoutMs||2000)) return resolve();
-        setTimeout(loop, 100);
-      })();
-    });
-  }
-
-  function primeAudio(){
-    if (audioReady) return Promise.resolve();
-    if (primingPromise) return primingPromise;
-
-    primingPromise = (async function(){
-      if (!window.speechSynthesis) return;
-      await waitForVoices(2500);
-      pickItalianVoice();
-
-      return new Promise(function(resolve){
-        try{
-          var u = new SpeechSynthesisUtterance('pronto');
-          u.lang = (itVoice && itVoice.lang) ? itVoice.lang : 'it-IT';
-          u.volume = 0.01;
-          u.onend = function(){ resolve(); };
-          u.onerror = function(){ resolve(); };
-          // ⚠️ Ne PAS cancel ici (iOS annule tout si on cancel trop tôt)
-          speechSynthesis.speak(u);
-        }catch(e){ resolve(); }
-      }).then(function(){
-        audioReady = true;
-        setBadge('Audio prêt', false);
-        // Lire la dernière phrase demandée pendant le prime
-        if (queue.length){
-          var last = queue[queue.length-1];
-          queue.length = 0;
-          speakNow(last);
-        }
-        primingPromise = null;
-      });
-    })();
-
-    return primingPromise;
-  }
-
-  function speakNow(text){
     try{
-      var u=new SpeechSynthesisUtterance(text);
-      u.lang=(itVoice&&itVoice.lang)?itVoice.lang:'it-IT';
-      if(itVoice) u.voice=itVoice;
-      u.rate=0.98; u.pitch=1.0;
-      // Ici, un seul cancel juste avant la vraie lecture (pas pendant le prime)
-      try { speechSynthesis.cancel(); } catch(e){}
-      speechSynthesis.speak(u);
-      App.incRevision(1);
+      var voices = speechSynthesis.getVoices() || [];
+      itVoice = null;
+      for(var i=0;i<voices.length;i++){
+        if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)){ itVoice=voices[i]; break; }
+      }
+      if(!itVoice) itVoice = voices[0] || null;
     }catch(e){}
   }
 
-  App.speak = function(text){
-    if(!text) return;
-    if (!window.speechSynthesis){
-      alert('La synthèse vocale n’est pas disponible sur ce navigateur.');
-      return;
-    }
-    if (!audioReady){
-      // Met en file d’attente et lance un prime unique
-      queue.push(text);
-      primeAudio();
-      return;
-    }
-    speakNow(text);
-  };
-
-  // Déclencheurs “gestes utilisateur” multiples pour maximiser le support mobile
-  function onFirstGesture(){
-    primeAudio();
-    var btn=document.getElementById('activate-audio');
-    if(btn){ btn.disabled=true; btn.textContent='🔊 Audio prêt'; }
+  // Petit "prime" silencieux, déclenché une seule fois, sans UI.
+  function primeAudio(){
+    if(audioReady) return;
+    try{
+      pickItalianVoice();
+      var u = new SpeechSynthesisUtterance('pronto');
+      u.lang = (itVoice && itVoice.lang) ? itVoice.lang : 'it-IT';
+      u.volume = 0.01;
+      u.onend = function(){ audioReady=true; };
+      speechSynthesis.speak(u);
+    }catch(e){}
   }
-  ['pointerdown','click','touchstart','keydown'].forEach(function(evt){
-    window.addEventListener(evt, onFirstGesture, { once:true });
-  });
+
   if (window.speechSynthesis){
     window.speechSynthesis.onvoiceschanged = function(){ if(!audioReady) pickItalianVoice(); };
+    // On réchauffe l’audio au premier geste, sans rien afficher.
+    window.addEventListener('pointerdown', primeAudio, { once:true });
   }
+
+  App.speak = function(text){
+    if(!text || !window.speechSynthesis) return;
+    try{
+      // Lecture directe au clic (comme avant). On accepte que le 1er essai soit un peu lent sur certains mobiles.
+      var u=new SpeechSynthesisUtterance(text);
+      pickItalianVoice();
+      u.lang=(itVoice&&itVoice.lang)?itVoice.lang:'it-IT';
+      if(itVoice) u.voice=itVoice;
+      u.rate=0.98; u.pitch=1.0;
+      try{ speechSynthesis.cancel(); }catch(e){}
+      speechSynthesis.speak(u);
+      App.incRevision(1);
+    }catch(e){}
+  };
 
   // Délégation clic boutons data-it (fallback sans .closest)
   document.addEventListener('click', function(e){
@@ -159,7 +103,7 @@
     }
   });
 
-  /* ============= Settings / Toggles / Compteur ============= */
+  /* ============ Settings / Toggles / Compteur ============ */
   var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
   App.settings = {
     get theme(){ return localStorage.getItem(LS.theme) || 'dark'; },
@@ -175,12 +119,11 @@
   App.injectControls = function(){
     setTheme(App.settings.theme); applyFR(App.settings.showFR);
     var bar = document.createElement('div'); bar.className='controls';
+    // ⬇️ Plus d’éléments “audio-state” / “Activer l’audio” ici.
     bar.innerHTML = ''
       + '<button id="toggle-theme" class="ghost">'+(App.settings.theme==='dark'?'☀️ Mode clair':'🌙 Mode sombre')+'</button>'
       + '<button id="toggle-fr">'+(App.settings.showFR?'Masquer FR':'Afficher FR')+'</button>'
       + '<button id="toggle-quiz" class="'+(App.settings.quiz?'':'ghost')+'">🎯 '+(App.settings.quiz?'Quitter le quiz':'Mode Quiz')+'</button>'
-      + '<button id="activate-audio">🔊 Activer l’audio</button>'
-      + '<span id="audio-state" class="badge warn">En attente d’un appui…</span>'
       + '<span id="rev-badge" class="badge">Révisions : <strong id="rev-count">0</strong></span>';
     var nav=document.querySelector('nav'); if(nav) nav.parentNode.insertBefore(bar, nav.nextSibling);
 
@@ -197,12 +140,6 @@
       this.classList.toggle('ghost', !App.settings.quiz);
       this.textContent = App.settings.quiz ? '🎯 Quitter le quiz' : 'Mode Quiz';
     };
-    document.getElementById('activate-audio').onclick=function(){
-      primeAudio().then(function(){
-        var b=document.getElementById('activate-audio');
-        if(b){ b.disabled=true; b.textContent='🔊 Audio prêt'; }
-      });
-    };
 
     App.updateCounterUI();
   };
@@ -217,7 +154,7 @@
     var el=document.getElementById('rev-count'); if(el) el.textContent = String(parseInt(localStorage.getItem(LS.countTotal)||'0'));
   };
 
-  /* ======================= Quiz ======================= */
+  /* ============ Quiz ============ */
   App.setupQuizHost = function(container, items){
     var askFR = true, current=null;
     var host=document.createElement('div'); host.className='quiz';
