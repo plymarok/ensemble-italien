@@ -1,1 +1,75 @@
+[
+  {
+    "title": "Formules de politesse / cortesia",
+    "items": [
+      {"it": "Per favore", "fr": "S’il vous plaît / s’il te plaît"},
+      {"it": "Grazie", "fr": "Merci"},
+      {"it": "Prego", "fr": "De rien / je vous en prie"},
+      {"it": "Scusa / Scusi", "fr": "Pardon (tu / vous)"}
+    ]
+  },
+  {
+    "title": "Manifester son incompréhension",
+    "items": [
+      {"it": "Non ho capito / sentito", "fr": "Je n’ai pas compris / entendu"},
+      {"it": "Puoi / può ripetere?", "fr": "Peux-tu / pouvez-vous répéter ?"},
+      {"it": "Non lo so", "fr": "Je ne sais pas"},
+      {"it": "Come si dice ... in italiano / francese?", "fr": "Comment dit-on ... en italien / en français ?"},
+      {"it": "Cosa significa ...?", "fr": "Que signifie ... ?"}
+    ]
+  },
+  {
+    "title": "Demander du matériel",
+    "items": [
+      {"it": "Posso avere una colla?", "fr": "Puis-je avoir une colle ?"},
+      {"it": "Posso avere un fazzoletto?", "fr": "Puis-je avoir un mouchoir ?"},
+      {"it": "Posso avere una penna?", "fr": "Puis-je avoir un stylo ?"}
+    ]
+  },
+  {
+    "title": "Dire qu’on a terminé l’activité",
+    "items": [
+      {"it": "Ho finito!", "fr": "J’ai terminé !"},
+      {"it": "Fatto!", "fr": "C’est fait !"},
+      {"it": "Posso fare qualcos’altro?", "fr": "Je peux faire autre chose ?"}
+    ]
+  },
+  {
+    "title": "S’excuser",
+    "items": [
+      {"it": "Non ho fatto i compiti", "fr": "Je n’ai pas fait les devoirs"},
+      {"it": "Ho dimenticato il quaderno", "fr": "J’ai oublié le cahier"},
+      {"it": "Scusa per il ritardo", "fr": "Désolé pour le retard"}
+    ]
+  },
+  {
+    "title": "Pronoms interrogatifs",
+    "items": [
+      {"it": "Perché", "fr": "Pourquoi"},
+      {"it": "Quando", "fr": "Quand"},
+      {"it": "Chi", "fr": "Qui"},
+      {"it": "Dove", "fr": "Où"},
+      {"it": "Come", "fr": "Comment"},
+      {"it": "Che cosa", "fr": "Quoi"},
+      {"it": "Quanto", "fr": "Combien"},
+      {"it": "Quale", "fr": "Quel / Quelle"}
+    ]
+  },
+  {
+    "title": "Expressions",
+    "items": [
+      {"it": "Andare in montagna", "fr": "Aller à la montagne"},
+      {"it": "Andare al mare", "fr": "Aller à la mer"}
+    ]
+  },
+  {
+    "title": "Le stagioni — Les saisons",
+    "items": [
+      {"it": "La primavera", "fr": "Le printemps"},
+      {"it": "L’estate", "fr": "L’été"},
+      {"it": "L’autunno", "fr": "L’automne"},
+      {"it": "L’inverno", "fr": "L’hiver"}
+    ]
+  }
+]
 
