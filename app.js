@@ -1,5 +1,4 @@
-<script>
-// App global (sans modules, compatible vieux mobiles)
+// App global (sans modules, compatible mobiles)
 (function(){
   var App = window.App = {};
 
@@ -24,15 +23,15 @@
     container.appendChild(bar);
   };
   App.loadJSON = function(path){
-    // fetch avec fallback XHR
     if (window.fetch){
-      return fetch(path).then(function(r){
+      return fetch(path, {cache:'no-store'}).then(function(r){
         if(!r.ok) throw new Error('HTTP '+r.status+' pour '+path);
         return r.json();
       });
     }else{
       return new Promise(function(res,rej){
         var x=new XMLHttpRequest(); x.open('GET', path, true);
+        x.setRequestHeader('Cache-Control','no-cache');
         x.onreadystatechange=function(){ if(x.readyState===4){ if(x.status>=200&&x.status<300){ res(JSON.parse(x.responseText)); } else { rej(new Error('XHR '+x.status)); } } };
         x.send();
       });
@@ -83,17 +82,17 @@
       App.incRevision(1);
     }catch(e){}
   };
-  // délégation globale pour <button data-it="...">
+  // Délégation (avec fallback si closest absent)
   document.addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('button[data-it]');
-    if(b){ App.speak(b.getAttribute('data-it')); }
+    var el = e.target;
+    while (el && el !== document) {
+      if (el.tagName === 'BUTTON' && el.hasAttribute('data-it')) { App.speak(el.getAttribute('data-it')); break; }
+      el = el.parentNode;
+    }
   });
 
   // ===== Settings / Toggles / Compteur =====
-  var LS = {
-    theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled',
-    countTotal:'it-rev-total'
-  };
+  var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
   App.settings = {
     get theme(){ return localStorage.getItem(LS.theme) || 'dark'; },
     set theme(v){ localStorage.setItem(LS.theme, v); setTheme(v); },
@@ -185,4 +184,3 @@
     document.addEventListener('quiz-toggle', draw);
   };
 })();
-</script>
