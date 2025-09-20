@@ -1,203 +1,280 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Révisions d’italien — Simple (1 page)</title>
-<style>
-  :root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--brand:#0ea5e9;--card:#ffffff;--line:#e2e8f0;--radius:14px;--shadow:0 6px 18px rgba(0,0,0,.08)}
-  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-  header{background:var(--brand);color:#fff;padding:16px;text-align:center;font-weight:800;letter-spacing:.3px}
-  main{max-width:980px;margin:16px auto;padding:0 12px}
-  h2{margin:26px 0 8px;color:var(--brand)} h3{margin:14px 2px 8px;color:#0ea5e9}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
-        padding:12px 14px;margin:10px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
-  .text{font-size:1.05rem} .fr{color:var(--muted)} .hide-fr .fr{display:none}
-  .btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
-  .btn:active{transform:translateY(1px)} .ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-  .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .search{display:flex;gap:8px;align-items:center;margin:8px 0 14px}
-  .search input{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
-  .note{background:#fff3cd;border:1px solid #facc15;border-radius:10px;padding:8px 12px;margin:8px 0;color:#1f2937}
-  #diag{display:none;position:sticky;top:0;z-index:9999;background:#fee2e2;color:#7f1d1d;border-bottom:1px solid #fecaca;padding:8px 10px;white-space:pre-wrap}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Révisions d’italien — Lexique & expressions</title>
+  <style>
+    :root{
+      --bg:#0f172a; --card:#111b2f; --ink:#e6edf6; --muted:#9fb0c7;
+      --brand:#38bdf8; --accent:#a78bfa; --radius:16px; --shadow:0 10px 24px rgba(0,0,0,.35);
+    }
+    html,body{margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif}
+    header{padding:22px 16px 8px; text-align:center}
+    header h1{margin:0 0 8px; font-size:1.45rem; letter-spacing:.2px}
+    header p{margin:0; color:var(--muted); font-size:.95rem}
+    .bar{display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; padding:14px 16px}
+    button, select, input[type="checkbox"]+label{
+      background:linear-gradient(180deg, var(--brand), #14a2dc);
+      color:white; border:0; padding:10px 14px; border-radius:12px; font-weight:600;
+      box-shadow:var(--shadow); cursor:pointer
+    }
+    .ghost{background:#19253f}
+    .toggle{display:flex; align-items:center; gap:8px; color:var(--ink); font-weight:600}
+    .wrap{max-width:900px; margin:0 auto; padding:12px}
+    details{background:var(--card); border-radius:var(--radius); margin:12px 0; box-shadow:var(--shadow); overflow:hidden}
+    summary{padding:14px 16px; font-weight:700; list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px}
+    summary::marker{display:none}
+    .badge{background:#17233b; color:var(--brand); padding:2px 8px; border-radius:999px; font-size:.8rem}
+    .list{padding:6px 12px 16px}
+    .item{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:10px 8px; border-bottom:1px solid #1f2c49}
+    .item:last-child{border-bottom:0}
+    .it{font-weight:700}
+    .fr{color:var(--muted); font-size:.95rem}
+    .speak{background:#1f2e4d}
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    .note{padding:10px 12px; color:var(--muted); font-size:.9rem; text-align:center}
+    @media (hover:hover){
+      button:hover{transform:translateY(-1px)}
+    }
+  </style>
 </head>
 <body>
-<header>📘 Révisions d’italien — Simple (1 page)</header>
+  <header>
+    <h1>Révisions d’italien — Aide-mémoire sonore</h1>
+    <p>Touchez “Tester l’audio”, puis les boutons 🔊 pour entendre l’italien. Tout est lisible et utilisable sur téléphone.</p>
+  </header>
 
-<div id="diag"></div>
-
-<main>
-  <p class="note">🔊 Appuie sur un bouton pour entendre l’italien. Si la voix locale ne démarre pas, un son en ligne est utilisé automatiquement.  
-  Astuce iPhone : désactive le mode silencieux.</p>
-
-  <div class="search">
-    <input id="search" placeholder="Filtrer (italien ou français)..." />
-    <button class="btn ghost" id="clear">Effacer</button>
-    <button class="btn ghost" id="toggle-fr">Masquer FR</button>
+  <div class="bar">
+    <button id="btnTest">🔈 Tester l’audio</button>
+    <button class="ghost" id="btnStop">⏹️ Stop</button>
+    <label class="toggle"><input type="checkbox" id="slow"> Prononciation lente</label>
+    <select id="voiceSel" title="Voix italienne"></select>
   </div>
 
-  <!-- ===== Verbes ===== -->
-  <section id="verbes">
-    <h2>Verbes essentiels</h2>
-    <div id="verbes-list"></div>
-  </section>
+  <div class="wrap">
+    <!-- EXPRESSIONS DU MARQUE-PAGE -->
+    <details open>
+      <summary>📑 Expressions du marque-page <span class="badge">parler en classe</span></summary>
+      <div class="list">
+        <!-- Formules de politesse -->
+        <div class="item">
+          <div><span class="it">Per favore</span> — <span class="fr">S’il vous plaît</span></div>
+          <button class="speak" data-say="Per favore">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Grazie</span> — <span class="fr">Merci</span></div>
+          <button class="speak" data-say="Grazie">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Prego / Di niente</span> — <span class="fr">De rien</span></div>
+          <button class="speak" data-say="Prego. Di niente.">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon / Excuse-moi — Excusez-moi</span></div>
+          <button class="speak" data-say="Scusa. Scusi.">🔊 Écouter</button>
+        </div>
 
-  <!-- ===== Vocabulaire ===== -->
-  <section id="vocab">
-    <h2>Vocabulaire utile</h2>
-    <div id="vocab-list"></div>
-  </section>
+        <!-- Manifester son incompréhension -->
+        <div class="item">
+          <div><span class="it">Non ho capito / Non ho sentito</span> — <span class="fr">Je n’ai pas compris / entendu</span></div>
+          <button class="speak" data-say="Non ho capito. Non ho sentito.">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Può / puoi ripetere?</span> — <span class="fr">Pouvez-vous / tu peux répéter ?</span></div>
+          <button class="speak" data-say="Può ripetere? Puoi ripetere?">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Non lo so</span> — <span class="fr">Je ne sais pas</span></div>
+          <button class="speak" data-say="Non lo so">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Come si dice … in italiano / francese?</span> — <span class="fr">Comment dit-on … en italien / français ?</span></div>
+          <button class="speak" data-say="Come si dice in italiano? Come si dice in francese?">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Cosa significa … ?</span> — <span class="fr">Que signifie … ?</span></div>
+          <button class="speak" data-say="Cosa significa?">🔊 Écouter</button>
+        </div>
 
-  <!-- ===== Passatempi ===== -->
-  <section id="passatempi">
-    <h2>I passatempi (loisirs)</h2>
-    <div id="pass-list" class="grid"></div>
-  </section>
+        <!-- Demander du matériel -->
+        <div class="item">
+          <div><span class="it">Posso avere una colla?</span> — <span class="fr">Puis-je avoir une colle ?</span></div>
+          <button class="speak" data-say="Posso avere una colla?">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Posso avere un fazzoletto?</span> — <span class="fr">Puis-je avoir un mouchoir ?</span></div>
+          <button class="speak" data-say="Posso avere un fazzoletto?">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Posso avere una penna?</span> — <span class="fr">Puis-je avoir un stylo ?</span></div>
+          <button class="speak" data-say="Posso avere una penna?">🔊 Écouter</button>
+        </div>
 
-  <!-- Lecteur audio (fallback) -->
-  <audio id="tts" preload="none" playsinline></audio>
-</main>
+        <!-- Dire qu'on a terminé -->
+        <div class="item">
+          <div><span class="it">Ho finito!</span> — <span class="fr">J’ai terminé !</span></div>
+          <button class="speak" data-say="Ho finito!">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Fatto!</span> — <span class="fr">C’est fait !</span></div>
+          <button class="speak" data-say="Fatto!">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Posso fare qualcos’altro?</span> — <span class="fr">Puis-je faire autre chose ?</span></div>
+          <button class="speak" data-say="Posso fare qualcos'altro?">🔊 Écouter</button>
+        </div>
 
-<script>
-/* ---------- Diagnostic: affiche toute erreur au lieu d'un écran blanc ---------- */
-const $diag = document.getElementById('diag');
-function diag(msg){ $diag.style.display='block'; $diag.textContent += ($diag.textContent? '\n' : '') + msg; }
-window.addEventListener('error', e=>diag('❌ '+(e.message||'Erreur JS')+(e.filename? ' — '+e.filename:'')+(e.lineno? ' (ligne '+e.lineno+')':'')));
-window.addEventListener('unhandledrejection', e=>diag('❌ Promise: '+(e.reason && e.reason.message? e.reason.message : String(e.reason||''))));
+        <!-- S'excuser -->
+        <div class="item">
+          <div><span class="it">Non ho fatto i compiti</span> — <span class="fr">Je n’ai pas fait les devoirs</span></div>
+          <button class="speak" data-say="Non ho fatto i compiti">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Ho dimenticato il quaderno</span> — <span class="fr">J’ai oublié le cahier</span></div>
+          <button class="speak" data-say="Ho dimenticato il quaderno">🔊 Écouter</button>
+        </div>
+        <div class="item">
+          <div><span class="it">Scusa / Scusi per il ritardo</span> — <span class="fr">Pardon pour le retard</span></div>
+          <button class="speak" data-say="Scusa per il ritardo. Scusi per il ritardo.">🔊 Écouter</button>
+        </div>
+      </div>
+    </details>
 
-/* ----------------------- Données (inline, pas de JSON) ----------------------- */
-const VERBS = [
-  {verb:'FARE', tr:'faire', forms:[['io faccio','je fais'],['tu fai','tu fais'],['lui/lei fa','il/elle fait'],['noi facciamo','nous faisons'],['voi fate','vous faites'],['loro fanno','ils font']]},
-  {verb:'POTERE', tr:'pouvoir', forms:[['io posso','je peux'],['tu puoi','tu peux'],['lui/lei può','il/elle peut'],['noi possiamo','nous pouvons'],['voi potete','vous pouvez'],['loro possono','ils peuvent']]},
-  {verb:'ANDARE', tr:'aller', forms:[['io vado','je vais'],['tu vai','tu vas'],['lui/lei va','il/elle va'],['noi andiamo','nous allons'],['voi andate','vous allez'],['loro vanno','ils vont']]},
-  {verb:'CHIAMARSI', tr:"s'appeler", forms:[['mi chiamo','je m’appelle'],['ti chiami','tu t’appelles'],['si chiama','il/elle s’appelle'],['ci chiamiamo','nous nous appelons'],['vi chiamate','vous vous appelez'],['si chiamano','ils s’appellent']]},
-  {verb:'ESSERE', tr:'être', forms:[['io sono','je suis'],['tu sei','tu es'],['lui/lei è','il/elle est'],['noi siamo','nous sommes'],['voi siete','vous êtes'],['loro sono','ils sont']]},
-  {verb:'AVERE', tr:'avoir', forms:[['io ho','j’ai'],['tu hai','tu as'],['lui/lei ha','il/elle a'],['noi abbiamo','nous avons'],['voi avete','vous avez'],['loro hanno','ils ont']]},
-  {verb:'PARLARE (modèle -ARE)', tr:'parler', forms:[['io parlo','je parle'],['tu parli','tu parles'],['lui/lei parla','il/elle parle'],['noi parliamo','nous parlons'],['voi parlate','vous parlez'],['loro parlano','ils parlent']]},
-  {verb:'SCRIVERE (modèle -ERE)', tr:'écrire', forms:[['io scrivo','j’écris'],['tu scrivi','tu écris'],['lui/lei scrive','il/elle écrit'],['noi scriviamo','nous écrivons'],['voi scrivete','vous écrivez'],['loro scrivono','ils écrivent']]}
-];
-const VOCAB = [
-  ['Per favore','S’il vous plaît'],['Grazie','Merci'],['Prego','De rien'],['Scusa / Scusi','Pardon'],
-  ['Non ho capito / sentito','Je n’ai pas compris / entendu'],['Può / puoi ripetere?','Pouvez-vous / peux-tu répéter ?'],['Non lo so','Je ne sais pas'],['Cosa significa?','Que signifie ?'],
-  ['Posso avere una colla?','Je peux avoir une colle ?'],['Posso avere un fazzoletto?','Je peux avoir un mouchoir ?'],['Posso avere una penna?','Je peux avoir un stylo ?'],
-  ['Ho finito!','J’ai terminé !'],['Fatto!','C’est fait !'],['Posso fare qualcos’altro?','Je peux faire autre chose ?'],
-  ['Non ho fatto i compiti','Je n’ai pas fait les devoirs'],['Ho dimenticato il quaderno','J’ai oublié le cahier'],['Scusa per il ritardo','Désolé(e) pour le retard'],
-  ['Perché','Pourquoi'],['Quando','Quand'],['Chi','Qui'],['Dove','Où'],['Come','Comment'],['Che cosa','Quoi'],['Quanto','Combien'],['Quale','Quel(les)'],
-  ['La primavera','Le printemps'],['L’estate','L’été'],['L’autunno','L’automne'],['L’inverno','L’hiver'],
-  ['Andare in montagna','Aller à la montagne'],['Andare al mare','Aller à la mer']
-];
-const PASS = [
-  ['Fare yoga','Faire du yoga 🧘'],['Pescare','Pêcher 🎣'],['Suonare la chitarra','Jouer de la guitare 🎸'],['Cantare','Chanter 🎤'],
-  ['Giocare a calcio','Jouer au foot ⚽'],['Andare in bici','Faire du vélo 🚲'],['Giocare a basket','Jouer au basket 🏀'],['Giocare a pallavolo','Jouer au volley 🏐'],
-  ['Andare a teatro','Aller au théâtre 🎭'],['Dipingere','Peindre 🎨'],['Andare al cinema','Aller au cinéma 🎬'],['Ascoltare la musica','Écouter la musique 📻'],
-  ['Giocare ai videogiochi','Jouer aux jeux vidéo 🎮'],['Leggere','Lire 📖'],['Viaggiare','Voyager ✈️'],['Giocare a cricket','Jouer au cricket 🏏']
-];
+    <!-- I PASSATEMPI -->
+    <details>
+      <summary>🎯 I passatempi <span class="badge">loisirs</span></summary>
+      <div class="list">
+        <!-- 1–16 -->
+        <div class="item"><div><span class="it">Fare yoga</span> — <span class="fr">faire du yoga</span></div><button class="speak" data-say="Fare yoga">🔊</button></div>
+        <div class="item"><div><span class="it">Pescare</span> — <span class="fr">pêcher</span></div><button class="speak" data-say="Pescare">🔊</button></div>
+        <div class="item"><div><span class="it">Suonare la chitarra</span> — <span class="fr">jouer de la guitare</span></div><button class="speak" data-say="Suonare la chitarra">🔊</button></div>
+        <div class="item"><div><span class="it">Cantare</span> — <span class="fr">chanter</span></div><button class="speak" data-say="Cantare">🔊</button></div>
+        <div class="item"><div><span class="it">Giocare a calcio</span> — <span class="fr">jouer au foot</span></div><button class="speak" data-say="Giocare a calcio">🔊</button></div>
+        <div class="item"><div><span class="it">Andare in bici</span> — <span class="fr">aller à vélo</span></div><button class="speak" data-say="Andare in bici">🔊</button></div>
+        <div class="item"><div><span class="it">Giocare a basket</span> — <span class="fr">jouer au basket</span></div><button class="speak" data-say="Giocare a basket">🔊</button></div>
+        <div class="item"><div><span class="it">Giocare a pallavolo</span> — <span class="fr">jouer au volley</span></div><button class="speak" data-say="Giocare a pallavolo">🔊</button></div>
+        <div class="item"><div><span class="it">Andare a teatro</span> — <span class="fr">aller au théâtre</span></div><button class="speak" data-say="Andare a teatro">🔊</button></div>
+        <div class="item"><div><span class="it">Dipingere</span> — <span class="fr">peindre</span></div><button class="speak" data-say="Dipingere">🔊</button></div>
+        <div class="item"><div><span class="it">Andare al cinema</span> — <span class="fr">aller au cinéma</span></div><button class="speak" data-say="Andare al cinema">🔊</button></div>
+        <div class="item"><div><span class="it">Ascoltare la musica</span> — <span class="fr">écouter de la musique</span></div><button class="speak" data-say="Ascoltare la musica">🔊</button></div>
+        <div class="item"><div><span class="it">Giocare ai videogiochi</span> — <span class="fr">jouer aux jeux vidéo</span></div><button class="speak" data-say="Giocare ai videogiochi">🔊</button></div>
+        <div class="item"><div><span class="it">Leggere</span> — <span class="fr">lire</span></div><button class="speak" data-say="Leggere">🔊</button></div>
+        <div class="item"><div><span class="it">Viaggiare</span> — <span class="fr">voyager</span></div><button class="speak" data-say="Viaggiare">🔊</button></div>
+        <div class="item"><div><span class="it">Giocare a cricket</span> — <span class="fr">jouer au cricket</span></div><button class="speak" data-say="Giocare a cricket">🔊</button></div>
+      </div>
+    </details>
 
-/* --------------------------- Rendu sans dépendances --------------------------- */
-const $ = s=>document.querySelector(s);
+    <!-- VERBES À CONNAÎTRE -->
+    <details>
+      <summary>⚙️ Verbi da sapere <span class="badge">à réviser à l’oral</span></summary>
+      <div class="list">
+        <div class="item"><div><span class="it">FARE</span> — <span class="fr">faire</span> (ex. <span class="it">io faccio</span>)</div><button class="speak" data-say="fare">🔊</button></div>
+        <div class="item"><div><span class="it">POTERE</span> — <span class="fr">pouvoir</span> (ex. <span class="it">io posso</span>)</div><button class="speak" data-say="potere">🔊</button></div>
+        <div class="item"><div><span class="it">ANDARE</span> — <span class="fr">aller</span> (ex. <span class="it">io vado</span>)</div><button class="speak" data-say="andare">🔊</button></div>
+        <div class="item"><div><span class="it">CHIAMARSI</span> — <span class="fr">s’appeler</span> (ex. <span class="it">mi chiamo</span>)</div><button class="speak" data-say="chiamarsi">🔊</button></div>
+        <div class="item"><div><span class="it">ESSERE</span> — <span class="fr">être</span> (ex. <span class="it">io sono</span>)</div><button class="speak" data-say="essere">🔊</button></div>
+        <div class="item"><div><span class="it">AVERE</span> — <span class="fr">avoir</span> (ex. <span class="it">io ho</span>)</div><button class="speak" data-say="avere">🔊</button></div>
+        <div class="item"><div><span class="it">Verbi in -ARE</span> — <span class="fr">ex. parlare → io parlo</span></div><button class="speak" data-say="parlare">🔊</button></div>
+        <div class="item"><div><span class="it">Verbi in -ERE</span> — <span class="fr">ex. leggere → io leggo</span></div><button class="speak" data-say="leggere">🔊</button></div>
+      </div>
+    </details>
 
-function renderAll(){
-  const q = ($('#search').value||'').toLowerCase();
+    <!-- PRONOMI INTERROGATIVI -->
+    <details>
+      <summary>❓ Pronomi interrogativi</summary>
+      <div class="list">
+        <div class="item"><div><span class="it">perché</span> — <span class="fr">pourquoi</span></div><button class="speak" data-say="perché">🔊</button></div>
+        <div class="item"><div><span class="it">quando</span> — <span class="fr">quand</span></div><button class="speak" data-say="quando">🔊</button></div>
+        <div class="item"><div><span class="it">chi</span> — <span class="fr">qui</span></div><button class="speak" data-say="chi">🔊</button></div>
+        <div class="item"><div><span class="it">dove</span> — <span class="fr">où</span></div><button class="speak" data-say="dove">🔊</button></div>
+        <div class="item"><div><span class="it">come</span> — <span class="fr">comment</span></div><button class="speak" data-say="come">🔊</button></div>
+        <div class="item"><div><span class="it">che cosa</span> — <span class="fr">que / quoi</span></div><button class="speak" data-say="che cosa">🔊</button></div>
+        <div class="item"><div><span class="it">quanto</span> — <span class="fr">combien</span></div><button class="speak" data-say="quanto">🔊</button></div>
+        <div class="item"><div><span class="it">quale</span> — <span class="fr">quel / quelle</span></div><button class="speak" data-say="quale">🔊</button></div>
+      </div>
+    </details>
 
-  // Verbes
-  const vWrap = $('#verbes-list'); vWrap.innerHTML='';
-  VERBS.forEach(v=>{
-    const matchBase = v.verb.toLowerCase().includes(q) || v.tr.toLowerCase().includes(q);
-    const box = document.createElement('div');
-    const head = document.createElement('div'); head.className='card';
-    head.innerHTML = `<div class="text"><b>${v.verb}</b> — <span class="fr">${v.tr}</span></div>`;
-    const details = document.createElement('div'); details.className='details';
-    v.forms.forEach(f=>{
-      const show = !q || matchBase || f[0].toLowerCase().includes(q) || f[1].toLowerCase().includes(q);
-      if(!show) return;
-      const row = document.createElement('div'); row.className='row';
-      row.innerHTML = `<span>${f[0]} — <span class="fr">${f[1]}</span></span>
-                       <button class="btn" data-it="${f[0].replace(/"/g,'&quot;')}">🔊</button>`;
-      details.appendChild(row);
-    });
-    box.appendChild(head); box.appendChild(details); vWrap.appendChild(box);
-  });
+    <!-- EXPRESSIONS + SAISONS -->
+    <details>
+      <summary>🌄 Andare in montagna / al mare &nbsp; • &nbsp; ❀ Le stagioni</summary>
+      <div class="list">
+        <div class="item"><div><span class="it">andare in montagna</span> — <span class="fr">aller à la montagne</span></div><button class="speak" data-say="andare in montagna">🔊</button></div>
+        <div class="item"><div><span class="it">andare al mare</span> — <span class="fr">aller à la mer</span></div><button class="speak" data-say="andare al mare">🔊</button></div>
+        <div class="item"><div><span class="it">la primavera</span> — <span class="fr">le printemps</span></div><button class="speak" data-say="la primavera">🔊</button></div>
+        <div class="item"><div><span class="it">l’estate</span> — <span class="fr">l’été</span></div><button class="speak" data-say="l'estate">🔊</button></div>
+        <div class="item"><div><span class="it">l’autunno</span> — <span class="fr">l’automne</span></div><button class="speak" data-say="l'autunno">🔊</button></div>
+        <div class="item"><div><span class="it">l’inverno</span> — <span class="fr">l’hiver</span></div><button class="speak" data-say="l'inverno">🔊</button></div>
+      </div>
+    </details>
 
-  // Vocab
-  const voWrap = $('#vocab-list'); voWrap.innerHTML='';
-  const gVocab = document.createElement('div');
-  VOCAB.filter(it=>!q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q))
-       .forEach(it=>{
-         const card = document.createElement('div'); card.className='card';
-         card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
-                           <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
-         gVocab.appendChild(card);
-       });
-  voWrap.appendChild(gVocab);
+    <p class="note">Astuce mobile : si vous n’entendez rien sur iPhone/iPad, touchez d’abord “Tester l’audio”, laissez la page au premier plan et le volume du téléphone au maximum.</p>
+  </div>
 
-  // Passatempi
-  const pWrap = $('#pass-list'); pWrap.innerHTML='';
-  PASS.filter(it=>!q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q))
-      .forEach(it=>{
-        const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
-                          <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
-        pWrap.appendChild(card);
+  <script>
+    // --- Speech synthesis (mobile-friendly) ---
+    const voiceSel = document.getElementById('voiceSel');
+    const slow = document.getElementById('slow');
+    const btnTest = document.getElementById('btnTest');
+    const btnStop = document.getElementById('btnStop');
+
+    let voices = [];
+    let itVoice = null;
+
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+      voiceSel.innerHTML = "";
+      const opts = voices
+        .map(v => ({ v, ok: v.lang && v.lang.toLowerCase().startsWith('it') }))
+        .sort((a,b)=> (b.ok?1:0) - (a.ok?1:0));
+      opts.forEach(({v})=>{
+        const o = document.createElement('option');
+        o.value = v.name; o.textContent = `${v.name} — ${v.lang}`;
+        voiceSel.appendChild(o);
       });
-}
-
-/* --------------------------------- Audio --------------------------------- */
-const hasWS = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
-let itVoice = null;
-function pickVoice(){
-  try{
-    const vs = speechSynthesis.getVoices() || [];
-    itVoice = null;
-    for(let i=0;i<vs.length;i++){
-      if(/^it(\-|_|$)/i.test(vs[i].lang) || /ital/i.test(vs[i].name)){ itVoice = vs[i]; break; }
+      // pick an italian voice if available, else first
+      const prefer = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('it'));
+      itVoice = prefer || voices[0] || null;
+      if (itVoice) {
+        const idx = [...voiceSel.options].findIndex(o=>o.value===itVoice.name);
+        if (idx>=0) voiceSel.selectedIndex = idx;
+      }
     }
-  }catch(e){ itVoice = null; }
-}
-if(hasWS){ try{ speechSynthesis.onvoiceschanged = pickVoice; setTimeout(pickVoice,0);}catch(e){} }
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
 
-const player = document.getElementById('tts');
-function gTTS(text, lang){ return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+(lang||'it')+'&q='+encodeURIComponent(text); }
-
-function speak(text){
-  if(!text) return;
-  // 1) Web Speech
-  if(hasWS){
-    let started=false;
-    const u = new SpeechSynthesisUtterance(text);
-    if(itVoice){ u.voice=itVoice; u.lang=itVoice.lang; } else { u.lang='it-IT'; }
-    u.rate=1; u.pitch=1; u.onstart=()=>{started=true;};
-    try{ speechSynthesis.speak(u);}catch(e){}
-    // 2) si rien ne démarre vite -> fallback <audio>
-    setTimeout(()=>{ if(!started){ player.src=gTTS(text,'it'); player.play().catch(()=>{}); } }, 300);
-    return;
-  }
-  // Pas de WebSpeech -> audio direct
-  player.src = gTTS(text,'it');
-  player.play().catch(()=>{});
-}
-
-/* ------------------------------ Interactions ------------------------------ */
-document.addEventListener('pointerdown', e=>{
-  let n=e.target;
-  while(n && n!==document){
-    if(n.matches && n.matches('button[data-it]')){
-      speak(n.getAttribute('data-it')); break;
+    function speak(text){
+      if (!text) return;
+      speechSynthesis.cancel(); // stop any current speech
+      const u = new SpeechSynthesisUtterance(text);
+      const chosen = voices.find(v => v.name === voiceSel.value) || itVoice;
+      if (chosen) { u.voice = chosen; u.lang = chosen.lang; }
+      else { u.lang = 'it-IT'; }
+      u.rate = slow.checked ? 0.85 : 1.0;
+      u.pitch = 1;
+      u.volume = 1;
+      speechSynthesis.speak(u);
     }
-    n=n.parentNode;
-  }
-},{passive:true});
 
-document.getElementById('search').addEventListener('input', renderAll);
-document.getElementById('clear').onclick = ()=>{ document.getElementById('search').value=''; renderAll(); };
-document.getElementById('toggle-fr').onclick = function(){
-  document.body.classList.toggle('hide-fr');
-  this.textContent = document.body.classList.contains('hide-fr') ? 'Afficher FR' : 'Masquer FR';
-};
+    // Unlock audio on mobile and give feedback
+    btnTest.addEventListener('click', () => {
+      speak('Ciao! Prova audio in italiano.');
+    });
+    btnStop.addEventListener('click', () => speechSynthesis.cancel());
 
-/* -------------------------------- Démarrage -------------------------------- */
-try{ renderAll(); }catch(e){ diag('❌ Rendu: '+e.message); }
-</script>
+    // Buttons in the list
+    document.querySelectorAll('.speak').forEach(btn=>{
+      btn.addEventListener('click', e => {
+        const t = btn.getAttribute('data-say') || btn.previousElementSibling?.textContent || '';
+        speak(t.trim());
+      }, {passive:true});
+    });
+
+    // Voice selector change
+    voiceSel.addEventListener('change', () => {
+      const name = voiceSel.value;
+      itVoice = voices.find(v => v.name === name) || itVoice;
+    });
+  </script>
 </body>
 </html>
