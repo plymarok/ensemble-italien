@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Révisions d’italien — Lexique & verbes (audio)</title>
+  <style>
+    /* ===== Palette & base ===== */
+    :root{
+      --bg1:#0b1224; --bg2:#0f172a;
+      --card:#111b2f; --ink:#e8eef7; --muted:#9fb0c7;
+      --brand:#38bdf8; --brand-2:#a78bfa;
+      --accent:#1f2e4d; --divider:#1e2b48;
+      --radius:18px; --shadow:0 12px 28px rgba(0,0,0,.35);
+    }
+    html,body{margin:0; height:100%; background:
+      radial-gradient(1200px 600px at 10% -10%, #152244 0%, transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, #1b2c52 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--ink);
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    *,*:before,*:after{box-sizing:border-box}
+
+    /* ===== En-tête ===== */
+    header{padding:26px 16px 8px; text-align:center}
+    header h1{margin:0 0 6px; font-size:1.55rem; letter-spacing:.2px}
+    header p{margin:0; color:var(--muted); font-size:.95rem}
+
+    /* ===== Barre d’actions ===== */
+    .bar{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter:saturate(150%) blur(8px);
+      background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.75));
+      display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; padding:12px 14px; border-bottom:1px solid #1a2746
+    }
+    button, select, input[type="checkbox"]+label{
+      appearance:none;
+      background:linear-gradient(180deg, var(--brand), #149ed7);
+      color:#fff; border:0; padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+      box-shadow:var(--shadow); cursor:pointer; transition:transform .15s ease, filter .15s ease
+    }
+    .ghost{background:var(--accent)}
+    .toggle{display:flex; align-items:center; gap:8px; color:var(--ink); font-weight:700}
+    select{background:#173058}
+    button:active{transform:translateY(1px)}
+    @media (hover:hover){button:hover{filter:brightness(1.08); transform:translateY(-1px)}}
+
+    /* ===== Conteneur principal ===== */
+    .wrap{max-width:980px; margin:0 auto; padding:14px}
+
+    /* ===== Cartes génériques (sections “details”) ===== */
+    details{background:var(--card); border-radius:var(--radius); margin:14px 0; box-shadow:var(--shadow); overflow:hidden; border:1px solid #0c1733}
+    summary{
+      position:relative; padding:16px 18px; font-weight:800; list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px
+    }
+    summary::marker{display:none}
+    summary::after{
+      content:"▾"; position:absolute; right:16px; top:50%; transform:translateY(-50%) rotate(-90deg);
+      color:var(--brand); font-weight:900; transition:transform .2s ease
+    }
+    details[open] summary::after{transform:translateY(-50%) rotate(0)}
+    .badge{background:#17233b; color:var(--brand); padding:2px 8px; border-radius:999px; font-size:.8rem}
+    .list{padding:6px 12px 12px}
+    .item{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:12px 10px; border-top:1px dashed var(--divider)}
+    .item:first-child{border-top:0}
+    .it{font-weight:800}
+    .fr{color:var(--muted); font-size:.95rem}
+
+    /* ===== Boutons audio ===== */
+    .speak{
+      background:linear-gradient(180deg, #1e3a72, #162a54);
+      border:1px solid #1a2a55;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px; font-weight:800
+    }
+    .speak::before{content:"🔊"}
+    .speak.playing{background:linear-gradient(180deg, #1f5fb3,#1d4591)}
+    .speak.playing::before{content:"🔈"}
+    .pulse{position:relative}
+    .pulse.playing::after{
+      content:""; position:absolute; inset:-2px; border-radius:inherit; border:2px solid rgba(56,189,248,.45);
+      animation:pulse 1.4s ease-out infinite
+    }
+    @keyframes pulse{
+      0%{transform:scale(1); opacity:.7}
+      100%{transform:scale(1.08); opacity:0}
+    }
+
+    /* ===== Bloc VERBES affiché directement ===== */
+    .verbs{background:var(--card); border-radius:var(--radius); margin:14px 0; box-shadow:var(--shadow); overflow:hidden; border:1px solid #0c1733}
+    .verbs header{padding:16px 18px; text-align:left; border-bottom:1px solid var(--divider)}
+    .verbs h2{margin:0; font-size:1.1rem; letter-spacing:.2px}
+    .verbgrid{
+      display:grid; gap:14px; padding:14px; grid-template-columns:1fr;
+    }
+    @media (min-width:720px){ .verbgrid{ grid-template-columns:1fr 1fr } }
+    .verbcard{
+      border-radius:16px; background:linear-gradient(180deg,#0f1a33,#0c162b);
+      overflow:hidden; border:1px solid #102349
+    }
+    .verbhead{
+      padding:12px 14px; font-weight:900; border-bottom:1px solid var(--divider);
+      background:linear-gradient(180deg, rgba(56,189,248,.14), transparent)
+    }
+    .row{
+      display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
+      padding:11px 12px; border-top:1px solid #0f2142
+    }
+    .row:first-child{border-top:0}
+    .row .it strong{font-weight:900}
+
+    .vnote{padding:10px 14px; color:var(--muted); font-size:.94rem; border-top:1px dashed var(--divider)}
+    .note{padding:10px 12px; color:var(--muted); font-size:.9rem; text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Révisions d’italien — Aide-mémoire sonore</h1>
+    <p>Touchez “Tester l’audio”, puis les boutons. Les verbes sont visibles directement.</p>
+  </header>
+
+  <div class="bar">
+    <button id="btnTest" class="pulse">🔈 Tester l’audio</button>
+    <button class="ghost" id="btnStop">⏹️ Stop</button>
+    <label class="toggle"><input type="checkbox" id="slow"> Prononciation lente</label>
+    <select id="voiceSel" title="Voix italienne"></select>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===== VERBES — AFFICHAGE DIRECT ===== -->
+    <section class="verbs" aria-label="Verbi da sapere">
+      <header><h2>⚙️ Verbi da sapere — présent de l’indicatif</h2></header>
+
+      <div class="verbgrid">
+        <!-- FARE -->
+        <div class="verbcard">
+          <div class="verbhead">FARE — faire</div>
+          <div class="row"><div>io <span class="it"><strong>faccio</strong></span></div><button class="speak" data-say="io faccio"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>fai</strong></span></div><button class="speak" data-say="tu fai"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>fa</strong></span></div><button class="speak" data-say="lui fa. lei fa"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>facciamo</strong></span></div><button class="speak" data-say="noi facciamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>fate</strong></span></div><button class="speak" data-say="voi fate"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>fanno</strong></span></div><button class="speak" data-say="loro fanno"></button></div>
+        </div>
+
+        <!-- POTERE -->
+        <div class="verbcard">
+          <div class="verbhead">POTERE — pouvoir</div>
+          <div class="row"><div>io <span class="it"><strong>posso</strong></span></div><button class="speak" data-say="io posso"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>puoi</strong></span></div><button class="speak" data-say="tu puoi"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>può</strong></span></div><button class="speak" data-say="lui può. lei può"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>possiamo</strong></span></div><button class="speak" data-say="noi possiamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>potete</strong></span></div><button class="speak" data-say="voi potete"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>possono</strong></span></div><button class="speak" data-say="loro possono"></button></div>
+        </div>
+
+        <!-- ANDARE -->
+        <div class="verbcard">
+          <div class="verbhead">ANDARE — aller</div>
+          <div class="row"><div>io <span class="it"><strong>vado</strong></span></div><button class="speak" data-say="io vado"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>vai</strong></span></div><button class="speak" data-say="tu vai"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>va</strong></span></div><button class="speak" data-say="lui va. lei va"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>andiamo</strong></span></div><button class="speak" data-say="noi andiamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>andate</strong></span></div><button class="speak" data-say="voi andate"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>vanno</strong></span></div><button class="speak" data-say="loro vanno"></button></div>
+        </div>
+
+        <!-- CHIAMARSI -->
+        <div class="verbcard">
+          <div class="verbhead">CHIAMARSI — s’appeler</div>
+          <div class="row"><div>io <span class="it"><strong>mi chiamo</strong></span></div><button class="speak" data-say="io mi chiamo"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>ti chiami</strong></span></div><button class="speak" data-say="tu ti chiami"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>si chiama</strong></span></div><button class="speak" data-say="lui si chiama. lei si chiama"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>ci chiamiamo</strong></span></div><button class="speak" data-say="noi ci chiamiamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>vi chiamate</strong></span></div><button class="speak" data-say="voi vi chiamate"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>si chiamano</strong></span></div><button class="speak" data-say="loro si chiamano"></button></div>
+        </div>
+
+        <!-- ESSERE -->
+        <div class="verbcard">
+          <div class="verbhead">ESSERE — être</div>
+          <div class="row"><div>io <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="io sono"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>sei</strong></span></div><button class="speak" data-say="tu sei"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>è</strong></span></div><button class="speak" data-say="lui è. lei è"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>siamo</strong></span></div><button class="speak" data-say="noi siamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>siete</strong></span></div><button class="speak" data-say="voi siete"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="loro sono"></button></div>
+        </div>
+
+        <!-- AVERE -->
+        <div class="verbcard">
+          <div class="verbhead">AVERE — avoir</div>
+          <div class="row"><div>io <span class="it"><strong>ho</strong></span></div><button class="speak" data-say="io ho"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>hai</strong></span></div><button class="speak" data-say="tu hai"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>ha</strong></span></div><button class="speak" data-say="lui ha. lei ha"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>abbiamo</strong></span></div><button class="speak" data-say="noi abbiamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>avete</strong></span></div><button class="speak" data-say="voi avete"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>hanno</strong></span></div><button class="speak" data-say="loro hanno"></button></div>
+        </div>
+      </div>
+
+      <div class="vnote">Modèles réguliers :</div>
+      <div class="verbcard" style="margin:14px">
+        <div class="row"><div><span class="it">parlare</span> — io parlo, tu parli, lui/lei parla, noi parliamo, voi parlate, loro parlano</div><button class="speak" data-say="io parlo, tu parli, lui parla, noi parliamo, voi parlate, loro parlano"></button></div>
+        <div class="row"><div><span class="it">leggere</span> — io leggo, tu leggi, lui/lei legge, noi leggiamo, voi leggete, loro leggono</div><button class="speak" data-say="io leggo, tu leggi, lui legge, noi leggiamo, voi leggete, loro leggono"></button></div>
+      </div>
+    </section>
+
+    <!-- ===== EXPRESSIONS DU MARQUE-PAGE ===== -->
+    <details>
+      <summary>📑 Expressions du marque-page <span class="badge">parler en classe</span></summary>
+      <div class="list">
+        <!-- Politesse -->
+        <div class="item"><div><span class="it">Per favore</span> — <span class="fr">S’il vous plaît</span></div><button class="speak" data-say="Per favore"></button></div>
+        <div class="item"><div><span class="it">Grazie</span> — <span class="fr">Merci</span></div><button class="speak" data-say="Grazie"></button></div>
+        <div class="item"><div><span class="it">Prego / Di niente</span> — <span class="fr">De rien</span></div><button class="speak" data-say="Prego. Di niente."></button></div>
+        <div class="item"><div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon / Excusez-moi</span></div><button class="speak" data-say="Scusa. Scusi."></button></div>
+        <!-- Incompréhension -->
+        <div class="item"><div><span class="it">Non ho capito / Non ho sentito</span> — <span class="fr">Je n’ai pas compris / entendu</span></div><button class="speak" data-say="Non ho capito. Non ho sentito."></button></div>
+        <div class="item"><div><span class="it">Può / puoi ripetere?</span> — <span class="fr">Pouvez-vous / tu peux répéter ?</span></div><button class="speak" data-say="Può ripetere? Puoi ripetere?"></button></div>
+        <div class="item"><div><span class="it">Non lo so</span> — <span class="fr">Je ne sais pas</span></div><button class="speak" data-say="Non lo so"></button></div>
+        <div class="item"><div><span class="it">Come si dice … in italiano / francese?</span> — <span class="fr">Comment dit-on … ?</span></div><button class="speak" data-say="Come si dice in italiano? Come si dice in francese?"></button></div>
+        <div class="item"><div><span class="it">Cosa significa … ?</span> — <span class="fr">Que signifie … ?</span></div><button class="speak" data-say="Cosa significa?"></button></div>
+        <!-- Autorisation -->
+        <div class="item"><div><span class="it">Posso andare in bagno?</span> — <span class="fr">Puis-je aller aux toilettes ?</span></div><button class="speak" data-say="Posso andare in bagno?"></button></div>
+        <div class="item"><div><span class="it">Posso buttare la carta?</span> — <span class="fr">Puis-je jeter le papier ?</span></div><button class="speak" data-say="Posso buttare la carta?"></button></div>
+        <div class="item"><div><span class="it">Posso aprire / chiudere la finestra?</span> — <span class="fr">Puis-je ouvrir / fermer la fenêtre ?</span></div><button class="speak" data-say="Posso aprire la finestra? Posso chiudere la finestra?"></button></div>
+        <div class="item"><div><span class="it">Posso bere?</span> — <span class="fr">Puis-je boire ?</span></div><button class="speak" data-say="Posso bere?"></button></div>
+        <div class="item"><div><span class="it">Posso entrare? / Posso uscire?</span> — <span class="fr">Puis-je entrer ? / sortir ?</span></div><button class="speak" data-say="Posso entrare? Posso uscire?"></button></div>
+        <!-- Matériel -->
+        <div class="item"><div><span class="it">Posso avere una colla?</span> — <span class="fr">Puis-je avoir une colle ?</span></div><button class="speak" data-say="Posso avere una colla?"></button></div>
+        <div class="item"><div><span class="it">Posso avere un fazzoletto?</span> — <span class="fr">Puis-je avoir un mouchoir ?</span></div><button class="speak" data-say="Posso avere un fazzoletto?"></button></div>
+        <div class="item"><div><span class="it">Posso avere una penna?</span> — <span class="fr">Puis-je avoir un stylo ?</span></div><button class="speak" data-say="Posso avere una penna?"></button></div>
+        <!-- Fin d’activité -->
+        <div class="item"><div><span class="it">Ho finito!</span> — <span class="fr">J’ai terminé !</span></div><button class="speak" data-say="Ho finito!"></button></div>
+        <div class="item"><div><span class="it">Fatto!</span> — <span class="fr">C’est fait !</span></div><button class="speak" data-say="Fatto!"></button></div>
+        <div class="item"><div><span class="it">Posso fare qualcos’altro?</span> — <span class="fr">Puis-je faire autre chose ?</span></div><button class="speak" data-say="Posso fare qualcos'altro?"></button></div>
+        <!-- S’excuser -->
+        <div class="item"><div><span class="it">Non ho fatto i compiti</span> — <span class="fr">Je n’ai pas fait les devoirs</span></div><button class="speak" data-say="Non ho fatto i compiti"></button></div>
+        <div class="item"><div><span class="it">Ho dimenticato il quaderno</span> — <span class="fr">J’ai oublié le cahier</span></div><button class="speak" data-say="Ho dimenticato il quaderno"></button></div>
+        <div class="item"><div><span class="it">Scusa / Scusi per il ritardo</span> — <span class="fr">Pardon pour le retard</span></div><button class="speak" data-say="Scusa per il ritardo. Scusi per il ritardo."></button></div>
+      </div>
+    </details>
+
+    <!-- ===== I PASSATEMPI ===== -->
+    <details>
+      <summary>🎯 I passatempi <span class="badge">loisirs (1–16)</span></summary>
+      <div class="list">
+        <div class="item"><div><span class="it">Fare yoga</span> — <span class="fr">faire du yoga</span></div><button class="speak" data-say="Fare yoga"></button></div>
+        <div class="item"><div><span class="it">Pescare</span> — <span class="fr">pêcher</span></div><button class="speak" data-say="Pescare"></button></div>
+        <div class="item"><div><span class="it">Suonare la chitarra</span> — <span class="fr">jouer de la guitare</span></div><button class="speak" data-say="Suonare la chitarra"></button></div>
+        <div class="item"><div><span class="it">Cantare</span> — <span class="fr">chanter</span></div><button class="speak" data-say="Cantare"></button></div>
+        <div class="item"><div><span class="it">Giocare a calcio</span> — <span class="fr">jouer au foot</span></div><button class="speak" data-say="Giocare a calcio"></button></div>
+        <div class="item"><div><span class="it">Andare in bici</span> — <span class="fr">aller à vélo</span></div><button class="speak" data-say="Andare in bici"></button></div>
+        <div class="item"><div><span class="it">Giocare a basket</span> — <span class="fr">jouer au basket</span></div><button class="speak" data-say="Giocare a basket"></button></div>
+        <div class="item"><div><span class="it">Giocare a pallavolo</span> — <span class="fr">jouer au volley</span></div><button class="speak" data-say="Giocare a pallavolo"></button></div>
+        <div class="item"><div><span class="it">Andare a teatro</span> — <span class="fr">aller au théâtre</span></div><button class="speak" data-say="Andare a teatro"></button></div>
+        <div class="item"><div><span class="it">Dipingere</span> — <span class="fr">peindre</span></div><button class="speak" data-say="Dipingere"></button></div>
+        <div class="item"><div><span class="it">Andare al cinema</span> — <span class="fr">aller au cinéma</span></div><button class="speak" data-say="Andare al cinema"></button></div>
+        <div class="item"><div><span class="it">Ascoltare la musica</span> — <span class="fr">écouter de la musique</span></div><button class="speak" data-say="Ascoltare la musica"></button></div>
+        <div class="item"><div><span class="it">Giocare ai videogiochi</span> — <span class="fr">jouer aux jeux vidéo</span></div><button class="speak" data-say="Giocare ai videogiochi"></button></div>
+        <div class="item"><div><span class="it">Leggere</span> — <span class="fr">lire</span></div><button class="speak" data-say="Leggere"></button></div>
+        <div class="item"><div><span class="it">Viaggiare</span> — <span class="fr">voyager</span></div><button class="speak" data-say="Viaggiare"></button></div>
+        <div class="item"><div><span class="it">Giocare a cricket</span> — <span class="fr">jouer au cricket</span></div><button class="speak" data-say="Giocare a cricket"></button></div>
+      </div>
+    </details>
+
+    <!-- ===== PRONOMES INTERROGATIFS ===== -->
+    <details>
+      <summary>❓ Pronomi interrogativi</summary>
+      <div class="list">
+        <div class="item"><div><span class="it">perché</span> — <span class="fr">pourquoi</span></div><button class="speak" data-say="perché"></button></div>
+        <div class="item"><div><span class="it">quando</span> — <span class="fr">quand</span></div><button class="speak" data-say="quando"></button></div>
+        <div class="item"><div><span class="it">chi</span> — <span class="fr">qui</span></div><button class="speak" data-say="chi"></button></div>
+        <div class="item"><div><span class="it">dove</span> — <span class="fr">où</span></div><button class="speak" data-say="dove"></button></div>
+        <div class="item"><div><span class="it">come</span> — <span class="fr">comment</span></div><button class="speak" data-say="come"></button></div>
+        <div class="item"><div><span class="it">che cosa</span> — <span class="fr">que / quoi</span></div><button class="speak" data-say="che cosa"></button></div>
+        <div class="item"><div><span class="it">quanto</span> — <span class="fr">combien</span></div><button class="speak" data-say="quanto"></button></div>
+        <div class="item"><div><span class="it">quale</span> — <span class="fr">quel / quelle</span></div><button class="speak" data-say="quale"></button></div>
+      </div>
+    </details>
+
+    <!-- ===== EXPRESSIONS & SAISONS ===== -->
+    <details>
+      <summary>🌄 Andare in montagna / al mare • ❀ Le stagioni</summary>
+      <div class="list">
+        <div class="item"><div><span class="it">andare in montagna</span> — <span class="fr">aller à la montagne</span></div><button class="speak" data-say="andare in montagna"></button></div>
+        <div class="item"><div><span class="it">andare al mare</span> — <span class="fr">aller à la mer</span></div><button class="speak" data-say="andare al mare"></button></div>
+        <div class="item"><div><span class="it">la primavera</span> — <span class="fr">le printemps</span></div><button class="speak" data-say="la primavera"></button></div>
+        <div class="item"><div><span class="it">l’estate</span> — <span class="fr">l’été</span></div><button class="speak" data-say="l'estate"></button></div>
+        <div class="item"><div><span class="it">l’autunno</span> — <span class="fr">l’automne</span></div><button class="speak" data-say="l'autunno"></button></div>
+        <div class="item"><div><span class="it">l’inverno</span> — <span class="fr">l’hiver</span></div><button class="speak" data-say="l'inverno"></button></div>
+      </div>
+    </details>
+
+    <p class="note">Astuce mobile : si rien ne se lance sur iPhone/iPad, touchez d’abord “Tester l’audio”, laissez la page visible (pas en arrière-plan) et montez le volume.</p>
+  </div>
+
+  <script>
+    // ===== Speech synthesis (robuste mobile) =====
+    const voiceSel = document.getElementById('voiceSel');
+    const slow = document.getElementById('slow');
+    const btnTest = document.getElementById('btnTest');
+    const btnStop = document.getElementById('btnStop');
+
+    let voices = [];
+    let itVoice = null;
+
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+      voiceSel.innerHTML = "";
+      const opts = voices.map(v => ({ v, ok: v.lang && v.lang.toLowerCase().startsWith('it') }))
+                         .sort((a,b)=> (b.ok?1:0) - (a.ok?1:0));
+      opts.forEach(({v})=>{
+        const o = document.createElement('option');
+        o.value = v.name; o.textContent = `${v.name} — ${v.lang}`;
+        voiceSel.appendChild(o);
+      });
+      const prefer = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('it'));
+      itVoice = prefer || voices[0] || null;
+      if (itVoice) {
+        const idx = [...voiceSel.options].findIndex(o=>o.value===itVoice.name);
+        if (idx>=0) voiceSel.selectedIndex = idx;
+      }
+    }
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    function speak(text, btn){
+      if (!text) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      const chosen = voices.find(v => v.name === voiceSel.value) || itVoice;
+      if (chosen) { u.voice = chosen; u.lang = chosen.lang; } else { u.lang = 'it-IT'; }
+      u.rate = slow.checked ? 0.88 : 1.0;
+      u.pitch = 1; u.volume = 1;
+
+      // Effet “en lecture” sur le bouton
+      if (btn){
+        btn.classList.add('playing'); btn.classList.add('pulse');
+        u.onend = u.onerror = () => { btn.classList.remove('playing'); btn.classList.remove('pulse'); };
+        u.onstart = () => btn.classList.add('playing');
+      }
+      speechSynthesis.speak(u);
+    }
+
+    btnTest.addEventListener('click', () => speak('Ciao! Prova audio in italiano.', btnTest));
+    btnStop.addEventListener('click', () => speechSynthesis.cancel());
+
+    document.querySelectorAll('.speak').forEach(btn=>{
+      btn.addEventListener('click', () => {
+        const t = btn.getAttribute('data-say') || btn.previousElementSibling?.textContent || '';
+        speak(t.trim(), btn);
+      }, {passive:true});
+    });
+
+    voiceSel.addEventListener('change', () => {
+      const name = voiceSel.value;
+      itVoice = voices.find(v => v.name === name) || itVoice;
+    });
+  </script>
+</body>
+</html>
