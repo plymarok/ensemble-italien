@@ -9,16 +9,12 @@
       --bg:#f8fafc; --card:#ffffff; --accent:#38bdf8;
       --text:#0f172a; --shadow:0 4px 12px rgba(0,0,0,.1); --radius:14px;
     }
-    body {
-      margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text);
-    }
+    body {margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text);}
     header {
       background:var(--accent); color:white; padding:20px; text-align:center;
       font-size:1.5em; font-weight:bold;
     }
-    section {
-      max-width:900px; margin:30px auto; padding:0 15px;
-    }
+    section {max-width:900px; margin:30px auto; padding:0 15px;}
     h2 {
       color:var(--accent); margin-top:40px; border-bottom:2px solid var(--accent);
       padding-bottom:5px;
@@ -27,12 +23,12 @@
       background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
       padding:14px 18px; margin:12px 0; display:flex; justify-content:space-between; align-items:center;
     }
-    .text { font-size:1.1em; }
+    .text {font-size:1.1em;}
     button {
       background:var(--accent); color:white; border:none; border-radius:var(--radius);
       padding:6px 12px; cursor:pointer; font-size:0.9em; transition:background 0.3s;
     }
-    button:hover { background:#0ea5e9; }
+    button:hover {background:#0ea5e9;}
   </style>
 </head>
 <body>
@@ -63,7 +59,59 @@
     <div class="card"><div class="text">Voi potete — vous pouvez</div><button onclick="speak('voi potete')">🔊</button></div>
     <div class="card"><div class="text">Loro possono — ils peuvent</div><button onclick="speak('loro possono')">🔊</button></div>
 
-    <!-- Même logique pour ANDARE, CHIAMARSI, ESSERE, AVERE -->
+    <!-- ANDARE -->
+    <div class="card"><div class="text"><b>ANDARE</b> — aller</div><button onclick="speak('andare')">🔊</button></div>
+    <div class="card"><div class="text">Io vado — je vais</div><button onclick="speak('io vado')">🔊</button></div>
+    <div class="card"><div class="text">Tu vai — tu vas</div><button onclick="speak('tu vai')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei va — il/elle va</div><button onclick="speak('lui va')">🔊</button></div>
+    <div class="card"><div class="text">Noi andiamo — nous allons</div><button onclick="speak('noi andiamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi andate — vous allez</div><button onclick="speak('voi andate')">🔊</button></div>
+    <div class="card"><div class="text">Loro vanno — ils vont</div><button onclick="speak('loro vanno')">🔊</button></div>
+
+    <!-- CHIAMARSI -->
+    <div class="card"><div class="text"><b>CHIAMARSI</b> — s’appeler</div><button onclick="speak('chiamarsi')">🔊</button></div>
+    <div class="card"><div class="text">Io mi chiamo — je m’appelle</div><button onclick="speak('io mi chiamo')">🔊</button></div>
+    <div class="card"><div class="text">Tu ti chiami — tu t’appelles</div><button onclick="speak('tu ti chiami')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei si chiama — il/elle s’appelle</div><button onclick="speak('lui si chiama')">🔊</button></div>
+    <div class="card"><div class="text">Noi ci chiamiamo — nous nous appelons</div><button onclick="speak('noi ci chiamiamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi vi chiamate — vous vous appelez</div><button onclick="speak('voi vi chiamate')">🔊</button></div>
+    <div class="card"><div class="text">Loro si chiamano — ils s’appellent</div><button onclick="speak('loro si chiamano')">🔊</button></div>
+
+    <!-- ESSERE -->
+    <div class="card"><div class="text"><b>ESSERE</b> — être</div><button onclick="speak('essere')">🔊</button></div>
+    <div class="card"><div class="text">Io sono — je suis</div><button onclick="speak('io sono')">🔊</button></div>
+    <div class="card"><div class="text">Tu sei — tu es</div><button onclick="speak('tu sei')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei è — il/elle est</div><button onclick="speak('lui è')">🔊</button></div>
+    <div class="card"><div class="text">Noi siamo — nous sommes</div><button onclick="speak('noi siamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi siete — vous êtes</div><button onclick="speak('voi siete')">🔊</button></div>
+    <div class="card"><div class="text">Loro sono — ils sont</div><button onclick="speak('loro sono')">🔊</button></div>
+
+    <!-- AVERE -->
+    <div class="card"><div class="text"><b>AVERE</b> — avoir</div><button onclick="speak('avere')">🔊</button></div>
+    <div class="card"><div class="text">Io ho — j’ai</div><button onclick="speak('io ho')">🔊</button></div>
+    <div class="card"><div class="text">Tu hai — tu as</div><button onclick="speak('tu hai')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei ha — il/elle a</div><button onclick="speak('lui ha')">🔊</button></div>
+    <div class="card"><div class="text">Noi abbiamo — nous avons</div><button onclick="speak('noi abbiamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi avete — vous avez</div><button onclick="speak('voi avete')">🔊</button></div>
+    <div class="card"><div class="text">Loro hanno — ils ont</div><button onclick="speak('loro hanno')">🔊</button></div>
+
+    <!-- Verbe modèle en -ARE : PARLARE -->
+    <h2>Verbe modèle (-ARE) : PARLARE</h2>
+    <div class="card"><div class="text">Io parlo — je parle</div><button onclick="speak('io parlo')">🔊</button></div>
+    <div class="card"><div class="text">Tu parli — tu parles</div><button onclick="speak('tu parli')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei parla — il/elle parle</div><button onclick="speak('lui parla')">🔊</button></div>
+    <div class="card"><div class="text">Noi parliamo — nous parlons</div><button onclick="speak('noi parliamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi parlate — vous parlez</div><button onclick="speak('voi parlate')">🔊</button></div>
+    <div class="card"><div class="text">Loro parlano — ils parlent</div><button onclick="speak('loro parlano')">🔊</button></div>
+
+    <!-- Verbe modèle en -ERE : SCRIVERE -->
+    <h2>Verbe modèle (-ERE) : SCRIVERE</h2>
+    <div class="card"><div class="text">Io scrivo — j’écris</div><button onclick="speak('io scrivo')">🔊</button></div>
+    <div class="card"><div class="text">Tu scrivi — tu écris</div><button onclick="speak('tu scrivi')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei scrive — il/elle écrit</div><button onclick="speak('lui scrive')">🔊</button></div>
+    <div class="card"><div class="text">Noi scriviamo — nous écrivons</div><button onclick="speak('noi scriviamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi scrivete — vous écrivez</div><button onclick="speak('voi scrivete')">🔊</button></div>
+    <div class="card"><div class="text">Loro scrivono — ils écrivent</div><button onclick="speak('loro scrivono')">🔊</button></div>
 
     <h2>Pronoms interrogatifs</h2>
     <div class="card"><div class="text">Perché — pourquoi</div><button onclick="speak('Perché')">🔊</button></div>
@@ -96,20 +144,4 @@
     <div class="card"><div class="text">Giocare a pallavolo — Jouer au volley 🏐</div><button onclick="speak('Giocare a pallavolo')">🔊</button></div>
     <div class="card"><div class="text">Andare a teatro — Aller au théâtre 🎭</div><button onclick="speak('Andare a teatro')">🔊</button></div>
     <div class="card"><div class="text">Dipingere — Peindre 🎨</div><button onclick="speak('Dipingere')">🔊</button></div>
-    <div class="card"><div class="text">Andare al cinema — Aller au cinéma 🎬</div><button onclick="speak('Andare al cinema')">🔊</button></div>
-    <div class="card"><div class="text">Ascoltare la musica — Écouter de la musique 🎧</div><button onclick="speak('Ascoltare la musica')">🔊</button></div>
-    <div class="card"><div class="text">Giocare ai videogiochi — Jouer aux jeux vidéo 🎮</div><button onclick="speak('Giocare ai videogiochi')">🔊</button></div>
-    <div class="card"><div class="text">Leggere — Lire 📖</div><button onclick="speak('Leggere')">🔊</button></div>
-    <div class="card"><div class="text">Viaggiare — Voyager ✈️</div><button onclick="speak('Viaggiare')">🔊</button></div>
-    <div class="card"><div class="text">Giocare a cricket — Jouer au cricket 🏏</div><button onclick="speak('Giocare a cricket')">🔊</button></div>
-  </section>
-
-  <script>
-    function speak(text) {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = "it-IT";
-      speechSynthesis.speak(u);
-    }
-  </script>
-</body>
-</html>
+    <div class="card"><div class="text">Andare al cinema — Aller au cinéma 🎬</div><button onclick="speak('Andare al cinema
