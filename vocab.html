@@ -28,7 +28,6 @@
       App.loadJSON('/data/vocab.json').then(function(data){
         var list=document.createElement('div'); container.appendChild(list);
 
-        // Quiz
         var flat=[]; data.forEach(function(sec){ sec.items.forEach(function(it){ flat.push({it:it.it, fr:it.fr}); }); });
         App.setupQuizHost(container, flat);
 
