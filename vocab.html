@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vocabulaire utile — Italien</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module">
+    import {loadJSON, createCard, renderSearch, speak, hi, injectControls, setupQuizHost} from './app.js';
+    window.addEventListener('DOMContentLoaded', async () => {
+      injectControls();
+      const container = document.getElementById('container');
+      renderSearch(container, (q) => filter(q));
+      const data = await loadJSON('data/vocab.json');
+      const list = document.createElement('div');
+      container.appendChild(list);
+
+      // Flatten for quiz
+      const flat = [];
+      data.forEach(sec => sec.items.forEach(it => flat.push({it:it.it, fr:it.fr})));
+      setupQuizHost(container, flat);
+
+      function draw(items, q=''){
+        list.innerHTML='';
+        items.forEach(section => {
+          const sec = document.createElement('section');
+          sec.innerHTML = `<h2>${section.title}</h2>`;
+          const grid = document.createElement('div'); grid.className = 'grid';
+          section.items.forEach(it => {
+            const card = createCard(`<div class="text">${hi(it.it,q)} — <span class="fr">${hi(it.fr,q)}</span></div>
+            <button class="ghost" data-it="${it.it.replace('"','&quot;')}">🔊</button>`);
+            grid.appendChild(card);
+          });
+          sec.appendChild(grid);
+          list.appendChild(sec);
+        });
+      }
+      function filter(q){
+        q = (q||'').toLowerCase();
+        const filtered = data.map(sec => ({
+          title: sec.title,
+          items: sec.items.filter(it => it.it.toLowerCase().includes(q) || it.fr.toLowerCase().includes(q))
+        })).filter(s => s.items.length);
+        draw(filtered.length ? filtered : data, q);
+      }
+      draw(data);
+      window.speak = speak;
+    });
+  </script>
+</head>
+<body data-page="vocab">
+  <header>📘 Vocabulaire utile</header>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="verbs.html">Verbes</a>
+    <a href="passatempi.html">Passatempi</a>
+  </nav>
+  <main id="container">
+    <h1>Formules + Interrogatifs + Saisons + Expressions</h1>
+    <p class="small">Toggle FR pour masquer/afficher les traductions. Quiz désactivable.</p>
+  </main>
+</body>
+</html>
 
