@@ -1,8 +1,8 @@
-// App global (sans modules) — version simplifiée sans UI d'activation
+// App global (simple & robuste)
 (function(){
   var App = window.App = {};
 
-  /* ============ Utils ============ */
+  /* -------- Utils -------- */
   App.hi = function(text, q){
     if(!q) return text;
     try{
@@ -43,67 +43,42 @@
     }
   };
 
-  /* ============ Audio (simple & discret) ============ */
-  var itVoice=null, audioReady=false;
-
+  /* -------- Audio (le plus simple possible) -------- */
   function pickItalianVoice(){
     try{
-      var voices = speechSynthesis.getVoices() || [];
-      itVoice = null;
+      var voices = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
       for(var i=0;i<voices.length;i++){
-        if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)){ itVoice=voices[i]; break; }
+        if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)) return voices[i];
       }
-      if(!itVoice) itVoice = voices[0] || null;
-    }catch(e){}
+      return voices[0] || null;
+    }catch(e){ return null; }
   }
-
-  // Petit "prime" silencieux, déclenché une seule fois, sans UI.
-  function primeAudio(){
-    if(audioReady) return;
-    try{
-      pickItalianVoice();
-      var u = new SpeechSynthesisUtterance('pronto');
-      u.lang = (itVoice && itVoice.lang) ? itVoice.lang : 'it-IT';
-      u.volume = 0.01;
-      u.onend = function(){ audioReady=true; };
-      speechSynthesis.speak(u);
-    }catch(e){}
-  }
-
-  if (window.speechSynthesis){
-    window.speechSynthesis.onvoiceschanged = function(){ if(!audioReady) pickItalianVoice(); };
-    // On réchauffe l’audio au premier geste, sans rien afficher.
-    window.addEventListener('pointerdown', primeAudio, { once:true });
-  }
-
   App.speak = function(text){
-    if(!text || !window.speechSynthesis) return;
+    if(!text || !('speechSynthesis' in window)) return;
     try{
-      // Lecture directe au clic (comme avant). On accepte que le 1er essai soit un peu lent sur certains mobiles.
-      var u=new SpeechSynthesisUtterance(text);
-      pickItalianVoice();
-      u.lang=(itVoice&&itVoice.lang)?itVoice.lang:'it-IT';
-      if(itVoice) u.voice=itVoice;
-      u.rate=0.98; u.pitch=1.0;
-      try{ speechSynthesis.cancel(); }catch(e){}
+      var u = new SpeechSynthesisUtterance(text);
+      var v = pickItalianVoice();
+      if(v){ u.voice = v; u.lang = v.lang; } else { u.lang = 'it-IT'; }
+      u.rate = 1.0; u.pitch = 1.0;
+      // Pas de cancel(), pas de “prime” → comportement le plus tolérant
       speechSynthesis.speak(u);
       App.incRevision(1);
     }catch(e){}
   };
 
-  // Délégation clic boutons data-it (fallback sans .closest)
+  // Délégation clic pour tous les boutons 🔊
   document.addEventListener('click', function(e){
-    var el=e.target;
+    var el = e.target;
     while(el && el!==document){
       if(el.tagName==='BUTTON' && el.hasAttribute('data-it')){
         App.speak(el.getAttribute('data-it'));
         break;
       }
-      el=el.parentNode;
+      el = el.parentNode;
     }
   });
 
-  /* ============ Settings / Toggles / Compteur ============ */
+  /* -------- Settings / Toggles / Compteur -------- */
   var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
   App.settings = {
     get theme(){ return localStorage.getItem(LS.theme) || 'dark'; },
@@ -119,7 +94,6 @@
   App.injectControls = function(){
     setTheme(App.settings.theme); applyFR(App.settings.showFR);
     var bar = document.createElement('div'); bar.className='controls';
-    // ⬇️ Plus d’éléments “audio-state” / “Activer l’audio” ici.
     bar.innerHTML = ''
       + '<button id="toggle-theme" class="ghost">'+(App.settings.theme==='dark'?'☀️ Mode clair':'🌙 Mode sombre')+'</button>'
       + '<button id="toggle-fr">'+(App.settings.showFR?'Masquer FR':'Afficher FR')+'</button>'
@@ -143,7 +117,6 @@
 
     App.updateCounterUI();
   };
-
   App.incRevision = function(n){
     n=n||1;
     var total = parseInt(localStorage.getItem(LS.countTotal)||'0') + n;
@@ -154,7 +127,7 @@
     var el=document.getElementById('rev-count'); if(el) el.textContent = String(parseInt(localStorage.getItem(LS.countTotal)||'0'));
   };
 
-  /* ============ Quiz ============ */
+  /* -------- Quiz -------- */
   App.setupQuizHost = function(container, items){
     var askFR = true, current=null;
     var host=document.createElement('div'); host.className='quiz';
@@ -170,9 +143,7 @@
     }
     function draw(){
       if(!App.settings.quiz){ host.style.display='none'; return; }
-      host.style.display='';
-      content.innerHTML='';
-      if(!current) current=pick();
+      host.style.display=''; content.innerHTML=''; if(!current) current=pick();
       var q=document.createElement('div'); q.className='q';
       q.innerHTML = askFR ? 'Traduire en <strong>italien</strong> : « '+current.fr+' »'
                           : 'Traduire en <strong>français</strong> : « '+current.it+' »';
