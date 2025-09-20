@@ -1,4 +1,4 @@
-// App global (simple & robuste)
+// App global — version MINIMALE (parle sur clic 🔊, sans prime, sans cancel)
 (function(){
   var App = window.App = {};
 
@@ -18,8 +18,8 @@
     bar.innerHTML = '<input id="search" placeholder="Filtrer (italien ou français)..." aria-label="Filtrer">'
                   + '<button id="clear" class="ghost">Effacer</button>';
     var input = bar.querySelector('#search'); var clear = bar.querySelector('#clear');
-    input.addEventListener('input', function(){ onSearch((input.value||'').trim().toLowerCase()); });
-    clear.addEventListener('click', function(){ input.value=''; onSearch(''); input.focus(); });
+    input.addEventListener('input', function(){ onSearch((input.value||"").trim().toLowerCase()); });
+    clear.addEventListener('click', function(){ input.value=""; onSearch(""); input.focus(); });
     container.appendChild(bar);
   };
   App.loadJSON = function(path){
@@ -34,8 +34,8 @@
         x.setRequestHeader('Cache-Control','no-cache');
         x.onreadystatechange=function(){
           if(x.readyState===4){
-            if(x.status>=200 && x.status<300){ res(JSON.parse(x.responseText)); }
-            else { rej(new Error('XHR '+x.status)); }
+            if(x.status>=200&&x.status<300) res(JSON.parse(x.responseText));
+            else rej(new Error('XHR '+x.status));
           }
         };
         x.send();
@@ -43,27 +43,31 @@
     }
   };
 
-  /* -------- Audio (le plus simple possible) -------- */
-  function pickItalianVoice(){
+  /* -------- Audio ultra simple -------- */
+  var AC = null;
+  function beep(){
     try{
-      var voices = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
-      for(var i=0;i<voices.length;i++){
-        if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)) return voices[i];
-      }
-      return voices[0] || null;
-    }catch(e){ return null; }
+      AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+      var o = AC.createOscillator(), g = AC.createGain();
+      o.type="sine"; o.frequency.value=660;
+      g.gain.value=0.08;
+      o.connect(g); g.connect(AC.destination);
+      o.start();
+      setTimeout(function(){ o.stop(); }, 120);
+    }catch(e){}
   }
+
   App.speak = function(text){
-    if(!text || !('speechSynthesis' in window)) return;
+    if(!text) return;
     try{
+      if(!('speechSynthesis' in window)){ beep(); return; }
       var u = new SpeechSynthesisUtterance(text);
-      var v = pickItalianVoice();
-      if(v){ u.voice = v; u.lang = v.lang; } else { u.lang = 'it-IT'; }
+      u.lang = "it-IT";          // ✅ pas de sélection de voix (évite les bugs mobiles)
       u.rate = 1.0; u.pitch = 1.0;
-      // Pas de cancel(), pas de “prime” → comportement le plus tolérant
+      // ❌ pas de cancel(), pas de prime
       speechSynthesis.speak(u);
       App.incRevision(1);
-    }catch(e){}
+    }catch(e){ beep(); }
   };
 
   // Délégation clic pour tous les boutons 🔊
