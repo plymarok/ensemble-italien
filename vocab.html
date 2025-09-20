@@ -26,7 +26,6 @@
       App.renderSearch(container, function(q){ filter(q); });
 
       App.loadJSON('/data/vocab.json').then(function(data){
-        console.log('Loaded vocab:', data);
         var list=document.createElement('div'); container.appendChild(list);
 
         // Quiz
@@ -40,8 +39,10 @@
             sec.innerHTML='<h2>'+section.title+'</h2>';
             var grid=document.createElement('div'); grid.className='grid';
             section.items.forEach(function(it){
-              var card=App.createCard('<div class="text">'+App.hi(it.it,q)+' — <span class="fr">'+App.hi(it.fr,q)+'</span></div>'+
-                                      '<button class="ghost" data-it="'+it.it.replace('"','&quot;')+'">🔊</button>');
+              var card=App.createCard(
+                '<div class="text">'+App.hi(it.it,q)+' — <span class="fr">'+App.hi(it.fr,q)+'</span></div>'+
+                '<button class="ghost" data-it="'+it.it.replace('"','&quot;')+'">🔊</button>'
+              );
               grid.appendChild(card);
             });
             sec.appendChild(grid); list.appendChild(sec);
@@ -55,9 +56,8 @@
           draw(filtered.length?filtered:data, q);
         }
         draw(data);
-      }).catch(function(err){
-        console.error(err);
-        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger /data/vocab.json</p>');
+      }).catch(function(){
+        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger <code>/data/vocab.json</code></p>');
       });
     });
   </script>
