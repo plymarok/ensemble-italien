@@ -5,50 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Verbes essentiels — Italien</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-    import {loadJSON, createCard, renderSearch, speak, hi, injectControls, setupQuizHost} from './app.js';
-    window.addEventListener('DOMContentLoaded', async () => {
-      injectControls();
-      const container = document.getElementById('container');
-      renderSearch(container, (q) => filter(q));
-
-      const data = await loadJSON('/data/verbs.json');   // ✅ chemin absolu
-      console.log("Loaded JSON verbs:", data);
-
-      const list = document.createElement('div');
-      list.className = 'grid'; container.appendChild(list);
-
-      const flat = [];
-      data.forEach(v => v.forms.forEach(f => flat.push({it:f.it, fr:f.fr})));
-      setupQuizHost(container, flat);
-
-      function draw(items, q=''){
-        list.innerHTML='';
-        items.forEach(v => {
-          const forms = v.forms.map(f =>
-            `<div class="row"><span class="it">${hi(f.it,q)}</span> — <span class="fr">${hi(f.fr,q)}</span>
-            <button class="ghost" data-it="${f.it.replace('"','&quot;')}">🔊</button></div>`).join('');
-          const card = createCard(`
-            <div class="text">
-              <div><strong>${hi(v.verb,q)}</strong> — <span class="fr">${hi(v.translation,q)}</span> <span class="small">(${v.mood})</span></div>
-              <div class="details">${forms}</div>
-            </div>
-          `);
-          list.appendChild(card);
-        });
-      }
-      function filter(q){
-        q = (q||'').toLowerCase();
-        const f = data.filter(v =>
-          v.verb.toLowerCase().includes(q) || v.translation.toLowerCase().includes(q) ||
-          v.forms.some(x => x.it.toLowerCase().includes(q) || x.fr.toLowerCase().includes(q))
-        );
-        draw(f, q);
-      }
-      draw(data);
-      window.speak = speak;
-    });
-  </script>
 </head>
 <body data-page="verbs">
   <header>📘 Verbes essentiels</header>
@@ -61,5 +17,49 @@
     <h1>Conjugaisons au présent</h1>
     <p class="small">Bouton 🔊 = prononciation immédiate. “Mode Quiz” (désactivable) pour s’entraîner.</p>
   </main>
+
+  <!-- App global -->
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      App.injectControls();
+      var container = document.getElementById('container');
+      App.renderSearch(container, function(q){ filter(q); });
+
+      App.loadJSON('/data/verbs.json').then(function(data){
+        console.log('Loaded verbs:', data);
+        var list=document.createElement('div'); list.className='grid'; container.appendChild(list);
+
+        // Quiz : formes à plat
+        var flat=[]; data.forEach(function(v){ v.forms.forEach(function(f){ flat.push({it:f.it, fr:f.fr}); }); });
+        App.setupQuizHost(container, flat);
+
+        function draw(items, q){
+          list.innerHTML='';
+          items.forEach(function(v){
+            var rows=v.forms.map(function(f){
+              return '<div class="row"><span class="it">'+App.hi(f.it,q)+'</span> — <span class="fr">'+App.hi(f.fr,q)+'</span>'+
+                     '<button class="ghost" data-it="'+f.it.replace('"','&quot;')+'">🔊</button></div>';
+            }).join('');
+            var card=App.createCard('<div class="text"><div><strong>'+App.hi(v.verb,q)+'</strong> — <span class="fr">'+App.hi(v.translation,q)+'</span> <span class="small">('+v.mood+')</span></div><div class="details">'+rows+'</div></div>');
+            list.appendChild(card);
+          });
+        }
+        function filter(q){
+          q=(q||'').toLowerCase();
+          var f=data.filter(function(v){
+            if(v.verb.toLowerCase().includes(q) || v.translation.toLowerCase().includes(q)) return true;
+            for(var i=0;i<v.forms.length;i++){ var x=v.forms[i]; if(x.it.toLowerCase().includes(q)||x.fr.toLowerCase().includes(q)) return true; }
+            return false;
+          });
+          draw(f, q);
+        }
+        draw(data);
+      }).catch(function(err){
+        console.error(err);
+        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger /data/verbs.json</p>');
+      });
+    });
+  </script>
 </body>
 </html>
