@@ -1,147 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Révisions Italien</title>
-  <style>
-    :root {
-      --bg:#f8fafc; --card:#ffffff; --accent:#38bdf8;
-      --text:#0f172a; --shadow:0 4px 12px rgba(0,0,0,.1); --radius:14px;
-    }
-    body {margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text);}
-    header {
-      background:var(--accent); color:white; padding:20px; text-align:center;
-      font-size:1.5em; font-weight:bold;
-    }
-    section {max-width:900px; margin:30px auto; padding:0 15px;}
-    h2 {
-      color:var(--accent); margin-top:40px; border-bottom:2px solid var(--accent);
-      padding-bottom:5px;
-    }
-    .card {
-      background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:14px 18px; margin:12px 0; display:flex; justify-content:space-between; align-items:center;
-    }
-    .text {font-size:1.1em;}
-    button {
-      background:var(--accent); color:white; border:none; border-radius:var(--radius);
-      padding:6px 12px; cursor:pointer; font-size:0.9em; transition:background 0.3s;
-    }
-    button:hover {background:#0ea5e9;}
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Révisions d'italien — Accueil</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module">
+    import {speak, injectControls} from './app.js';
+    window.speak = speak;
+    window.addEventListener('DOMContentLoaded', injectControls);
+  </script>
 </head>
-<body>
-  <header>📘 Révisions Italien</header>
-  <section>
-    <h2>Formules de politesse</h2>
-    <div class="card"><div class="text">Per favore — S’il vous plaît</div><button onclick="speak('Per favore')">🔊</button></div>
-    <div class="card"><div class="text">Grazie — Merci</div><button onclick="speak('Grazie')">🔊</button></div>
-    <div class="card"><div class="text">Prego — De rien</div><button onclick="speak('Prego')">🔊</button></div>
-    <div class="card"><div class="text">Scusa / Scusi — Pardon</div><button onclick="speak('Scusa')">🔊</button></div>
-
-    <h2>Verbes essentiels</h2>
-    <!-- FARE -->
-    <div class="card"><div class="text"><b>FARE</b> — faire</div><button onclick="speak('fare')">🔊</button></div>
-    <div class="card"><div class="text">Io faccio — je fais</div><button onclick="speak('io faccio')">🔊</button></div>
-    <div class="card"><div class="text">Tu fai — tu fais</div><button onclick="speak('tu fai')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei fa — il/elle fait</div><button onclick="speak('lui fa')">🔊</button></div>
-    <div class="card"><div class="text">Noi facciamo — nous faisons</div><button onclick="speak('noi facciamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi fate — vous faites</div><button onclick="speak('voi fate')">🔊</button></div>
-    <div class="card"><div class="text">Loro fanno — ils font</div><button onclick="speak('loro fanno')">🔊</button></div>
-
-    <!-- POTERE -->
-    <div class="card"><div class="text"><b>POTERE</b> — pouvoir</div><button onclick="speak('potere')">🔊</button></div>
-    <div class="card"><div class="text">Io posso — je peux</div><button onclick="speak('io posso')">🔊</button></div>
-    <div class="card"><div class="text">Tu puoi — tu peux</div><button onclick="speak('tu puoi')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei può — il/elle peut</div><button onclick="speak('lui può')">🔊</button></div>
-    <div class="card"><div class="text">Noi possiamo — nous pouvons</div><button onclick="speak('noi possiamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi potete — vous pouvez</div><button onclick="speak('voi potete')">🔊</button></div>
-    <div class="card"><div class="text">Loro possono — ils peuvent</div><button onclick="speak('loro possono')">🔊</button></div>
-
-    <!-- ANDARE -->
-    <div class="card"><div class="text"><b>ANDARE</b> — aller</div><button onclick="speak('andare')">🔊</button></div>
-    <div class="card"><div class="text">Io vado — je vais</div><button onclick="speak('io vado')">🔊</button></div>
-    <div class="card"><div class="text">Tu vai — tu vas</div><button onclick="speak('tu vai')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei va — il/elle va</div><button onclick="speak('lui va')">🔊</button></div>
-    <div class="card"><div class="text">Noi andiamo — nous allons</div><button onclick="speak('noi andiamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi andate — vous allez</div><button onclick="speak('voi andate')">🔊</button></div>
-    <div class="card"><div class="text">Loro vanno — ils vont</div><button onclick="speak('loro vanno')">🔊</button></div>
-
-    <!-- CHIAMARSI -->
-    <div class="card"><div class="text"><b>CHIAMARSI</b> — s’appeler</div><button onclick="speak('chiamarsi')">🔊</button></div>
-    <div class="card"><div class="text">Io mi chiamo — je m’appelle</div><button onclick="speak('io mi chiamo')">🔊</button></div>
-    <div class="card"><div class="text">Tu ti chiami — tu t’appelles</div><button onclick="speak('tu ti chiami')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei si chiama — il/elle s’appelle</div><button onclick="speak('lui si chiama')">🔊</button></div>
-    <div class="card"><div class="text">Noi ci chiamiamo — nous nous appelons</div><button onclick="speak('noi ci chiamiamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi vi chiamate — vous vous appelez</div><button onclick="speak('voi vi chiamate')">🔊</button></div>
-    <div class="card"><div class="text">Loro si chiamano — ils s’appellent</div><button onclick="speak('loro si chiamano')">🔊</button></div>
-
-    <!-- ESSERE -->
-    <div class="card"><div class="text"><b>ESSERE</b> — être</div><button onclick="speak('essere')">🔊</button></div>
-    <div class="card"><div class="text">Io sono — je suis</div><button onclick="speak('io sono')">🔊</button></div>
-    <div class="card"><div class="text">Tu sei — tu es</div><button onclick="speak('tu sei')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei è — il/elle est</div><button onclick="speak('lui è')">🔊</button></div>
-    <div class="card"><div class="text">Noi siamo — nous sommes</div><button onclick="speak('noi siamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi siete — vous êtes</div><button onclick="speak('voi siete')">🔊</button></div>
-    <div class="card"><div class="text">Loro sono — ils sont</div><button onclick="speak('loro sono')">🔊</button></div>
-
-    <!-- AVERE -->
-    <div class="card"><div class="text"><b>AVERE</b> — avoir</div><button onclick="speak('avere')">🔊</button></div>
-    <div class="card"><div class="text">Io ho — j’ai</div><button onclick="speak('io ho')">🔊</button></div>
-    <div class="card"><div class="text">Tu hai — tu as</div><button onclick="speak('tu hai')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei ha — il/elle a</div><button onclick="speak('lui ha')">🔊</button></div>
-    <div class="card"><div class="text">Noi abbiamo — nous avons</div><button onclick="speak('noi abbiamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi avete — vous avez</div><button onclick="speak('voi avete')">🔊</button></div>
-    <div class="card"><div class="text">Loro hanno — ils ont</div><button onclick="speak('loro hanno')">🔊</button></div>
-
-    <!-- Verbe modèle en -ARE : PARLARE -->
-    <h2>Verbe modèle (-ARE) : PARLARE</h2>
-    <div class="card"><div class="text">Io parlo — je parle</div><button onclick="speak('io parlo')">🔊</button></div>
-    <div class="card"><div class="text">Tu parli — tu parles</div><button onclick="speak('tu parli')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei parla — il/elle parle</div><button onclick="speak('lui parla')">🔊</button></div>
-    <div class="card"><div class="text">Noi parliamo — nous parlons</div><button onclick="speak('noi parliamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi parlate — vous parlez</div><button onclick="speak('voi parlate')">🔊</button></div>
-    <div class="card"><div class="text">Loro parlano — ils parlent</div><button onclick="speak('loro parlano')">🔊</button></div>
-
-    <!-- Verbe modèle en -ERE : SCRIVERE -->
-    <h2>Verbe modèle (-ERE) : SCRIVERE</h2>
-    <div class="card"><div class="text">Io scrivo — j’écris</div><button onclick="speak('io scrivo')">🔊</button></div>
-    <div class="card"><div class="text">Tu scrivi — tu écris</div><button onclick="speak('tu scrivi')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei scrive — il/elle écrit</div><button onclick="speak('lui scrive')">🔊</button></div>
-    <div class="card"><div class="text">Noi scriviamo — nous écrivons</div><button onclick="speak('noi scriviamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi scrivete — vous écrivez</div><button onclick="speak('voi scrivete')">🔊</button></div>
-    <div class="card"><div class="text">Loro scrivono — ils écrivent</div><button onclick="speak('loro scrivono')">🔊</button></div>
-
-    <h2>Pronoms interrogatifs</h2>
-    <div class="card"><div class="text">Perché — pourquoi</div><button onclick="speak('Perché')">🔊</button></div>
-    <div class="card"><div class="text">Quando — quand</div><button onclick="speak('Quando')">🔊</button></div>
-    <div class="card"><div class="text">Chi — qui</div><button onclick="speak('Chi')">🔊</button></div>
-    <div class="card"><div class="text">Dove — où</div><button onclick="speak('Dove')">🔊</button></div>
-    <div class="card"><div class="text">Come — comment</div><button onclick="speak('Come')">🔊</button></div>
-    <div class="card"><div class="text">Che cosa — quoi</div><button onclick="speak('Che cosa')">🔊</button></div>
-    <div class="card"><div class="text">Quanto — combien</div><button onclick="speak('Quanto')">🔊</button></div>
-    <div class="card"><div class="text">Quale — quel(le)</div><button onclick="speak('Quale')">🔊</button></div>
-
-    <h2>Expressions</h2>
-    <div class="card"><div class="text">Andare in montagna — Aller à la montagne</div><button onclick="speak('Andare in montagna')">🔊</button></div>
-    <div class="card"><div class="text">Andare al mare — Aller à la mer</div><button onclick="speak('Andare al mare')">🔊</button></div>
-
-    <h2>Les saisons</h2>
-    <div class="card"><div class="text">La primavera — le printemps</div><button onclick="speak('La primavera')">🔊</button></div>
-    <div class="card"><div class="text">L’estate — l’été</div><button onclick="speak('L estate')">🔊</button></div>
-    <div class="card"><div class="text">L’autunno — l’automne</div><button onclick="speak('L autunno')">🔊</button></div>
-    <div class="card"><div class="text">L’inverno — l’hiver</div><button onclick="speak('L inverno')">🔊</button></div>
-
-    <h2>I passatempi</h2>
-    <div class="card"><div class="text">Fare yoga — Faire du yoga 🧘</div><button onclick="speak('Fare yoga')">🔊</button></div>
-    <div class="card"><div class="text">Pescare — Pêcher 🎣</div><button onclick="speak('Pescare')">🔊</button></div>
-    <div class="card"><div class="text">Suonare la chitarra — Jouer de la guitare 🎸</div><button onclick="speak('Suonare la chitarra')">🔊</button></div>
-    <div class="card"><div class="text">Cantare — Chanter 🎤</div><button onclick="speak('Cantare')">🔊</button></div>
-    <div class="card"><div class="text">Giocare a calcio — Jouer au foot ⚽</div><button onclick="speak('Giocare a calcio')">🔊</button></div>
-    <div class="card"><div class="text">Andare in bici — Faire du vélo 🚴</div><button onclick="speak('Andare in bici')">🔊</button></div>
-    <div class="card"><div class="text">Giocare a basket — Jouer au basket 🏀</div><button onclick="speak('Giocare a basket')">🔊</button></div>
-    <div class="card"><div class="text">Giocare a pallavolo — Jouer au volley 🏐</div><button onclick="speak('Giocare a pallavolo')">🔊</button></div>
-    <div class="card"><div class="text">Andare a teatro — Aller au théâtre 🎭</div><button onclick="speak('Andare a teatro')">🔊</button></div>
-    <div class="card"><div class="text">Dipingere — Peindre 🎨</div><button onclick="speak('Dipingere')">🔊</button></div>
-    <div class="card"><div class="text">Andare al cinema — Aller au cinéma 🎬</div><button onclick="speak('Andare al cinema
+<body data-page="home">
+  <header>📘 Révisions d'italien — Accueil</header>
+  <nav>
+    <a href="verbs.html">Verbes</a>
+    <a href="vocab.html">Vocabulaire</a>
+    <a href="passatempi.html">Passatempi</a>
+  </nav>
+  <main>
+    <h1>Bienvenue</h1>
+    <p class="small">Tout le programme à réviser : verbes essentiels, pronoms interrogatifs, formules utiles, saisons et passe-temps. Chaque élément affiche la traduction et un bouton audio <span class="kbd">🔊</span> pour prononcer en italien.</p>
+    <div class="grid">
+      <div class="card">
+        <div>
+          <h2>Verbes</h2>
+          <div class="small">FARE, POTERE, ANDARE, CHIAMARSI, ESSERE, AVERE + modèles PARLARE & SCRIVERE</div>
+        </div>
+        <a class="button" href="verbs.html">Ouvrir</a>
+      </div>
+      <div class="card">
+        <div>
+          <h2>Vocabulaire</h2>
+          <div class="small">Formules, incompréhension, matériel, terminer, s’excuser, interrogatifs, saisons, “andare in montagna / al mare”.</div>
+        </div>
+        <a class="button" href="vocab.html">Ouvrir</a>
+      </div>
+      <div class="card">
+        <div>
+          <h2>Passatempi</h2>
+          <div class="small">16 activités avec emoji et audio instantané.</div>
+        </div>
+        <a class="button" href="passatempi.html">Ouvrir</a>
+      </div>
+    </div>
+  </main>
+  <div class="footer">Fait avec ❤️ pour apprendre vite et bien. Appuie une fois pour activer l’audio.</div>
+</body>
+</html>
