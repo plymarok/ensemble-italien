@@ -28,7 +28,6 @@
       App.loadJSON('/data/verbs.json').then(function(data){
         var list=document.createElement('div'); list.className='grid'; container.appendChild(list);
 
-        // Quiz : formes à plat
         var flat=[]; data.forEach(function(v){ v.forms.forEach(function(f){ flat.push({it:f.it, fr:f.fr}); }); });
         App.setupQuizHost(container, flat);
 
