@@ -1,8 +1,8 @@
-// App global (sans modules, compatible mobiles)
+// App global (sans modules) — version mobile-safe
 (function(){
   var App = window.App = {};
 
-  // ===== Utils =====
+  /* ===================== Utils ===================== */
   App.hi = function(text, q){
     if(!q) return text;
     try{
@@ -15,8 +15,8 @@
   };
   App.renderSearch = function(container, onSearch){
     var bar = document.createElement('div'); bar.className='searchbar';
-    bar.innerHTML = '<input id="search" placeholder="Filtrer (italien ou français)..." aria-label="Filtrer">'+
-                    '<button id="clear" class="ghost">Effacer</button>';
+    bar.innerHTML = '<input id="search" placeholder="Filtrer (italien ou français)..." aria-label="Filtrer">'
+                  + '<button id="clear" class="ghost">Effacer</button>';
     var input = bar.querySelector('#search'); var clear = bar.querySelector('#clear');
     input.addEventListener('input', function(){ onSearch((input.value||'').trim().toLowerCase()); });
     clear.addEventListener('click', function(){ input.value=''; onSearch(''); input.focus(); });
@@ -28,70 +28,138 @@
         if(!r.ok) throw new Error('HTTP '+r.status+' pour '+path);
         return r.json();
       });
-    }else{
+    } else {
       return new Promise(function(res,rej){
         var x=new XMLHttpRequest(); x.open('GET', path, true);
         x.setRequestHeader('Cache-Control','no-cache');
-        x.onreadystatechange=function(){ if(x.readyState===4){ if(x.status>=200&&x.status<300){ res(JSON.parse(x.responseText)); } else { rej(new Error('XHR '+x.status)); } } };
+        x.onreadystatechange=function(){
+          if(x.readyState===4){
+            if(x.status>=200 && x.status<300){ res(JSON.parse(x.responseText)); }
+            else { rej(new Error('XHR '+x.status)); }
+          }
+        };
         x.send();
       });
     }
   };
 
-  // ===== Audio ultra-réactif =====
-  var itVoice=null, audioReady=false;
-  function pickItalianVoice(){
-    try{
-      var voices = speechSynthesis.getVoices() || [];
-      for(var i=0;i<voices.length;i++){
-        if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)){ itVoice=voices[i]; break; }
-      }
-      if(!itVoice) itVoice = voices[0] || null;
-    }catch(e){}
-  }
-  function primeAudio(){
-    if(audioReady) return;
-    pickItalianVoice();
-    try{
-      var u = new SpeechSynthesisUtterance('pronto');
-      u.lang = (itVoice && itVoice.lang) ? itVoice.lang : 'it-IT';
-      u.volume = 0.01;
-      u.onend = function(){ audioReady=true; setBadge('Audio prêt', false); };
-      speechSynthesis.cancel();
-      speechSynthesis.speak(u);
-    }catch(e){}
-  }
-  if (window.speechSynthesis){
-    window.speechSynthesis.onvoiceschanged = pickItalianVoice;
-    window.addEventListener('pointerdown', primeAudio, {once:true});
-    window.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ primeAudio(); } }, {once:true});
-  }
+  /* ================== Speech Synthesis ================== */
+  var itVoice=null, audioReady=false, primingPromise=null, queue=[];
   function setBadge(text, warn){
     var s=document.querySelector('#audio-state');
     if(s){ s.textContent=text; s.className = warn===false ? 'badge' : 'badge warn'; }
   }
-  App.speak = function(text){
+
+  function getVoicesSafe(){ try { return speechSynthesis.getVoices() || []; } catch(e){ return []; } }
+  function pickItalianVoice(){
+    var voices = getVoicesSafe();
+    itVoice = null;
+    for(var i=0;i<voices.length;i++){
+      if(/it-|Italian/i.test(voices[i].lang) || /Italian/i.test(voices[i].name)){ itVoice=voices[i]; break; }
+    }
+    if(!itVoice) itVoice = voices[0] || null;
+  }
+  function waitForVoices(timeoutMs){
+    return new Promise(function(resolve){
+      var start=Date.now();
+      (function loop(){
+        var v = getVoicesSafe();
+        if (v && v.length){ return resolve(); }
+        if (Date.now()-start > (timeoutMs||2000)) return resolve();
+        setTimeout(loop, 100);
+      })();
+    });
+  }
+
+  function primeAudio(){
+    if (audioReady) return Promise.resolve();
+    if (primingPromise) return primingPromise;
+
+    primingPromise = (async function(){
+      if (!window.speechSynthesis) return;
+      await waitForVoices(2500);
+      pickItalianVoice();
+
+      return new Promise(function(resolve){
+        try{
+          var u = new SpeechSynthesisUtterance('pronto');
+          u.lang = (itVoice && itVoice.lang) ? itVoice.lang : 'it-IT';
+          u.volume = 0.01;
+          u.onend = function(){ resolve(); };
+          u.onerror = function(){ resolve(); };
+          // ⚠️ Ne PAS cancel ici (iOS annule tout si on cancel trop tôt)
+          speechSynthesis.speak(u);
+        }catch(e){ resolve(); }
+      }).then(function(){
+        audioReady = true;
+        setBadge('Audio prêt', false);
+        // Lire la dernière phrase demandée pendant le prime
+        if (queue.length){
+          var last = queue[queue.length-1];
+          queue.length = 0;
+          speakNow(last);
+        }
+        primingPromise = null;
+      });
+    })();
+
+    return primingPromise;
+  }
+
+  function speakNow(text){
     try{
-      if(!text) return;
-      if(!audioReady) primeAudio();
       var u=new SpeechSynthesisUtterance(text);
       u.lang=(itVoice&&itVoice.lang)?itVoice.lang:'it-IT';
       if(itVoice) u.voice=itVoice;
       u.rate=0.98; u.pitch=1.0;
-      speechSynthesis.cancel(); speechSynthesis.speak(u);
+      // Ici, un seul cancel juste avant la vraie lecture (pas pendant le prime)
+      try { speechSynthesis.cancel(); } catch(e){}
+      speechSynthesis.speak(u);
       App.incRevision(1);
     }catch(e){}
+  }
+
+  App.speak = function(text){
+    if(!text) return;
+    if (!window.speechSynthesis){
+      alert('La synthèse vocale n’est pas disponible sur ce navigateur.');
+      return;
+    }
+    if (!audioReady){
+      // Met en file d’attente et lance un prime unique
+      queue.push(text);
+      primeAudio();
+      return;
+    }
+    speakNow(text);
   };
-  // Délégation (avec fallback si closest absent)
+
+  // Déclencheurs “gestes utilisateur” multiples pour maximiser le support mobile
+  function onFirstGesture(){
+    primeAudio();
+    var btn=document.getElementById('activate-audio');
+    if(btn){ btn.disabled=true; btn.textContent='🔊 Audio prêt'; }
+  }
+  ['pointerdown','click','touchstart','keydown'].forEach(function(evt){
+    window.addEventListener(evt, onFirstGesture, { once:true });
+  });
+  if (window.speechSynthesis){
+    window.speechSynthesis.onvoiceschanged = function(){ if(!audioReady) pickItalianVoice(); };
+  }
+
+  // Délégation clic boutons data-it (fallback sans .closest)
   document.addEventListener('click', function(e){
-    var el = e.target;
-    while (el && el !== document) {
-      if (el.tagName === 'BUTTON' && el.hasAttribute('data-it')) { App.speak(el.getAttribute('data-it')); break; }
-      el = el.parentNode;
+    var el=e.target;
+    while(el && el!==document){
+      if(el.tagName==='BUTTON' && el.hasAttribute('data-it')){
+        App.speak(el.getAttribute('data-it'));
+        break;
+      }
+      el=el.parentNode;
     }
   });
 
-  // ===== Settings / Toggles / Compteur =====
+  /* ============= Settings / Toggles / Compteur ============= */
   var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
   App.settings = {
     get theme(){ return localStorage.getItem(LS.theme) || 'dark'; },
@@ -103,6 +171,7 @@
   };
   function setTheme(t){ document.documentElement.setAttribute('data-theme', t==='light'?'light':'dark'); }
   function applyFR(show){ document.body.classList.toggle('hide-fr', !show); }
+
   App.injectControls = function(){
     setTheme(App.settings.theme); applyFR(App.settings.showFR);
     var bar = document.createElement('div'); bar.className='controls';
@@ -110,7 +179,8 @@
       + '<button id="toggle-theme" class="ghost">'+(App.settings.theme==='dark'?'☀️ Mode clair':'🌙 Mode sombre')+'</button>'
       + '<button id="toggle-fr">'+(App.settings.showFR?'Masquer FR':'Afficher FR')+'</button>'
       + '<button id="toggle-quiz" class="'+(App.settings.quiz?'':'ghost')+'">🎯 '+(App.settings.quiz?'Quitter le quiz':'Mode Quiz')+'</button>'
-      + '<span id="audio-state" class="badge warn">Activer l\'audio : touche Entrée / 1er clic</span>'
+      + '<button id="activate-audio">🔊 Activer l’audio</button>'
+      + '<span id="audio-state" class="badge warn">En attente d’un appui…</span>'
       + '<span id="rev-badge" class="badge">Révisions : <strong id="rev-count">0</strong></span>';
     var nav=document.querySelector('nav'); if(nav) nav.parentNode.insertBefore(bar, nav.nextSibling);
 
@@ -127,8 +197,16 @@
       this.classList.toggle('ghost', !App.settings.quiz);
       this.textContent = App.settings.quiz ? '🎯 Quitter le quiz' : 'Mode Quiz';
     };
+    document.getElementById('activate-audio').onclick=function(){
+      primeAudio().then(function(){
+        var b=document.getElementById('activate-audio');
+        if(b){ b.disabled=true; b.textContent='🔊 Audio prêt'; }
+      });
+    };
+
     App.updateCounterUI();
   };
+
   App.incRevision = function(n){
     n=n||1;
     var total = parseInt(localStorage.getItem(LS.countTotal)||'0') + n;
@@ -139,7 +217,7 @@
     var el=document.getElementById('rev-count'); if(el) el.textContent = String(parseInt(localStorage.getItem(LS.countTotal)||'0'));
   };
 
-  // ===== Quiz (global) =====
+  /* ======================= Quiz ======================= */
   App.setupQuizHost = function(container, items){
     var askFR = true, current=null;
     var host=document.createElement('div'); host.className='quiz';
