@@ -15,10 +15,9 @@
   </nav>
   <main id="container">
     <h1>Conjugaisons au présent</h1>
-    <p class="small">Bouton 🔊 = prononciation immédiate. “Mode Quiz” (désactivable) pour s’entraîner.</p>
+    <p class="small">Bouton 🔊 = prononciation immédiate. Mode Quiz désactivable.</p>
   </main>
 
-  <!-- App global -->
   <script src="app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
@@ -27,7 +26,6 @@
       App.renderSearch(container, function(q){ filter(q); });
 
       App.loadJSON('/data/verbs.json').then(function(data){
-        console.log('Loaded verbs:', data);
         var list=document.createElement('div'); list.className='grid'; container.appendChild(list);
 
         // Quiz : formes à plat
@@ -41,7 +39,10 @@
               return '<div class="row"><span class="it">'+App.hi(f.it,q)+'</span> — <span class="fr">'+App.hi(f.fr,q)+'</span>'+
                      '<button class="ghost" data-it="'+f.it.replace('"','&quot;')+'">🔊</button></div>';
             }).join('');
-            var card=App.createCard('<div class="text"><div><strong>'+App.hi(v.verb,q)+'</strong> — <span class="fr">'+App.hi(v.translation,q)+'</span> <span class="small">('+v.mood+')</span></div><div class="details">'+rows+'</div></div>');
+            var card = App.createCard(
+              '<div class="text"><div><strong>'+App.hi(v.verb,q)+'</strong> — <span class="fr">'+App.hi(v.translation,q)+'</span> <span class="small">('+v.mood+')</span></div>'+
+              '<div class="details">'+rows+'</div></div>'
+            );
             list.appendChild(card);
           });
         }
@@ -55,9 +56,8 @@
           draw(f, q);
         }
         draw(data);
-      }).catch(function(err){
-        console.error(err);
-        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger /data/verbs.json</p>');
+      }).catch(function(){
+        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger <code>/data/verbs.json</code></p>');
       });
     });
   </script>
