@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +11,10 @@
       injectControls();
       const container = document.getElementById('container');
       renderSearch(container, (q) => filter(q));
-      const data = await loadJSON('data/passatempi.json');
+
+      const data = await loadJSON('data/passatempi.json');   // ✅ chemin correct
+      console.log("Loaded JSON passatempi:", data);
+
       const grid = document.createElement('div'); grid.className='grid'; container.appendChild(grid);
 
       setupQuizHost(container, data.map(x => ({it:x.it, fr:x.fr})));
