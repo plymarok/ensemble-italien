@@ -1,310 +1,203 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Révisions d’italien — 1 page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Révisions d’italien — Simple (1 page)</title>
 <style>
-  :root{
-    --bg:#0f172a; --panel:#0b1426; --text:#e2e8f0; --muted:#94a3b8;
-    --brand:#38bdf8; --brand2:#a78bfa; --card:#16223a; --card2:#1e2a44;
-    --radius:14px; --shadow:0 8px 28px rgba(0,0,0,.35);
-  }
-  body{margin:0;background:var(--bg);color:var(--text);
-       font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-  header{position:sticky;top:0;z-index:10;color:#fff;
-         background:linear-gradient(90deg,var(--brand),var(--brand2));
-         padding:16px 12px;text-align:center;font-weight:800;letter-spacing:.3px}
-  .bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-       padding:10px;background:#0b1426;border-bottom:1px solid rgba(148,163,184,.22)}
-  .chip{background:var(--card);border:1px solid rgba(148,163,184,.3);color:var(--text);
-        border-radius:999px;padding:8px 12px;text-decoration:none;box-shadow:var(--shadow)}
-  .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px}
-  .btn{background:var(--brand);color:#00131c;border:none;border-radius:12px;
-       padding:8px 12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
-  .btn.ghost{background:transparent;color:var(--text);
-             border:1px solid rgba(148,163,184,.35)}
-  main{max-width:1100px;margin:16px auto;padding:0 12px}
-  h2{margin:26px 0 10px;color:var(--brand)}
-  .card{background:var(--card);border:1px solid rgba(148,163,184,.25);
-        border-radius:var(--radius);box-shadow:var(--shadow);
+  :root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--brand:#0ea5e9;--card:#ffffff;--line:#e2e8f0;--radius:14px;--shadow:0 6px 18px rgba(0,0,0,.08)}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+  header{background:var(--brand);color:#fff;padding:16px;text-align:center;font-weight:800;letter-spacing:.3px}
+  main{max-width:980px;margin:16px auto;padding:0 12px}
+  h2{margin:26px 0 8px;color:var(--brand)} h3{margin:14px 2px 8px;color:#0ea5e9}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
         padding:12px 14px;margin:10px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
-  .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
-  .text{font-size:1.05rem}
-  .fr{opacity:.95}
-  .hide-fr .fr{display:none}
-  .note{max-width:1100px;margin:10px auto 0;padding:8px 12px;
-        background:#fff3cd;color:#1f2937;border:1px solid #facc15;border-radius:12px}
+  .text{font-size:1.05rem} .fr{color:var(--muted)} .hide-fr .fr{display:none}
+  .btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+  .btn:active{transform:translateY(1px)} .ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
   .search{display:flex;gap:8px;align-items:center;margin:8px 0 14px}
-  .search input{flex:1;min-width:220px;background:var(--panel);color:var(--text);
-                border:1px solid rgba(148,163,184,.35);border-radius:12px;padding:10px 12px}
-  .small{color:var(--muted);font-size:.95rem}
-  #diag{display:none;position:sticky;top:0;z-index:20;background:#fee2e2;color:#7f1d1d;
-        border-bottom:1px solid #fecaca;padding:8px 10px;white-space:pre-wrap}
+  .search input{flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+  .note{background:#fff3cd;border:1px solid #facc15;border-radius:10px;padding:8px 12px;margin:8px 0;color:#1f2937}
+  #diag{display:none;position:sticky;top:0;z-index:9999;background:#fee2e2;color:#7f1d1d;border-bottom:1px solid #fecaca;padding:8px 10px;white-space:pre-wrap}
 </style>
 </head>
 <body>
-<header>📘 Révisions d’italien — 1 page</header>
+<header>📘 Révisions d’italien — Simple (1 page)</header>
 
 <div id="diag"></div>
 
-<div class="bar">
-  <a class="chip" href="#verbes">Verbes</a>
-  <a class="chip" href="#vocab">Vocabulaire</a>
-  <a class="chip" href="#passatempi">Passatempi</a>
-</div>
+<main>
+  <p class="note">🔊 Appuie sur un bouton pour entendre l’italien. Si la voix locale ne démarre pas, un son en ligne est utilisé automatiquement.  
+  Astuce iPhone : désactive le mode silencieux.</p>
 
-<div class="controls">
-  <button id="toggle-fr" class="btn">Masquer FR</button>
-  <button id="scroll-top" class="btn ghost">Haut ⬆️</button>
-</div>
+  <div class="search">
+    <input id="search" placeholder="Filtrer (italien ou français)..." />
+    <button class="btn ghost" id="clear">Effacer</button>
+    <button class="btn ghost" id="toggle-fr">Masquer FR</button>
+  </div>
 
-<main id="app">
-  <div class="note small">🔊 Appuie sur un bouton pour entendre l’italien.  
-  Sur iPhone, désactive le mode silencieux.</div>
-
+  <!-- ===== Verbes ===== -->
   <section id="verbes">
     <h2>Verbes essentiels</h2>
-    <p class="small">FARE, POTERE, ANDARE, CHIAMARSI, ESSERE, AVERE + modèles PARLARE (&nbsp;-ARE&nbsp;) et SCRIVERE (&nbsp;-ERE&nbsp;).</p>
-    <div class="search">
-      <input id="search-verbes" placeholder="Filtrer un verbe/une forme…" />
-      <button class="btn ghost" onclick="this.previousElementSibling.value=''; renderVerbes();">Effacer</button>
-    </div>
     <div id="verbes-list"></div>
   </section>
 
+  <!-- ===== Vocabulaire ===== -->
   <section id="vocab">
     <h2>Vocabulaire utile</h2>
-    <div class="search">
-      <input id="search-vocab" placeholder="Filtrer une expression…" />
-      <button class="btn ghost" onclick="this.previousElementSibling.value=''; renderVocab();">Effacer</button>
-    </div>
     <div id="vocab-list"></div>
   </section>
 
+  <!-- ===== Passatempi ===== -->
   <section id="passatempi">
     <h2>I passatempi (loisirs)</h2>
-    <div class="search">
-      <input id="search-pass" placeholder="Filtrer un passe-temps…" />
-      <button class="btn ghost" onclick="this.previousElementSibling.value=''; renderPassatempi();">Effacer</button>
-    </div>
     <div id="pass-list" class="grid"></div>
   </section>
+
+  <!-- Lecteur audio (fallback) -->
+  <audio id="tts" preload="none" playsinline></audio>
 </main>
 
 <script>
-/* ========================= Données inline ========================= */
+/* ---------- Diagnostic: affiche toute erreur au lieu d'un écran blanc ---------- */
+const $diag = document.getElementById('diag');
+function diag(msg){ $diag.style.display='block'; $diag.textContent += ($diag.textContent? '\n' : '') + msg; }
+window.addEventListener('error', e=>diag('❌ '+(e.message||'Erreur JS')+(e.filename? ' — '+e.filename:'')+(e.lineno? ' (ligne '+e.lineno+')':'')));
+window.addEventListener('unhandledrejection', e=>diag('❌ Promise: '+(e.reason && e.reason.message? e.reason.message : String(e.reason||''))));
+
+/* ----------------------- Données (inline, pas de JSON) ----------------------- */
 const VERBS = [
-  {verb:'FARE', tr:'faire', forms:[
-    ['io faccio','je fais'],['tu fai','tu fais'],['lui/lei fa','il/elle fait'],
-    ['noi facciamo','nous faisons'],['voi fate','vous faites'],['loro fanno','ils font']
-  ]},
-  {verb:'POTERE', tr:'pouvoir', forms:[
-    ['io posso','je peux'],['tu puoi','tu peux'],['lui/lei può','il/elle peut'],
-    ['noi possiamo','nous pouvons'],['voi potete','vous pouvez'],['loro possono','ils peuvent']
-  ]},
-  {verb:'ANDARE', tr:'aller', forms:[
-    ['io vado','je vais'],['tu vai','tu vas'],['lui/lei va','il/elle va'],
-    ['noi andiamo','nous allons'],['voi andate','vous allez'],['loro vanno','ils vont']
-  ]},
-  {verb:'CHIAMARSI', tr:"s'appeler", forms:[
-    ['mi chiamo','je m’appelle'],['ti chiami','tu t’appelles'],['si chiama','il/elle s’appelle'],
-    ['ci chiamiamo','nous nous appelons'],['vi chiamate','vous vous appelez'],['si chiamano','ils s’appellent']
-  ]},
-  {verb:'ESSERE', tr:'être', forms:[
-    ['io sono','je suis'],['tu sei','tu es'],['lui/lei è','il/elle est'],
-    ['noi siamo','nous sommes'],['voi siete','vous êtes'],['loro sono','ils sont']
-  ]},
-  {verb:'AVERE', tr:'avoir', forms:[
-    ['io ho','j’ai'],['tu hai','tu as'],['lui/lei ha','il/elle a'],
-    ['noi abbiamo','nous avons'],['voi avete','vous avez'],['loro hanno','ils ont']
-  ]},
-  {verb:'PARLARE (modèle -ARE)', tr:'parler', forms:[
-    ['io parlo','je parle'],['tu parli','tu parles'],['lui/lei parla','il/elle parle'],
-    ['noi parliamo','nous parlons'],['voi parlate','vous parlez'],['loro parlano','ils parlent']
-  ]},
-  {verb:'SCRIVERE (modèle -ERE)', tr:'écrire', forms:[
-    ['io scrivo','j’écris'],['tu scrivi','tu écris'],['lui/lei scrive','il/elle écrit'],
-    ['noi scriviamo','nous écrivons'],['voi scrivete','vous écrivez'],['loro scrivono','ils écrivent']
-  ]}
+  {verb:'FARE', tr:'faire', forms:[['io faccio','je fais'],['tu fai','tu fais'],['lui/lei fa','il/elle fait'],['noi facciamo','nous faisons'],['voi fate','vous faites'],['loro fanno','ils font']]},
+  {verb:'POTERE', tr:'pouvoir', forms:[['io posso','je peux'],['tu puoi','tu peux'],['lui/lei può','il/elle peut'],['noi possiamo','nous pouvons'],['voi potete','vous pouvez'],['loro possono','ils peuvent']]},
+  {verb:'ANDARE', tr:'aller', forms:[['io vado','je vais'],['tu vai','tu vas'],['lui/lei va','il/elle va'],['noi andiamo','nous allons'],['voi andate','vous allez'],['loro vanno','ils vont']]},
+  {verb:'CHIAMARSI', tr:"s'appeler", forms:[['mi chiamo','je m’appelle'],['ti chiami','tu t’appelles'],['si chiama','il/elle s’appelle'],['ci chiamiamo','nous nous appelons'],['vi chiamate','vous vous appelez'],['si chiamano','ils s’appellent']]},
+  {verb:'ESSERE', tr:'être', forms:[['io sono','je suis'],['tu sei','tu es'],['lui/lei è','il/elle est'],['noi siamo','nous sommes'],['voi siete','vous êtes'],['loro sono','ils sont']]},
+  {verb:'AVERE', tr:'avoir', forms:[['io ho','j’ai'],['tu hai','tu as'],['lui/lei ha','il/elle a'],['noi abbiamo','nous avons'],['voi avete','vous avez'],['loro hanno','ils ont']]},
+  {verb:'PARLARE (modèle -ARE)', tr:'parler', forms:[['io parlo','je parle'],['tu parli','tu parles'],['lui/lei parla','il/elle parle'],['noi parliamo','nous parlons'],['voi parlate','vous parlez'],['loro parlano','ils parlent']]},
+  {verb:'SCRIVERE (modèle -ERE)', tr:'écrire', forms:[['io scrivo','j’écris'],['tu scrivi','tu écris'],['lui/lei scrive','il/elle écrit'],['noi scriviamo','nous écrivons'],['voi scrivete','vous écrivez'],['loro scrivono','ils écrivent']]}
+];
+const VOCAB = [
+  ['Per favore','S’il vous plaît'],['Grazie','Merci'],['Prego','De rien'],['Scusa / Scusi','Pardon'],
+  ['Non ho capito / sentito','Je n’ai pas compris / entendu'],['Può / puoi ripetere?','Pouvez-vous / peux-tu répéter ?'],['Non lo so','Je ne sais pas'],['Cosa significa?','Que signifie ?'],
+  ['Posso avere una colla?','Je peux avoir une colle ?'],['Posso avere un fazzoletto?','Je peux avoir un mouchoir ?'],['Posso avere una penna?','Je peux avoir un stylo ?'],
+  ['Ho finito!','J’ai terminé !'],['Fatto!','C’est fait !'],['Posso fare qualcos’altro?','Je peux faire autre chose ?'],
+  ['Non ho fatto i compiti','Je n’ai pas fait les devoirs'],['Ho dimenticato il quaderno','J’ai oublié le cahier'],['Scusa per il ritardo','Désolé(e) pour le retard'],
+  ['Perché','Pourquoi'],['Quando','Quand'],['Chi','Qui'],['Dove','Où'],['Come','Comment'],['Che cosa','Quoi'],['Quanto','Combien'],['Quale','Quel(les)'],
+  ['La primavera','Le printemps'],['L’estate','L’été'],['L’autunno','L’automne'],['L’inverno','L’hiver'],
+  ['Andare in montagna','Aller à la montagne'],['Andare al mare','Aller à la mer']
+];
+const PASS = [
+  ['Fare yoga','Faire du yoga 🧘'],['Pescare','Pêcher 🎣'],['Suonare la chitarra','Jouer de la guitare 🎸'],['Cantare','Chanter 🎤'],
+  ['Giocare a calcio','Jouer au foot ⚽'],['Andare in bici','Faire du vélo 🚲'],['Giocare a basket','Jouer au basket 🏀'],['Giocare a pallavolo','Jouer au volley 🏐'],
+  ['Andare a teatro','Aller au théâtre 🎭'],['Dipingere','Peindre 🎨'],['Andare al cinema','Aller au cinéma 🎬'],['Ascoltare la musica','Écouter la musique 📻'],
+  ['Giocare ai videogiochi','Jouer aux jeux vidéo 🎮'],['Leggere','Lire 📖'],['Viaggiare','Voyager ✈️'],['Giocare a cricket','Jouer au cricket 🏏']
 ];
 
-const VOCAB_SECTIONS = [
-  {title:'Formules de politesse', items:[
-    ['Per favore','S’il vous plaît'],['Grazie','Merci'],
-    ['Prego','De rien'],['Scusa / Scusi','Pardon']
-  ]},
-  {title:'Manifester son incompréhension', items:[
-    ['Non ho capito / sentito','Je n’ai pas compris / entendu'],
-    ['Può / puoi ripetere?','Pouvez-vous / peux-tu répéter ?'],
-    ['Non lo so','Je ne sais pas'],
-    ['Cosa significa?','Que signifie ?']
-  ]},
-  {title:'Demander du matériel', items:[
-    ['Posso avere una colla?','Je peux avoir une colle ?'],
-    ['Posso avere un fazzoletto?','Je peux avoir un mouchoir ?'],
-    ['Posso avere una penna?','Je peux avoir un stylo ?']
-  ]},
-  {title:'Dire qu’on a terminé', items:[
-    ['Ho finito!','J’ai terminé !'],
-    ['Fatto!','C’est fait !'],
-    ['Posso fare qualcos’altro?','Je peux faire autre chose ?']
-  ]},
-  {title:'S’excuser', items:[
-    ['Non ho fatto i compiti','Je n’ai pas fait les devoirs'],
-    ['Ho dimenticato il quaderno','J’ai oublié le cahier'],
-    ['Scusa per il ritardo','Désolé(e) pour le retard']
-  ]},
-  {title:'Pronoms interrogatifs', items:[
-    ['Perché','Pourquoi'],['Quando','Quand'],['Chi','Qui'],['Dove','Où'],
-    ['Come','Comment'],['Che cosa','Quoi'],['Quanto','Combien'],['Quale','Quel(les)']
-  ]},
-  {title:'Saisons + expressions', items:[
-    ['La primavera','Le printemps'],['L’estate','L’été'],['L’autunno','L’automne'],['L’inverno','L’hiver'],
-    ['Andare in montagna','Aller à la montagne'],['Andare al mare','Aller à la mer']
-  ]}
-];
-
-const PASSATEMPI = [
-  ['Fare yoga','Faire du yoga 🧘'],['Pescare','Pêcher 🎣'],['Suonare la chitarra','Jouer de la guitare 🎸'],
-  ['Cantare','Chanter 🎤'],['Giocare a calcio','Jouer au foot ⚽'],['Andare in bici','Faire du vélo 🚲'],
-  ['Giocare a basket','Jouer au basket 🏀'],['Giocare a pallavolo','Jouer au volley 🏐'],
-  ['Andare a teatro','Aller au théâtre 🎭'],['Dipingere','Peindre 🎨'],
-  ['Andare al cinema','Aller au cinéma 🎬'],['Ascoltare la musica','Écouter la musique 📻'],
-  ['Giocare ai videogiochi','Jouer aux jeux vidéo 🎮'],['Leggere','Lire 📖'],
-  ['Viaggiare','Voyager ✈️'],['Giocare a cricket','Jouer au cricket 🏏']
-];
-
-/* ====================== Rendu (1 seule page) ====================== */
+/* --------------------------- Rendu sans dépendances --------------------------- */
 const $ = s=>document.querySelector(s);
 
-function renderVerbes(){
-  const q = ($('#search-verbes').value||'').toLowerCase();
-  const wrap = $('#verbes-list'); wrap.innerHTML='';
+function renderAll(){
+  const q = ($('#search').value||'').toLowerCase();
+
+  // Verbes
+  const vWrap = $('#verbes-list'); vWrap.innerHTML='';
   VERBS.forEach(v=>{
-    const ok = !q || v.verb.toLowerCase().includes(q) || v.tr.toLowerCase().includes(q) ||
-      v.forms.some(f => f[0].toLowerCase().includes(q) || f[1].toLowerCase().includes(q));
-    if(!ok) return;
-    const card = document.createElement('div'); card.className='card'; card.innerHTML =
-      `<div class="text"><b>${v.verb}</b> — <span class="fr">${v.tr}</span></div>`;
+    const matchBase = v.verb.toLowerCase().includes(q) || v.tr.toLowerCase().includes(q);
+    const box = document.createElement('div');
+    const head = document.createElement('div'); head.className='card';
+    head.innerHTML = `<div class="text"><b>${v.verb}</b> — <span class="fr">${v.tr}</span></div>`;
     const details = document.createElement('div'); details.className='details';
     v.forms.forEach(f=>{
+      const show = !q || matchBase || f[0].toLowerCase().includes(q) || f[1].toLowerCase().includes(q);
+      if(!show) return;
       const row = document.createElement('div'); row.className='row';
       row.innerHTML = `<span>${f[0]} — <span class="fr">${f[1]}</span></span>
                        <button class="btn" data-it="${f[0].replace(/"/g,'&quot;')}">🔊</button>`;
       details.appendChild(row);
     });
-    const box = document.createElement('div'); box.style.width='100%';
-    box.appendChild(card); box.appendChild(details);
-    wrap.appendChild(box);
+    box.appendChild(head); box.appendChild(details); vWrap.appendChild(box);
   });
+
+  // Vocab
+  const voWrap = $('#vocab-list'); voWrap.innerHTML='';
+  const gVocab = document.createElement('div');
+  VOCAB.filter(it=>!q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q))
+       .forEach(it=>{
+         const card = document.createElement('div'); card.className='card';
+         card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
+                           <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
+         gVocab.appendChild(card);
+       });
+  voWrap.appendChild(gVocab);
+
+  // Passatempi
+  const pWrap = $('#pass-list'); pWrap.innerHTML='';
+  PASS.filter(it=>!q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q))
+      .forEach(it=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
+                          <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
+        pWrap.appendChild(card);
+      });
 }
 
-function renderVocab(){
-  const q = ($('#search-vocab').value||'').toLowerCase();
-  const wrap = $('#vocab-list'); wrap.innerHTML='';
-  VOCAB_SECTIONS.forEach(sec=>{
-    const items = sec.items.filter(it =>
-      !q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q)
-    );
-    if(!items.length) return;
-    const h = document.createElement('h3'); h.textContent = sec.title; h.style.margin='14px 2px 8px'; wrap.appendChild(h);
-    items.forEach(it=>{
-      const card = document.createElement('div'); card.className='card';
-      card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
-                        <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
-      wrap.appendChild(card);
-    });
-  });
-}
-
-function renderPassatempi(){
-  const q = ($('#search-pass').value||'').toLowerCase();
-  const grid = $('#pass-list'); grid.innerHTML='';
-  PASSATEMPI.filter(it => !q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q))
-            .forEach(it=>{
-              const card = document.createElement('div'); card.className='card';
-              card.innerHTML = `<div class="text">${it[0]} — <span class="fr">${it[1]}</span></div>
-                                <button class="btn" data-it="${it[0].replace(/"/g,'&quot;')}">🔊</button>`;
-              grid.appendChild(card);
-            });
-}
-
-/* ============================ Audio robuste ============================ */
-// 1) Web Speech (priorité). 2) Fallback audio distant (Google TTS).
+/* --------------------------------- Audio --------------------------------- */
 const hasWS = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
 let itVoice = null;
 function pickVoice(){
   try{
     const vs = speechSynthesis.getVoices() || [];
     itVoice = null;
-    for (let i=0;i<vs.length;i++){
+    for(let i=0;i<vs.length;i++){
       if(/^it(\-|_|$)/i.test(vs[i].lang) || /ital/i.test(vs[i].name)){ itVoice = vs[i]; break; }
     }
   }catch(e){ itVoice = null; }
 }
-if(hasWS){
-  try{ speechSynthesis.onvoiceschanged = pickVoice; setTimeout(pickVoice,0); }catch(e){}
-}
-const audioEl = new Audio(); audioEl.setAttribute('playsinline',''); audioEl.preload = 'none';
+if(hasWS){ try{ speechSynthesis.onvoiceschanged = pickVoice; setTimeout(pickVoice,0);}catch(e){} }
+
+const player = document.getElementById('tts');
 function gTTS(text, lang){ return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+(lang||'it')+'&q='+encodeURIComponent(text); }
 
 function speak(text){
   if(!text) return;
-  // essaie WebSpeech; si onStart ne vient pas rapidement, bascule sur <audio>.
+  // 1) Web Speech
   if(hasWS){
-    let started = false, timedOut = false;
+    let started=false;
     const u = new SpeechSynthesisUtterance(text);
-    if(itVoice){ u.voice = itVoice; u.lang = itVoice.lang; } else { u.lang = 'it-IT'; }
-    u.rate = 1.0; u.pitch = 1.0;
-    u.onstart = ()=>{ started = true; };
-    try{ speechSynthesis.speak(u); }catch(e){}
-    setTimeout(()=>{
-      timedOut = true;
-      if(!started){ // fallback fiable smartphone/webview
-        audioEl.src = gTTS(text,'it');
-        audioEl.play().catch(()=>{});
-      }
-    }, 300);
+    if(itVoice){ u.voice=itVoice; u.lang=itVoice.lang; } else { u.lang='it-IT'; }
+    u.rate=1; u.pitch=1; u.onstart=()=>{started=true;};
+    try{ speechSynthesis.speak(u);}catch(e){}
+    // 2) si rien ne démarre vite -> fallback <audio>
+    setTimeout(()=>{ if(!started){ player.src=gTTS(text,'it'); player.play().catch(()=>{}); } }, 300);
     return;
   }
-  // Pas de WebSpeech → direct <audio>
-  audioEl.src = gTTS(text,'it');
-  audioEl.play().catch(()=>{});
+  // Pas de WebSpeech -> audio direct
+  player.src = gTTS(text,'it');
+  player.play().catch(()=>{});
 }
 
-/* =========================== Interactions UI =========================== */
+/* ------------------------------ Interactions ------------------------------ */
 document.addEventListener('pointerdown', e=>{
   let n=e.target;
   while(n && n!==document){
-    if(n.tagName==='BUTTON' && n.hasAttribute('data-it')){
-      speak(n.getAttribute('data-it'));
-      break;
+    if(n.matches && n.matches('button[data-it]')){
+      speak(n.getAttribute('data-it')); break;
     }
     n=n.parentNode;
   }
-}, {passive:true});
+},{passive:true});
 
+document.getElementById('search').addEventListener('input', renderAll);
+document.getElementById('clear').onclick = ()=>{ document.getElementById('search').value=''; renderAll(); };
 document.getElementById('toggle-fr').onclick = function(){
   document.body.classList.toggle('hide-fr');
   this.textContent = document.body.classList.contains('hide-fr') ? 'Afficher FR' : 'Masquer FR';
 };
-document.getElementById('scroll-top').onclick = ()=>window.scrollTo({top:0,behavior:'smooth'});
 
-/* ============================== Diagnostic ============================= */
-const diag = document.getElementById('diag');
-function showDiag(msg){
-  diag.style.display='block';
-  diag.textContent += (diag.textContent? '\n' : '') + msg;
-}
-window.addEventListener('error', e=>{
-  showDiag('❌ '+(e.message||'Erreur JS')+(e.filename? ' — '+e.filename:'')+(e.lineno? ' (ligne '+e.lineno+')':''));});
-window.addEventListener('unhandledrejection', e=>{
-  showDiag('❌ Promise: '+(e.reason && e.reason.message ? e.reason.message : e.reason));});
-
-/* =============================== Démarrage ============================== */
-renderVerbes(); renderVocab(); renderPassatempi();
+/* -------------------------------- Démarrage -------------------------------- */
+try{ renderAll(); }catch(e){ diag('❌ Rendu: '+e.message); }
 </script>
 </body>
 </html>
