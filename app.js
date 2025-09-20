@@ -228,4 +228,17 @@
 
       var opts=document.createElement('div'); opts.className='opts';
       choices(items, current, 4).forEach(function(choice){
-        var btn=document.createElement('button'); btn.textContent = a
+        var btn=document.createElement('button'); btn.textContent = askFR ? choice.it : choice.fr;
+        btn.onclick=function(){
+          if(choice===current){ btn.classList.add('correct'); App.incRevision(2); setTimeout(function(){ current=null; draw(); }, 500); }
+          else { btn.classList.add('wrong'); }
+        };
+        opts.appendChild(btn);
+      });
+
+      content.appendChild(q); content.appendChild(tools); content.appendChild(opts);
+    }
+    draw();
+    document.addEventListener('quiz-toggle', draw);
+  };
+})();
