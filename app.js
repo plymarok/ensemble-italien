@@ -1,8 +1,8 @@
-// App global — TTS robuste: meSpeak (CDN) -> speechSynthesis -> bip
+// App global — TTS smartphone first: meSpeak (préchargé au 1er toucher) -> WebSpeech (fallback). Pas de bip.
 (function(){
   var App = window.App = {};
 
-  /* -------- Utils -------- */
+  /* -------------------------------- Utils -------------------------------- */
   App.hi = function(text, q){
     if(!q) return text;
     try{
@@ -43,82 +43,117 @@
     }
   };
 
-  /* -------- Audio: meSpeak fallback + WebSpeech + bip -------- */
-  var useMeSpeak = false, meReady = false, voiceLoaded = false;
-  function loadScript(url){ return new Promise(function(res,rej){ var s=document.createElement('script'); s.src=url; s.async=true; s.onload=function(){res(true)}; s.onerror=function(){rej(false)}; document.head.appendChild(s); }); }
-  function loadMeSpeak(){
-    if (useMeSpeak) return Promise.resolve(true);
-    var tries = [
+  /* ------------------------------ Audio core ------------------------------ */
+  // meSpeak (eSpeak en JS) — fonctionne très bien sur mobile.
+  var AC = null, hasGesture=false;
+  var useMeSpeak=false, meReady=false, loading=false, queue=[];
+  function getAC(){
+    try{
+      AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+      if (AC.state === 'suspended' && AC.resume) AC.resume();
+    }catch(e){}
+    return AC;
+  }
+  function loadScript(url){
+    return new Promise(function(res,rej){
+      var s=document.createElement('script'); s.src=url; s.async=true;
+      s.onload=function(){ res(true); };
+      s.onerror=function(){ rej(false); };
+      document.head.appendChild(s);
+    });
+  }
+  function ensureMeSpeak(){
+    if (meReady) return Promise.resolve(true);
+    if (loading)  return new Promise(function(r){ var t=setInterval(function(){ if(!loading){ clearInterval(t); r(meReady); } }, 60); });
+    loading = true;
+
+    getAC(); // déverrouille l’audio sur geste
+
+    // charge le core puis config + voix italienne
+    var coreUrls = [
       'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/mespeak.min.js',
       'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/mespeak.js'
     ];
-    // charge le core
-    return tries.reduce(function(p,url){
-      return p.catch(function(){ return loadScript(url); });
-    }, Promise.reject()).then(function(){
-      if (!window.meSpeak) throw new Error('meSpeak non défini');
-      // charge config + voix italienne
-      return new Promise(function(resolve){
-        var done=0, ok=true;
-        meSpeak.loadConfig('https://cdn.jsdelivr.net/npm/mespeak@2.0.2/src/mespeak_config.json', function(r1){
-          ok = ok && !!r1; done++; if(done===2) finish(ok);
-        });
-        meSpeak.loadVoice('https://cdn.jsdelivr.net/npm/mespeak@2.0.2/voices/it.json', function(r2){
-          ok = ok && !!r2; done++; if(done===2) finish(ok);
-        });
-        function finish(ok){
-          meReady = ok; useMeSpeak = ok; voiceLoaded = ok;
-          resolve(ok);
-        }
-      });
-    }).catch(function(){ return false; });
+    var configUrl = 'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/src/mespeak_config.json';
+    var voiceUrl  = 'https://cdn.jsdelivr.net/npm/mespeak@2.0.2/voices/it.json';
+
+    function loadCore(i){
+      if (i>=coreUrls.length) return Promise.reject(false);
+      return loadScript(coreUrls[i]).catch(function(){ return loadCore(i+1); });
+    }
+    return loadCore(0).then(function(){
+      if (!window.meSpeak) throw new Error('meSpeak indisponible');
+      try{ if (AC && meSpeak.setAudioContext) meSpeak.setAudioContext(AC); }catch(e){}
+      return Promise.all([
+        new Promise(function(r){ meSpeak.loadConfig(configUrl, function(ok){ r(!!ok); }); }),
+        new Promise(function(r){ meSpeak.loadVoice(voiceUrl,  function(ok){ r(!!ok); }); })
+      ]);
+    }).then(function(rs){
+      meReady = rs.every(Boolean);
+      useMeSpeak = meReady;
+      loading = false;
+      return meReady;
+    }).catch(function(){
+      loading = false;
+      useMeSpeak = false; meReady = false;
+      return false;
+    });
   }
 
-  var AC = null;
-  function beep(){
+  function speakMe(text){
     try{
-      AC = AC || new (window.AudioContext||window.webkitAudioContext)();
-      var o = AC.createOscillator(), g = AC.createGain();
-      o.type="sine"; o.frequency.value=660; g.gain.value=0.08;
-      o.connect(g); g.connect(AC.destination); o.start(); setTimeout(function(){ o.stop(); }, 120);
-    }catch(e){}
-  }
-
-  function speakMeSpeak(text){
-    try{
-      meSpeak.speak(text, { voice:'it', speed: 170, wordgap: 2, variant: 'f3', pitch: 50 });
+      meSpeak.speak(text, { voice:'it', speed: 170, wordgap: 2, pitch: 50 });
       App.incRevision(1);
       return true;
     }catch(e){ return false; }
   }
-  function speakWebSpeech(text){
+  function speakWeb(text){
     try{
-      if(!('speechSynthesis' in window)) return false;
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = "it-IT"; u.rate = 1.0; u.pitch = 1.0;
+      if (!('speechSynthesis' in window)) return false;
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang="it-IT"; u.rate=1.0; u.pitch=1.0;
       speechSynthesis.speak(u);
       App.incRevision(1);
       return true;
     }catch(e){ return false; }
   }
 
-  // API publique
+  // API publique — clic 🔊 => parle
   App.speak = function(text){
     if(!text) return;
-    // tente meSpeak d'abord (chargement à la volée au 1er clic)
-    if (!useMeSpeak){
-      loadMeSpeak().then(function(ok){
-        if(ok){ speakMeSpeak(text); }
-        else if (!speakWebSpeech(text)){ beep(); }
-      });
-      return;
+
+    // Si meSpeak est prêt : on l’utilise direct.
+    if (useMeSpeak && meReady){
+      if (speakMe(text)) return;
+      // sinon on tente WebSpeech en secours
+      speakWeb(text); return;
     }
-    if (meReady && voiceLoaded){
-      if(!speakMeSpeak(text)){ if(!speakWebSpeech(text)) beep(); }
-    } else {
-      if(!speakWebSpeech(text)) beep();
-    }
+
+    // Sinon : on met en file et on charge meSpeak une fois
+    queue.push(text);
+    ensureMeSpeak().then(function(ok){
+      var toSay = queue.slice(); queue.length=0;
+      if (ok){
+        // dit la dernière requête (la plus récente)
+        speakMe(toSay[toSay.length-1]);
+      } else {
+        // secours WebSpeech (silencieux si non supporté)
+        speakWeb(toSay[toSay.length-1]);
+      }
+    });
   };
+
+  // Déverrouillage au 1er geste utilisateur (mobile)
+  function onGesture(){
+    if (hasGesture) return;
+    hasGesture = true;
+    getAC(); // unlock WebAudio
+    // Précharge meSpeak discrètement pour rendre le 1er 🔊 plus rapide
+    ensureMeSpeak();
+  }
+  ['pointerdown','touchstart','click','keydown'].forEach(function(evt){
+    window.addEventListener(evt, onGesture, { once:true, passive:true });
+  });
 
   // Délégation clic pour tous les boutons 🔊
   document.addEventListener('click', function(e){
@@ -132,7 +167,7 @@
     }
   });
 
-  /* -------- Settings / Toggles / Compteur -------- */
+  /* ---------------- Settings / Toggles / Compteur ---------------- */
   var LS = { theme:'it-theme', showFR:'it-show-fr', quiz:'it-quiz-enabled', countTotal:'it-rev-total' };
   App.settings = {
     get theme(){ return localStorage.getItem(LS.theme) || 'dark'; },
@@ -181,7 +216,7 @@
     var el=document.getElementById('rev-count'); if(el) el.textContent = String(parseInt(localStorage.getItem(LS.countTotal)||'0'));
   };
 
-  /* -------- Quiz -------- */
+  /* -------------------------------- Quiz -------------------------------- */
   App.setupQuizHost = function(container, items){
     var askFR = true, current=null;
     var host=document.createElement('div'); host.className='quiz';
