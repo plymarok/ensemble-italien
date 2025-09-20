@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Révisions d'italien — Accueil</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-    import {speak, injectControls} from './app.js';
-    window.speak = speak;
-    window.addEventListener('DOMContentLoaded', injectControls);
-  </script>
 </head>
 <body data-page="home">
   <header>📘 Révisions d'italien — Accueil</header>
@@ -20,7 +15,7 @@
   </nav>
   <main>
     <h1>Bienvenue</h1>
-    <p class="small">Tout le programme à réviser : verbes essentiels, pronoms interrogatifs, formules utiles, saisons et passe-temps. Chaque élément affiche la traduction et un bouton audio <span class="kbd">🔊</span> pour prononcer en italien.</p>
+    <p class="small">Choisis une section pour réviser : verbes essentiels, vocabulaire utile, ou i passatempi. Audio 🔊, quiz, thème sombre/clair, compteur de révision.</p>
     <div class="grid">
       <div class="card">
         <div>
@@ -39,12 +34,21 @@
       <div class="card">
         <div>
           <h2>Passatempi</h2>
-          <div class="small">16 activités avec emoji et audio instantané.</div>
+          <div class="small">16 activités avec emoji et prononciation.</div>
         </div>
         <a class="button" href="passatempi.html">Ouvrir</a>
       </div>
     </div>
   </main>
-  <div class="footer">Fait avec ❤️ pour apprendre vite et bien. Appuie une fois pour activer l’audio.</div>
+  <div class="footer">Astuce : sur mobile, touche l’écran une fois pour activer l’audio.</div>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      App.injectControls();
+    });
+  </script>
+  <noscript><p class="small">Active JavaScript pour utiliser le site.</p></noscript>
 </body>
 </html>
+
