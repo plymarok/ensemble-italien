@@ -11,7 +11,10 @@
       injectControls();
       const container = document.getElementById('container');
       renderSearch(container, (q) => filter(q));
-      const data = await loadJSON('data/verbs.json');
+
+      const data = await loadJSON('data/verbs.json');   // ✅ chemin correct
+      console.log("Loaded JSON verbs:", data);
+
       const list = document.createElement('div');
       list.className = 'grid'; container.appendChild(list);
 
@@ -20,11 +23,10 @@
       data.forEach(v => v.forms.forEach(f => flat.push({it:f.it, fr:f.fr})) );
       setupQuizHost(container, flat);
 
-      let cards = [];
       function draw(items, q=''){
-        list.innerHTML=''; cards=[];
+        list.innerHTML='';
         items.forEach(v => {
-          const forms = v.forms.map(f => 
+          const forms = v.forms.map(f =>
             `<div class="row"><span class="it">${hi(f.it,q)}</span> — <span class="fr">${hi(f.fr,q)}</span>
             <button class="ghost" data-it="${f.it.replace('"','&quot;')}">🔊</button></div>`).join('');
           const card = createCard(`
@@ -32,34 +34,20 @@
               <div><strong>${hi(v.verb,q)}</strong> — <span class="fr">${hi(v.translation,q)}</span> <span class="small">(${v.mood})</span></div>
               <div class="details">${forms}</div>
             </div>
-            <div style="display:flex;gap:8px">
-              <button class="ghost" onclick="playAll('${v.verb}')">Tout lire</button>
-            </div>
           `);
           list.appendChild(card);
-          cards.push({el:card, data:v});
         });
       }
       function filter(q){
         q = (q||'').toLowerCase();
-        const f = data.filter(v => 
-          v.verb.toLowerCase().includes(q) || v.translation.toLowerCase().includes(q) || 
+        const f = data.filter(v =>
+          v.verb.toLowerCase().includes(q) || v.translation.toLowerCase().includes(q) ||
           v.forms.some(x => x.it.toLowerCase().includes(q) || x.fr.toLowerCase().includes(q))
         );
         draw(f, q);
       }
       draw(data);
       window.speak = speak;
-      window.playAll = (verbName) => {
-        const v = data.find(x => x.verb === verbName);
-        if (!v) return;
-        let i = 0;
-        const sayNext = () => {
-          if (i >= v.forms.length) return;
-          speak(v.forms[i].it); i++; setTimeout(sayNext, 900);
-        };
-        sayNext();
-      };
     });
   </script>
 </head>
@@ -76,4 +64,3 @@
   </main>
 </body>
 </html>
-
