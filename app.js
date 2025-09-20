@@ -1,4 +1,4 @@
-// App global — mobile-first TTS : meSpeak préchargé + lecture sur pointerdown, fallback WebSpeech
+// App global — TTS béton: meSpeak -> WebSpeech -> Audio TTS (Google)
 (function(){
   var App = window.App = {};
 
@@ -53,7 +53,7 @@
     }catch(e){}
   }
 
-  // meSpeak préchargé au chargement de page
+  // --- meSpeak (préchargé) ---
   var meReady=false, useMeSpeak=false, loading=false;
   function loadScript(url){
     return new Promise(function(res,rej){
@@ -71,7 +71,6 @@
     ];
     var configUrl='https://cdn.jsdelivr.net/npm/mespeak@2.0.2/src/mespeak_config.json';
     var voiceUrl ='https://cdn.jsdelivr.net/npm/mespeak@2.0.2/voices/it.json';
-
     function loadCore(i){
       if(i>=coreUrls.length) return Promise.reject(false);
       return loadScript(coreUrls[i]).catch(function(){ return loadCore(i+1); });
@@ -91,12 +90,7 @@
       meReady = false; useMeSpeak = false; loading = false;
     });
   }
-  // Précharger dès que possible (DOM prêt)
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', preloadMeSpeak);
-  }else{
-    preloadMeSpeak();
-  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', preloadMeSpeak); } else { preloadMeSpeak(); }
 
   function speakWithMeSpeak(text){
     try{
@@ -107,7 +101,9 @@
       return true;
     }catch(e){ return false; }
   }
-  function speakWithWebSpeech(text){
+
+  // --- Web Speech (natif) ---
+  function speakWithWeb(text){
     try{
       if(!('speechSynthesis' in window)) return false;
       var u=new SpeechSynthesisUtterance(text);
@@ -118,25 +114,43 @@
     }catch(e){ return false; }
   }
 
-  // API publique
+  // --- Fallback Audio distant (Google TTS) ---
+  function gTTS(text, lang){
+    var q = encodeURIComponent(text);
+    var l = (lang||'it-IT');
+    // Utilisation standard côté <audio> (pas besoin de CORS pour lire)
+    return 'https://translate.google.com/translate_tts?ie=UTF-8&q='+q+'&tl='+encodeURIComponent(l)+'&client=tw-ob';
+  }
+  function speakWithRemoteAudio(text){
+    try{
+      var a = new Audio();
+      a.src = gTTS(text,'it-IT');
+      a.crossOrigin = 'anonymous';
+      a.setAttribute('playsinline','');
+      a.play().then(function(){ App.incRevision(1); }).catch(function(){});
+      return true;
+    }catch(e){ return false; }
+  }
+
+  // API publique: un appui sur 🔊 => on parle
   App.speak = function(text){
     if(!text) return;
-    // on essaie meSpeak (préchargé), sinon WebSpeech
+    // ordre: meSpeak -> WebSpeech -> Audio distant
     if (useMeSpeak && meReady){
       if (speakWithMeSpeak(text)) return;
     }
-    speakWithWebSpeech(text);
+    if (speakWithWeb(text)) return;
+    speakWithRemoteAudio(text);
   };
 
-  // Lecture dès POINTERDOWN sur le bouton 🔊 (meilleure compat mobile)
+  // Lecture au pointerdown (meilleur “user gesture” sur mobile)
   var lastSpeakTs=0;
   function trySpeakFromEvent(e){
     var el = e.target;
     while(el && el!==document){
       if(el.tagName==='BUTTON' && el.hasAttribute('data-it')){
-        unlockAudio(); // geste utilisateur => déverrouille l’audio
+        unlockAudio();
         var now = Date.now();
-        // évite double lecture (pointerdown puis click)
         if(now - lastSpeakTs > 250){
           lastSpeakTs = now;
           App.speak(el.getAttribute('data-it'));
@@ -146,7 +160,6 @@
       el = el.parentNode;
     }
   }
-  // pointerdown = prioritaire mobile, click = secours (desktop)
   document.addEventListener('pointerdown', trySpeakFromEvent, {passive:true});
   document.addEventListener('click',       trySpeakFromEvent, {passive:true});
 
