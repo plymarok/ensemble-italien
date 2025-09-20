@@ -12,15 +12,14 @@
       const container = document.getElementById('container');
       renderSearch(container, (q) => filter(q));
 
-      const data = await loadJSON('data/verbs.json');   // ✅ chemin correct
+      const data = await loadJSON('/data/verbs.json');   // ✅ chemin absolu
       console.log("Loaded JSON verbs:", data);
 
       const list = document.createElement('div');
       list.className = 'grid'; container.appendChild(list);
 
-      // Flat items for quiz
       const flat = [];
-      data.forEach(v => v.forms.forEach(f => flat.push({it:f.it, fr:f.fr})) );
+      data.forEach(v => v.forms.forEach(f => flat.push({it:f.it, fr:f.fr})));
       setupQuizHost(container, flat);
 
       function draw(items, q=''){
