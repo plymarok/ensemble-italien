@@ -3,21 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Révisions d’italien — Lexique & expressions</title>
+  <title>Révisions d’italien — Lexique & verbes (audio)</title>
   <style>
     :root{
       --bg:#0f172a; --card:#111b2f; --ink:#e6edf6; --muted:#9fb0c7;
       --brand:#38bdf8; --accent:#a78bfa; --radius:16px; --shadow:0 10px 24px rgba(0,0,0,.35);
     }
-    html,body{margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif}
+    html,body{margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
     header{padding:22px 16px 8px; text-align:center}
-    header h1{margin:0 0 8px; font-size:1.45rem; letter-spacing:.2px}
+    header h1{margin:0 0 8px; font-size:1.45rem}
     header p{margin:0; color:var(--muted); font-size:.95rem}
     .bar{display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; padding:14px 16px}
     button, select, input[type="checkbox"]+label{
       background:linear-gradient(180deg, var(--brand), #14a2dc);
-      color:white; border:0; padding:10px 14px; border-radius:12px; font-weight:600;
-      box-shadow:var(--shadow); cursor:pointer
+      color:#fff; border:0; padding:10px 14px; border-radius:12px; font-weight:600; box-shadow:var(--shadow); cursor:pointer
     }
     .ghost{background:#19253f}
     .toggle{display:flex; align-items:center; gap:8px; color:var(--ink); font-weight:600}
@@ -26,23 +25,24 @@
     summary{padding:14px 16px; font-weight:700; list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px}
     summary::marker{display:none}
     .badge{background:#17233b; color:var(--brand); padding:2px 8px; border-radius:999px; font-size:.8rem}
-    .list{padding:6px 12px 16px}
+    .list{padding:6px 12px 12px}
     .item{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:10px 8px; border-bottom:1px solid #1f2c49}
     .item:last-child{border-bottom:0}
     .it{font-weight:700}
     .fr{color:var(--muted); font-size:.95rem}
     .speak{background:#1f2e4d}
-    .row{display:flex; gap:12px; flex-wrap:wrap}
     .note{padding:10px 12px; color:var(--muted); font-size:.9rem; text-align:center}
-    @media (hover:hover){
-      button:hover{transform:translateY(-1px)}
-    }
+    /* sous-sections verbes */
+    .sub{margin:8px 8px 12px; background:#0f1a33; border-radius:12px}
+    .row{display:grid; grid-template-columns:1fr auto; gap:8px; padding:8px 10px; border-top:1px solid #1f2c49}
+    .row:first-child{border-top:0}
+    @media (hover:hover){button:hover{transform:translateY(-1px)}}
   </style>
 </head>
 <body>
   <header>
     <h1>Révisions d’italien — Aide-mémoire sonore</h1>
-    <p>Touchez “Tester l’audio”, puis les boutons 🔊 pour entendre l’italien. Tout est lisible et utilisable sur téléphone.</p>
+    <p>Touchez “Tester l’audio”, puis les boutons 🔊. Contenu conforme aux docs : marque-page, i passatempi, verbes, pronoms, “andare in montagna / al mare”, saisons.</p>
   </header>
 
   <div class="bar">
@@ -58,94 +58,46 @@
       <summary>📑 Expressions du marque-page <span class="badge">parler en classe</span></summary>
       <div class="list">
         <!-- Formules de politesse -->
-        <div class="item">
-          <div><span class="it">Per favore</span> — <span class="fr">S’il vous plaît</span></div>
-          <button class="speak" data-say="Per favore">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Grazie</span> — <span class="fr">Merci</span></div>
-          <button class="speak" data-say="Grazie">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Prego / Di niente</span> — <span class="fr">De rien</span></div>
-          <button class="speak" data-say="Prego. Di niente.">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon / Excuse-moi — Excusez-moi</span></div>
-          <button class="speak" data-say="Scusa. Scusi.">🔊 Écouter</button>
-        </div>
+        <div class="item"><div><span class="it">Per favore</span> — <span class="fr">S’il vous plaît</span></div><button class="speak" data-say="Per favore">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Grazie</span> — <span class="fr">Merci</span></div><button class="speak" data-say="Grazie">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Prego / Di niente</span> — <span class="fr">De rien</span></div><button class="speak" data-say="Prego. Di niente.">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon / Excuse-moi — Excusez-moi</span></div><button class="speak" data-say="Scusa. Scusi.">🔊 Écouter</button></div>
 
         <!-- Manifester son incompréhension -->
-        <div class="item">
-          <div><span class="it">Non ho capito / Non ho sentito</span> — <span class="fr">Je n’ai pas compris / entendu</span></div>
-          <button class="speak" data-say="Non ho capito. Non ho sentito.">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Può / puoi ripetere?</span> — <span class="fr">Pouvez-vous / tu peux répéter ?</span></div>
-          <button class="speak" data-say="Può ripetere? Puoi ripetere?">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Non lo so</span> — <span class="fr">Je ne sais pas</span></div>
-          <button class="speak" data-say="Non lo so">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Come si dice … in italiano / francese?</span> — <span class="fr">Comment dit-on … en italien / français ?</span></div>
-          <button class="speak" data-say="Come si dice in italiano? Come si dice in francese?">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Cosa significa … ?</span> — <span class="fr">Que signifie … ?</span></div>
-          <button class="speak" data-say="Cosa significa?">🔊 Écouter</button>
-        </div>
+        <div class="item"><div><span class="it">Non ho capito / Non ho sentito</span> — <span class="fr">Je n’ai pas compris / entendu</span></div><button class="speak" data-say="Non ho capito. Non ho sentito.">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Può / puoi ripetere?</span> — <span class="fr">Pouvez-vous / tu peux répéter ?</span></div><button class="speak" data-say="Può ripetere? Puoi ripetere?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Non lo so</span> — <span class="fr">Je ne sais pas</span></div><button class="speak" data-say="Non lo so">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Come si dice … in italiano / francese?</span> — <span class="fr">Comment dit-on … en italien / français ?</span></div><button class="speak" data-say="Come si dice in italiano? Come si dice in francese?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Cosa significa … ?</span> — <span class="fr">Que signifie … ?</span></div><button class="speak" data-say="Cosa significa?">🔊 Écouter</button></div>
+
+        <!-- Demander l’autorisation (ajouté) -->
+        <div class="item"><div><span class="it">Posso andare in bagno?</span> — <span class="fr">Puis-je aller aux toilettes ?</span></div><button class="speak" data-say="Posso andare in bagno?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso buttare la carta?</span> — <span class="fr">Puis-je jeter le papier ?</span></div><button class="speak" data-say="Posso buttare la carta?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso aprire / chiudere la finestra?</span> — <span class="fr">Puis-je ouvrir / fermer la fenêtre ?</span></div><button class="speak" data-say="Posso aprire la finestra? Posso chiudere la finestra?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso bere?</span> — <span class="fr">Puis-je boire ?</span></div><button class="speak" data-say="Posso bere?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso entrare? / Posso uscire?</span> — <span class="fr">Puis-je entrer ? / sortir ?</span></div><button class="speak" data-say="Posso entrare? Posso uscire?">🔊 Écouter</button></div>
 
         <!-- Demander du matériel -->
-        <div class="item">
-          <div><span class="it">Posso avere una colla?</span> — <span class="fr">Puis-je avoir une colle ?</span></div>
-          <button class="speak" data-say="Posso avere una colla?">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Posso avere un fazzoletto?</span> — <span class="fr">Puis-je avoir un mouchoir ?</span></div>
-          <button class="speak" data-say="Posso avere un fazzoletto?">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Posso avere una penna?</span> — <span class="fr">Puis-je avoir un stylo ?</span></div>
-          <button class="speak" data-say="Posso avere una penna?">🔊 Écouter</button>
-        </div>
+        <div class="item"><div><span class="it">Posso avere una colla?</span> — <span class="fr">Puis-je avoir une colle ?</span></div><button class="speak" data-say="Posso avere una colla?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso avere un fazzoletto?</span> — <span class="fr">Puis-je avoir un mouchoir ?</span></div><button class="speak" data-say="Posso avere un fazzoletto?">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso avere una penna?</span> — <span class="fr">Puis-je avoir un stylo ?</span></div><button class="speak" data-say="Posso avere una penna?">🔊 Écouter</button></div>
 
-        <!-- Dire qu'on a terminé -->
-        <div class="item">
-          <div><span class="it">Ho finito!</span> — <span class="fr">J’ai terminé !</span></div>
-          <button class="speak" data-say="Ho finito!">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Fatto!</span> — <span class="fr">C’est fait !</span></div>
-          <button class="speak" data-say="Fatto!">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Posso fare qualcos’altro?</span> — <span class="fr">Puis-je faire autre chose ?</span></div>
-          <button class="speak" data-say="Posso fare qualcos'altro?">🔊 Écouter</button>
-        </div>
+        <!-- Dire qu’on a terminé -->
+        <div class="item"><div><span class="it">Ho finito!</span> — <span class="fr">J’ai terminé !</span></div><button class="speak" data-say="Ho finito!">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Fatto!</span> — <span class="fr">C’est fait !</span></div><button class="speak" data-say="Fatto!">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Posso fare qualcos’altro?</span> — <span class="fr">Puis-je faire autre chose ?</span></div><button class="speak" data-say="Posso fare qualcos'altro?">🔊 Écouter</button></div>
 
-        <!-- S'excuser -->
-        <div class="item">
-          <div><span class="it">Non ho fatto i compiti</span> — <span class="fr">Je n’ai pas fait les devoirs</span></div>
-          <button class="speak" data-say="Non ho fatto i compiti">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Ho dimenticato il quaderno</span> — <span class="fr">J’ai oublié le cahier</span></div>
-          <button class="speak" data-say="Ho dimenticato il quaderno">🔊 Écouter</button>
-        </div>
-        <div class="item">
-          <div><span class="it">Scusa / Scusi per il ritardo</span> — <span class="fr">Pardon pour le retard</span></div>
-          <button class="speak" data-say="Scusa per il ritardo. Scusi per il ritardo.">🔊 Écouter</button>
-        </div>
+        <!-- S’excuser -->
+        <div class="item"><div><span class="it">Non ho fatto i compiti</span> — <span class="fr">Je n’ai pas fait les devoirs</span></div><button class="speak" data-say="Non ho fatto i compiti">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Ho dimenticato il quaderno</span> — <span class="fr">J’ai oublié le cahier</span></div><button class="speak" data-say="Ho dimenticato il quaderno">🔊 Écouter</button></div>
+        <div class="item"><div><span class="it">Scusa / Scusi per il ritardo</span> — <span class="fr">Pardon pour le retard</span></div><button class="speak" data-say="Scusa per il ritardo. Scusi per il ritardo.">🔊 Écouter</button></div>
       </div>
     </details>
 
-    <!-- I PASSATEMPI -->
+    <!-- I PASSATEMPI (1–16) -->
     <details>
-      <summary>🎯 I passatempi <span class="badge">loisirs</span></summary>
+      <summary>🎯 I passatempi <span class="badge">liste 1–16</span></summary>
       <div class="list">
-        <!-- 1–16 -->
         <div class="item"><div><span class="it">Fare yoga</span> — <span class="fr">faire du yoga</span></div><button class="speak" data-say="Fare yoga">🔊</button></div>
         <div class="item"><div><span class="it">Pescare</span> — <span class="fr">pêcher</span></div><button class="speak" data-say="Pescare">🔊</button></div>
         <div class="item"><div><span class="it">Suonare la chitarra</span> — <span class="fr">jouer de la guitare</span></div><button class="speak" data-say="Suonare la chitarra">🔊</button></div>
@@ -165,19 +117,68 @@
       </div>
     </details>
 
-    <!-- VERBES À CONNAÎTRE -->
-    <details>
-      <summary>⚙️ Verbi da sapere <span class="badge">à réviser à l’oral</span></summary>
-      <div class="list">
-        <div class="item"><div><span class="it">FARE</span> — <span class="fr">faire</span> (ex. <span class="it">io faccio</span>)</div><button class="speak" data-say="fare">🔊</button></div>
-        <div class="item"><div><span class="it">POTERE</span> — <span class="fr">pouvoir</span> (ex. <span class="it">io posso</span>)</div><button class="speak" data-say="potere">🔊</button></div>
-        <div class="item"><div><span class="it">ANDARE</span> — <span class="fr">aller</span> (ex. <span class="it">io vado</span>)</div><button class="speak" data-say="andare">🔊</button></div>
-        <div class="item"><div><span class="it">CHIAMARSI</span> — <span class="fr">s’appeler</span> (ex. <span class="it">mi chiamo</span>)</div><button class="speak" data-say="chiamarsi">🔊</button></div>
-        <div class="item"><div><span class="it">ESSERE</span> — <span class="fr">être</span> (ex. <span class="it">io sono</span>)</div><button class="speak" data-say="essere">🔊</button></div>
-        <div class="item"><div><span class="it">AVERE</span> — <span class="fr">avoir</span> (ex. <span class="it">io ho</span>)</div><button class="speak" data-say="avere">🔊</button></div>
-        <div class="item"><div><span class="it">Verbi in -ARE</span> — <span class="fr">ex. parlare → io parlo</span></div><button class="speak" data-say="parlare">🔊</button></div>
-        <div class="item"><div><span class="it">Verbi in -ERE</span> — <span class="fr">ex. leggere → io leggo</span></div><button class="speak" data-say="leggere">🔊</button></div>
-      </div>
+    <!-- VERBES À CONNAÎTRE (conjugaisons audio) -->
+    <details open>
+      <summary>⚙️ Verbi da sapere <span class="badge">présent de l’indicatif</span></summary>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">FARE — faire</summary>
+        <div class="row"><div>io <span class="it">faccio</span></div><button class="speak" data-say="io faccio">🔊</button></div>
+        <div class="row"><div>tu <span class="it">fai</span></div><button class="speak" data-say="tu fai">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">fa</span></div><button class="speak" data-say="lui fa. lei fa">🔊</button></div>
+        <div class="row"><div>noi <span class="it">facciamo</span></div><button class="speak" data-say="noi facciamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">fate</span></div><button class="speak" data-say="voi fate">🔊</button></div>
+        <div class="row"><div>loro <span class="it">fanno</span></div><button class="speak" data-say="loro fanno">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">POTERE — pouvoir</summary>
+        <div class="row"><div>io <span class="it">posso</span></div><button class="speak" data-say="io posso">🔊</button></div>
+        <div class="row"><div>tu <span class="it">puoi</span></div><button class="speak" data-say="tu puoi">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">può</span></div><button class="speak" data-say="lui può. lei può">🔊</button></div>
+        <div class="row"><div>noi <span class="it">possiamo</span></div><button class="speak" data-say="noi possiamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">potete</span></div><button class="speak" data-say="voi potete">🔊</button></div>
+        <div class="row"><div>loro <span class="it">possono</span></div><button class="speak" data-say="loro possono">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">ANDARE — aller</summary>
+        <div class="row"><div>io <span class="it">vado</span></div><button class="speak" data-say="io vado">🔊</button></div>
+        <div class="row"><div>tu <span class="it">vai</span></div><button class="speak" data-say="tu vai">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">va</span></div><button class="speak" data-say="lui va. lei va">🔊</button></div>
+        <div class="row"><div>noi <span class="it">andiamo</span></div><button class="speak" data-say="noi andiamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">andate</span></div><button class="speak" data-say="voi andate">🔊</button></div>
+        <div class="row"><div>loro <span class="it">vanno</span></div><button class="speak" data-say="loro vanno">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">CHIAMARSI — s’appeler</summary>
+        <div class="row"><div>io <span class="it">mi chiamo</span></div><button class="speak" data-say="io mi chiamo">🔊</button></div>
+        <div class="row"><div>tu <span class="it">ti chiami</span></div><button class="speak" data-say="tu ti chiami">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">si chiama</span></div><button class="speak" data-say="lui si chiama. lei si chiama">🔊</button></div>
+        <div class="row"><div>noi <span class="it">ci chiamiamo</span></div><button class="speak" data-say="noi ci chiamiamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">vi chiamate</span></div><button class="speak" data-say="voi vi chiamate">🔊</button></div>
+        <div class="row"><div>loro <span class="it">si chiamano</span></div><button class="speak" data-say="loro si chiamano">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">ESSERE — être</summary>
+        <div class="row"><div>io <span class="it">sono</span></div><button class="speak" data-say="io sono">🔊</button></div>
+        <div class="row"><div>tu <span class="it">sei</span></div><button class="speak" data-say="tu sei">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">è</span></div><button class="speak" data-say="lui è. lei è">🔊</button></div>
+        <div class="row"><div>noi <span class="it">siamo</span></div><button class="speak" data-say="noi siamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">siete</span></div><button class="speak" data-say="voi siete">🔊</button></div>
+        <div class="row"><div>loro <span class="it">sono</span></div><button class="speak" data-say="loro sono">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">AVERE — avoir</summary>
+        <div class="row"><div>io <span class="it">ho</span></div><button class="speak" data-say="io ho">🔊</button></div>
+        <div class="row"><div>tu <span class="it">hai</span></div><button class="speak" data-say="tu hai">🔊</button></div>
+        <div class="row"><div>lui / lei <span class="it">ha</span></div><button class="speak" data-say="lui ha. lei ha">🔊</button></div>
+        <div class="row"><div>noi <span class="it">abbiamo</span></div><button class="speak" data-say="noi abbiamo">🔊</button></div>
+        <div class="row"><div>voi <span class="it">avete</span></div><button class="speak" data-say="voi avete">🔊</button></div>
+        <div class="row"><div>loro <span class="it">hanno</span></div><button class="speak" data-say="loro hanno">🔊</button></div>
+      </details>
+
+      <details class="sub"><summary style="padding:10px 12px; font-weight:700">Modèles — verbes en -ARE / -ERE</summary>
+        <div class="row"><div><span class="it">parlare</span> : io parlo, tu parli, lui/lei parla, noi parliamo, voi parlate, loro parlano</div><button class="speak" data-say="io parlo, tu parli, lui parla, noi parliamo, voi parlate, loro parlano">🔊</button></div>
+        <div class="row"><div><span class="it">leggere</span> : io leggo, tu leggi, lui/lei legge, noi leggiamo, voi leggete, loro leggono</div><button class="speak" data-say="io leggo, tu leggi, lui legge, noi leggiamo, voi leggete, loro leggono">🔊</button></div>
+      </details>
     </details>
 
     <!-- PRONOMI INTERROGATIVI -->
@@ -208,7 +209,7 @@
       </div>
     </details>
 
-    <p class="note">Astuce mobile : si vous n’entendez rien sur iPhone/iPad, touchez d’abord “Tester l’audio”, laissez la page au premier plan et le volume du téléphone au maximum.</p>
+    <p class="note">Astuce mobile : si rien ne se lance sur iPhone/iPad, touchez d’abord “Tester l’audio”, laissez la page visible (pas en arrière-plan) et montez le volume.</p>
   </div>
 
   <script>
@@ -224,15 +225,13 @@
     function loadVoices() {
       voices = speechSynthesis.getVoices();
       voiceSel.innerHTML = "";
-      const opts = voices
-        .map(v => ({ v, ok: v.lang && v.lang.toLowerCase().startsWith('it') }))
-        .sort((a,b)=> (b.ok?1:0) - (a.ok?1:0));
+      const opts = voices.map(v => ({ v, ok: v.lang && v.lang.toLowerCase().startsWith('it') }))
+                         .sort((a,b)=> (b.ok?1:0) - (a.ok?1:0));
       opts.forEach(({v})=>{
         const o = document.createElement('option');
         o.value = v.name; o.textContent = `${v.name} — ${v.lang}`;
         voiceSel.appendChild(o);
       });
-      // pick an italian voice if available, else first
       const prefer = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('it'));
       itVoice = prefer || voices[0] || null;
       if (itVoice) {
@@ -245,32 +244,26 @@
 
     function speak(text){
       if (!text) return;
-      speechSynthesis.cancel(); // stop any current speech
+      speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       const chosen = voices.find(v => v.name === voiceSel.value) || itVoice;
       if (chosen) { u.voice = chosen; u.lang = chosen.lang; }
       else { u.lang = 'it-IT'; }
       u.rate = slow.checked ? 0.85 : 1.0;
-      u.pitch = 1;
-      u.volume = 1;
+      u.pitch = 1; u.volume = 1;
       speechSynthesis.speak(u);
     }
 
-    // Unlock audio on mobile and give feedback
-    btnTest.addEventListener('click', () => {
-      speak('Ciao! Prova audio in italiano.');
-    });
+    btnTest.addEventListener('click', () => speak('Ciao! Prova audio in italiano.'));
     btnStop.addEventListener('click', () => speechSynthesis.cancel());
 
-    // Buttons in the list
     document.querySelectorAll('.speak').forEach(btn=>{
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', () => {
         const t = btn.getAttribute('data-say') || btn.previousElementSibling?.textContent || '';
         speak(t.trim());
       }, {passive:true});
     });
 
-    // Voice selector change
     voiceSel.addEventListener('change', () => {
       const name = voiceSel.value;
       itVoice = voices.find(v => v.name === name) || itVoice;
