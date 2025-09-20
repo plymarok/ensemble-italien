@@ -1,125 +1,130 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Révisions Italien</title>
   <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --accent: #38bdf8;
-      --text: #0f172a;
-      --shadow: 0 4px 12px rgba(0,0,0,0.1);
-      --radius: 12px;
-    }
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-    }
-    header {
-      background: var(--accent);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.5em;
-    }
-    section {
-      margin: 20px auto;
-      max-width: 900px;
-    }
-    h2 {
-      color: var(--accent);
-      margin-top: 40px;
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 6px;
-    }
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 15px 20px;
-      margin: 12px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .text {
-      font-size: 1.1em;
-    }
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      padding: 6px 12px;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #0ea5e9;
-    }
+    :root{--bg:#f8fafc;--card:#fff;--accent:#38bdf8;--text:#0f172a;--shadow:0 4px 12px rgba(0,0,0,.1);--radius:12px}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0;background:var(--bg);color:var(--text)}
+    header{background:var(--accent);color:#fff;padding:20px;text-align:center;font-size:1.4rem}
+    section{margin:20px auto;max-width:900px;padding:0 12px}
+    h2{color:var(--accent);margin:28px 0 8px;border-bottom:2px solid var(--accent);padding-bottom:6px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .text{font-size:1.05rem}
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:600}
+    .btn:active{transform:translateY(1px)}
+    .note{max-width:900px;margin:10px auto 0;padding:8px 12px;color:#0f172a;background:#fff3cd;border:1px solid #facc15;border-radius:10px;font-size:.95rem}
+    .hidden{display:none}
   </style>
 </head>
 <body>
   <header>📘 Révisions Italien</header>
-  <section>
+
+  <div id="no-tts" class="note hidden">🔇 La synthèse vocale n'est pas disponible sur ce navigateur. Le texte reste consultable.</div>
+
+  <section id="content">
+
     <h2>Formules de politesse</h2>
-    <div class="card"><div class="text">Per favore — S’il vous plaît</div><button onclick="speak('Per favore')">🔊</button></div>
-    <div class="card"><div class="text">Grazie — Merci</div><button onclick="speak('Grazie')">🔊</button></div>
-    <div class="card"><div class="text">Prego — De rien</div><button onclick="speak('Prego')">🔊</button></div>
-    <div class="card"><div class="text">Scusa / Scusi — Pardon</div><button onclick="speak('Scusa')">🔊</button></div>
+    <div class="card"><div class="text">Per favore — S’il vous plaît</div><button class="btn" data-it="Per favore" aria-label="Écouter Per favore">🔊</button></div>
+    <div class="card"><div class="text">Grazie — Merci</div><button class="btn" data-it="Grazie" aria-label="Écouter Grazie">🔊</button></div>
+    <div class="card"><div class="text">Prego — De rien</div><button class="btn" data-it="Prego" aria-label="Écouter Prego">🔊</button></div>
+    <div class="card"><div class="text">Scusa / Scusi — Pardon</div><button class="btn" data-it="Scusa" aria-label="Écouter Scusa">🔊</button></div>
 
-    <h2>Verbes essentiels</h2>
-    <div class="card"><div class="text"><b>FARE</b> — faire</div><button onclick="speak('fare')">🔊</button></div>
-    <div class="card"><div class="text">Io faccio — je fais</div><button onclick="speak('io faccio')">🔊</button></div>
-    <div class="card"><div class="text">Tu fai — tu fais</div><button onclick="speak('tu fai')">🔊</button></div>
-    <div class="card"><div class="text">Lui/lei fa — il/elle fait</div><button onclick="speak('lui fa')">🔊</button></div>
-    <div class="card"><div class="text">Noi facciamo — nous faisons</div><button onclick="speak('noi facciamo')">🔊</button></div>
-    <div class="card"><div class="text">Voi fate — vous faites</div><button onclick="speak('voi fate')">🔊</button></div>
-    <div class="card"><div class="text">Loro fanno — ils font</div><button onclick="speak('loro fanno')">🔊</button></div>
-
-    <!-- Répéter le même modèle pour POTERE, ANDARE, CHIAMARSI, ESSERE, AVERE -->
+    <h2>Verbes essentiels — FARE</h2>
+    <div class="card"><div class="text"><b>FARE</b> — faire</div><button class="btn" data-it="fare" aria-label="Écouter FARE">🔊</button></div>
+    <div class="card"><div class="text">Io faccio — je fais</div><button class="btn" data-it="Io faccio">🔊</button></div>
+    <div class="card"><div class="text">Tu fai — tu fais</div><button class="btn" data-it="Tu fai">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei fa — il/elle fait</div><button class="btn" data-it="Lui fa">🔊</button></div>
+    <div class="card"><div class="text">Noi facciamo — nous faisons</div><button class="btn" data-it="Noi facciamo">🔊</button></div>
+    <div class="card"><div class="text">Voi fate — vous faites</div><button class="btn" data-it="Voi fate">🔊</button></div>
+    <div class="card"><div class="text">Loro fanno — ils font</div><button class="btn" data-it="Loro fanno">🔊</button></div>
 
     <h2>Pronoms interrogatifs</h2>
-    <div class="card"><div class="text">Perché — pourquoi</div><button onclick="speak('Perché')">🔊</button></div>
-    <div class="card"><div class="text">Quando — quand</div><button onclick="speak('Quando')">🔊</button></div>
-    <div class="card"><div class="text">Chi — qui</div><button onclick="speak('Chi')">🔊</button></div>
-    <div class="card"><div class="text">Dove — où</div><button onclick="speak('Dove')">🔊</button></div>
-    <div class="card"><div class="text">Come — comment</div><button onclick="speak('Come')">🔊</button></div>
-    <div class="card"><div class="text">Che cosa — quoi</div><button onclick="speak('Che cosa')">🔊</button></div>
-    <div class="card"><div class="text">Quanto — combien</div><button onclick="speak('Quanto')">🔊</button></div>
-    <div class="card"><div class="text">Quale — quel(le)</div><button onclick="speak('Quale')">🔊</button></div>
+    <div class="card"><div class="text">Perché — pourquoi</div><button class="btn" data-it="Perché">🔊</button></div>
+    <div class="card"><div class="text">Quando — quand</div><button class="btn" data-it="Quando">🔊</button></div>
+    <div class="card"><div class="text">Chi — qui</div><button class="btn" data-it="Chi">🔊</button></div>
+    <div class="card"><div class="text">Dove — où</div><button class="btn" data-it="Dove">🔊</button></div>
+    <div class="card"><div class="text">Come — comment</div><button class="btn" data-it="Come">🔊</button></div>
+    <div class="card"><div class="text">Che cosa — quoi</div><button class="btn" data-it="Che cosa">🔊</button></div>
+    <div class="card"><div class="text">Quanto — combien</div><button class="btn" data-it="Quanto">🔊</button></div>
+    <div class="card"><div class="text">Quale — quel(le)</div><button class="btn" data-it="Quale">🔊</button></div>
 
     <h2>Expressions</h2>
-    <div class="card"><div class="text">Andare in montagna — Aller à la montagne</div><button onclick="speak('Andare in montagna')">🔊</button></div>
-    <div class="card"><div class="text">Andare al mare — Aller à la mer</div><button onclick="speak('Andare al mare')">🔊</button></div>
+    <div class="card"><div class="text">Andare in montagna — Aller à la montagne</div><button class="btn" data-it="Andare in montagna">🔊</button></div>
+    <div class="card"><div class="text">Andare al mare — Aller à la mer</div><button class="btn" data-it="Andare al mare">🔊</button></div>
 
     <h2>Les saisons</h2>
-    <div class="card"><div class="text">La primavera — le printemps</div><button onclick="speak('La primavera')">🔊</button></div>
-    <div class="card"><div class="text">L’estate — l’été</div><button onclick="speak('L estate')">🔊</button></div>
-    <div class="card"><div class="text">L’autunno — l’automne</div><button onclick="speak('L autunno')">🔊</button></div>
-    <div class="card"><div class="text">L’inverno — l’hiver</div><button onclick="speak('L inverno')">🔊</button></div>
+    <div class="card"><div class="text">La primavera — le printemps</div><button class="btn" data-it="La primavera">🔊</button></div>
+    <div class="card"><div class="text">L’estate — l’été</div><button class="btn" data-it="L estate">🔊</button></div>
+    <div class="card"><div class="text">L’autunno — l’automne</div><button class="btn" data-it="L autunno">🔊</button></div>
+    <div class="card"><div class="text">L’inverno — l’hiver</div><button class="btn" data-it="L inverno">🔊</button></div>
 
     <h2>I passatempi</h2>
-    <div class="card"><div class="text">Fare yoga — Faire du yoga 🧘</div><button onclick="speak('Fare yoga')">🔊</button></div>
-    <div class="card"><div class="text">Giocare a calcio — Jouer au foot ⚽</div><button onclick="speak('Giocare a calcio')">🔊</button></div>
-    <div class="card"><div class="text">Suonare la chitarra — Jouer de la guitare 🎸</div><button onclick="speak('Suonare la chitarra')">🔊</button></div>
-    <!-- Ajouter toutes les activités avec emoji -->
-
+    <div class="card"><div class="text">Fare yoga — Faire du yoga 🧘</div><button class="btn" data-it="Fare yoga">🔊</button></div>
+    <div class="card"><div class="text">Giocare a calcio — Jouer au foot ⚽</div><button class="btn" data-it="Giocare a calcio">🔊</button></div>
+    <div class="card"><div class="text">Suonare la chitarra — Jouer de la guitare 🎸</div><button class="btn" data-it="Suonare la chitarra">🔊</button></div>
   </section>
 
+  <noscript>
+    <div class="note">Active JavaScript pour utiliser l'audio.</div>
+  </noscript>
+
   <script>
-    function speak(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "it-IT";
-      speechSynthesis.speak(utterance);
-    }
+    (function(){
+      // Bandeau si pas de TTS natif
+      var hasTTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+      if(!hasTTS){ document.getElementById('no-tts').classList.remove('hidden'); }
+
+      // Sélection de la voix italienne (si dispo)
+      var itVoice = null;
+      function pickVoice(){
+        try{
+          var vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+          itVoice = null;
+          for (var i=0;i<vs.length;i++){
+            if (/^it(-|_|$)/i.test(vs[i].lang) || /ital/i.test(vs[i].name)) { itVoice = vs[i]; break; }
+          }
+        }catch(e){ itVoice = null; }
+      }
+      if (hasTTS){
+        try{
+          speechSynthesis.onvoiceschanged = pickVoice;
+          setTimeout(pickVoice,0);
+        }catch(e){}
+      }
+
+      function speak(text){
+        if (!hasTTS || !text) return;
+        try{
+          var u = new SpeechSynthesisUtterance(text);
+          if (itVoice){ u.voice = itVoice; u.lang = itVoice.lang; } else { u.lang = 'it-IT'; }
+          u.rate = 1.0; u.pitch = 1.0;
+          speechSynthesis.speak(u);
+        }catch(e){}
+      }
+
+      // Délégation: lecture dès "pointerdown" (meilleur support mobile)
+      var lastTs = 0;
+      function handle(e){
+        var n = e.target;
+        while(n && n!==document){
+          if(n.matches && n.matches('button[data-it]')){
+            var now = Date.now();
+            if(now - lastTs > 250){ // évite double tir pointerdown/click
+              lastTs = now;
+              e.preventDefault();
+              speak(n.getAttribute('data-it'));
+            }
+            break;
+          }
+          n = n.parentNode;
+        }
+      }
+      document.addEventListener('pointerdown', handle, {passive:false});
+      document.addEventListener('click', handle, {passive:false});
+    })();
   </script>
 </body>
 </html>
-
