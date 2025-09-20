@@ -29,9 +29,7 @@ nav a{
   transition:.2s transform, .2s background;
 }
 nav a:hover{transform:translateY(-1px); background:var(--card-2)}
-.controls{
-  display:flex; gap:10px; justify-content:center; flex-wrap:wrap; padding:8px 16px; background:transparent; margin-top:6px
-}
+.controls{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; padding:8px 16px; margin-top:6px }
 .controls button, .button, button{
   background:var(--brand); color:#001019; border:none; padding:10px 12px;
   border-radius:14px; cursor:pointer; font-weight:700; letter-spacing:.2px;
@@ -64,6 +62,7 @@ h2{color:var(--brand)}
 .kbd{border:1px solid rgba(148,163,184,.35); background:var(--panel); padding:3px 8px; border-radius:8px; font-family:ui-monospace,Menlo,Consolas,monospace}
 .fr{opacity:.95}
 .hide-fr .fr{display:none}
+mark{background:rgba(250,204,21,.25); padding:0 .15em; border-radius:.25em}
 .footer{text-align:center; color:var(--muted); padding:40px 10px; font-size:.9rem}
 
 /* Quiz */
@@ -74,4 +73,3 @@ h2{color:var(--brand)}
 .quiz .opts button.correct{background:rgba(16,185,129,.25); border:1px solid rgba(16,185,129,.6)}
 .quiz .opts button.wrong{background:rgba(239, 68, 68,.18); border:1px solid rgba(239,68,68,.45)}
 @media (max-width:560px){ nav{top:56px} header{padding:14px 10px}}
-
