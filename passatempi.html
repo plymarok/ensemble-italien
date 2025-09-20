@@ -5,36 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>I Passatempi — Italien</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-    import {loadJSON, createCard, renderSearch, speak, hi, injectControls, setupQuizHost} from './app.js';
-    window.addEventListener('DOMContentLoaded', async () => {
-      injectControls();
-      const container = document.getElementById('container');
-      renderSearch(container, (q) => filter(q));
-
-      const data = await loadJSON('/data/passatempi.json');   // ✅ chemin absolu
-      console.log("Loaded JSON passatempi:", data);
-
-      const grid = document.createElement('div'); grid.className='grid'; container.appendChild(grid);
-
-      setupQuizHost(container, data.map(x => ({it:x.it, fr:x.fr})));
-
-      function draw(items, q=''){
-        grid.innerHTML='';
-        items.forEach(it => {
-          const card = createCard(`<div class="text">${hi(it.it,q)} — <span class="fr">${hi(it.fr,q)}</span> ${it.emoji||''}</div>
-            <button class="ghost" data-it="${it.it.replace('"','&quot;')}">🔊</button>`);
-          grid.appendChild(card);
-        });
-      }
-      function filter(q){
-        q=(q||'').toLowerCase();
-        draw(data.filter(it=> it.it.toLowerCase().includes(q) || it.fr.toLowerCase().includes(q)), q);
-      }
-      draw(data);
-      window.speak = speak;
-    });
-  </script>
 </head>
 <body data-page="passatempi">
   <header>📘 I passatempi</header>
@@ -47,5 +17,38 @@
     <h1>Les passe-temps (16)</h1>
     <p class="small">Mode quiz disponible (désactivable). Compteur de révision lié aux lectures audio et bonnes réponses.</p>
   </main>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      App.injectControls();
+      var container=document.getElementById('container');
+      App.renderSearch(container, function(q){ filter(q); });
+
+      App.loadJSON('/data/passatempi.json').then(function(data){
+        var grid=document.createElement('div'); grid.className='grid'; container.appendChild(grid);
+
+        App.setupQuizHost(container, data.map(function(x){ return {it:x.it, fr:x.fr}; }));
+
+        function draw(items, q){
+          grid.innerHTML='';
+          items.forEach(function(it){
+            var card=App.createCard(
+              '<div class="text">'+App.hi(it.it,q)+' — <span class="fr">'+App.hi(it.fr,q)+'</span> '+(it.emoji||'')+'</div>'+
+              '<button class="ghost" data-it="'+it.it.replace('"','&quot;')+'">🔊</button>'
+            );
+            grid.appendChild(card);
+          });
+        }
+        function filter(q){
+          q=(q||'').toLowerCase();
+          draw(data.filter(function(it){ return it.it.toLowerCase().includes(q)||it.fr.toLowerCase().includes(q); }), q);
+        }
+        draw(data);
+      }).catch(function(){
+        container.insertAdjacentHTML('beforeend','<p class="small">❌ Impossible de charger <code>/data/passatempi.json</code></p>');
+      });
+    });
+  </script>
 </body>
 </html>
