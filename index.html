@@ -5,35 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Révisions d’italien — Lexique & verbes (audio)</title>
   <style>
-    /* ===== Palette & base ===== */
     :root{
       --bg1:#0b1224; --bg2:#0f172a;
       --card:#111b2f; --ink:#e8eef7; --muted:#9fb0c7;
-      --brand:#38bdf8; --brand-2:#a78bfa;
+      --brand:#38bdf8; --brand2:#a78bfa;
       --accent:#1f2e4d; --divider:#1e2b48;
       --radius:18px; --shadow:0 12px 28px rgba(0,0,0,.35);
     }
-    html,body{margin:0; height:100%; background:
-      radial-gradient(1200px 600px at 10% -10%, #152244 0%, transparent 60%),
-      radial-gradient(900px 600px at 100% 0%, #1b2c52 0%, transparent 55%),
-      linear-gradient(180deg, var(--bg1), var(--bg2));
-      color:var(--ink);
-      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    html,body{
+      margin:0; background:
+        radial-gradient(1200px 600px at 10% -10%, #152244 0%, transparent 60%),
+        radial-gradient(900px 600px at 100% 0%, #1b2c52 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--ink); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif
+    }
     *,*:before,*:after{box-sizing:border-box}
 
-    /* ===== En-tête ===== */
     header{padding:26px 16px 8px; text-align:center}
-    header h1{margin:0 0 6px; font-size:1.55rem; letter-spacing:.2px}
+    header h1{margin:0 0 6px; font-size:1.55rem}
     header p{margin:0; color:var(--muted); font-size:.95rem}
 
-    /* ===== Barre d’actions ===== */
     .bar{
-      position:sticky; top:0; z-index:10;
+      position:sticky; top:0; z-index:20;
       backdrop-filter:saturate(150%) blur(8px);
       background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.75));
-      display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; padding:12px 14px; border-bottom:1px solid #1a2746
+      display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap;
+      padding:12px 14px; border-bottom:1px solid #1a2746
     }
-    button, select, input[type="checkbox"]+label{
+    button, input[type="checkbox"]+label{
       appearance:none;
       background:linear-gradient(180deg, var(--brand), #149ed7);
       color:#fff; border:0; padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;
@@ -41,23 +40,27 @@
     }
     .ghost{background:var(--accent)}
     .toggle{display:flex; align-items:center; gap:8px; color:var(--ink); font-weight:700}
-    select{background:#173058}
     button:active{transform:translateY(1px)}
     @media (hover:hover){button:hover{filter:brightness(1.08); transform:translateY(-1px)}}
 
-    /* ===== Conteneur principal ===== */
+    .tabs{
+      position:sticky; top:56px; z-index:15; /* juste sous la barre */
+      padding:10px 14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+      background:linear-gradient(180deg, rgba(15,23,42,.8), rgba(15,23,42,.6));
+      border-bottom:1px solid #16213f; backdrop-filter:blur(6px)
+    }
+    .tab{
+      background:#173058; color:#cfe8ff; border:1px solid #1a2a55; border-radius:999px;
+      padding:8px 12px; font-weight:800; cursor:pointer
+    }
+    .tab.active{background:linear-gradient(180deg, var(--brand), #149ed7); color:#fff}
+
     .wrap{max-width:980px; margin:0 auto; padding:14px}
 
-    /* ===== Cartes génériques (sections “details”) ===== */
     details{background:var(--card); border-radius:var(--radius); margin:14px 0; box-shadow:var(--shadow); overflow:hidden; border:1px solid #0c1733}
-    summary{
-      position:relative; padding:16px 18px; font-weight:800; list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px
-    }
+    summary{position:relative; padding:16px 18px; font-weight:800; list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px}
     summary::marker{display:none}
-    summary::after{
-      content:"▾"; position:absolute; right:16px; top:50%; transform:translateY(-50%) rotate(-90deg);
-      color:var(--brand); font-weight:900; transition:transform .2s ease
-    }
+    summary::after{content:"▾"; position:absolute; right:16px; top:50%; transform:translateY(-50%) rotate(-90deg); color:var(--brand); font-weight:900; transition:transform .2s}
     details[open] summary::after{transform:translateY(-50%) rotate(0)}
     .badge{background:#17233b; color:var(--brand); padding:2px 8px; border-radius:999px; font-size:.8rem}
     .list{padding:6px 12px 12px}
@@ -66,74 +69,57 @@
     .it{font-weight:800}
     .fr{color:var(--muted); font-size:.95rem}
 
-    /* ===== Boutons audio ===== */
-    .speak{
-      background:linear-gradient(180deg, #1e3a72, #162a54);
-      border:1px solid #1a2a55;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 12px; border-radius:999px; font-weight:800
-    }
+    .speak{background:linear-gradient(180deg, #1e3a72, #162a54); border:1px solid #1a2a55;
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; font-weight:800}
     .speak::before{content:"🔊"}
     .speak.playing{background:linear-gradient(180deg, #1f5fb3,#1d4591)}
     .speak.playing::before{content:"🔈"}
-    .pulse{position:relative}
-    .pulse.playing::after{
-      content:""; position:absolute; inset:-2px; border-radius:inherit; border:2px solid rgba(56,189,248,.45);
-      animation:pulse 1.4s ease-out infinite
-    }
-    @keyframes pulse{
-      0%{transform:scale(1); opacity:.7}
-      100%{transform:scale(1.08); opacity:0}
-    }
 
-    /* ===== Bloc VERBES affiché directement ===== */
     .verbs{background:var(--card); border-radius:var(--radius); margin:14px 0; box-shadow:var(--shadow); overflow:hidden; border:1px solid #0c1733}
     .verbs header{padding:16px 18px; text-align:left; border-bottom:1px solid var(--divider)}
-    .verbs h2{margin:0; font-size:1.1rem; letter-spacing:.2px}
-    .verbgrid{
-      display:grid; gap:14px; padding:14px; grid-template-columns:1fr;
-    }
+    .verbs h2{margin:0; font-size:1.1rem}
+    .verbgrid{display:grid; gap:14px; padding:14px; grid-template-columns:1fr}
     @media (min-width:720px){ .verbgrid{ grid-template-columns:1fr 1fr } }
-    .verbcard{
-      border-radius:16px; background:linear-gradient(180deg,#0f1a33,#0c162b);
-      overflow:hidden; border:1px solid #102349
-    }
-    .verbhead{
-      padding:12px 14px; font-weight:900; border-bottom:1px solid var(--divider);
-      background:linear-gradient(180deg, rgba(56,189,248,.14), transparent)
-    }
-    .row{
-      display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
-      padding:11px 12px; border-top:1px solid #0f2142
-    }
+    .verbcard{border-radius:16px; background:linear-gradient(180deg,#0f1a33,#0c162b); overflow:hidden; border:1px solid #102349}
+    .verbhead{padding:12px 14px; font-weight:900; border-bottom:1px solid var(--divider); background:linear-gradient(180deg, rgba(56,189,248,.14), transparent)}
+    .row{display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; padding:11px 12px; border-top:1px solid #0f2142}
     .row:first-child{border-top:0}
     .row .it strong{font-weight:900}
 
     .vnote{padding:10px 14px; color:var(--muted); font-size:.94rem; border-top:1px dashed var(--divider)}
     .note{padding:10px 12px; color:var(--muted); font-size:.9rem; text-align:center}
+    /* util */
+    .hidden{display:none!important}
   </style>
 </head>
 <body>
   <header>
     <h1>Révisions d’italien — Aide-mémoire sonore</h1>
-    <p>Touchez “Tester l’audio”, puis les boutons. Les verbes sont visibles directement.</p>
+    <p>Appuie sur “Tester l’audio”, puis sur les boutons. Voix italienne auto, mode lent plus lent.</p>
   </header>
 
   <div class="bar">
-    <button id="btnTest" class="pulse">🔈 Tester l’audio</button>
+    <button id="btnTest">🔈 Tester l’audio</button>
     <button class="ghost" id="btnStop">⏹️ Stop</button>
     <label class="toggle"><input type="checkbox" id="slow"> Prononciation lente</label>
-    <select id="voiceSel" title="Voix italienne"></select>
   </div>
+
+  <!-- Onglets catégories -->
+  <nav class="tabs" aria-label="Catégories">
+    <button class="tab active" data-filter="all">Tous</button>
+    <button class="tab" data-filter="verbs">Verbes</button>
+    <button class="tab" data-filter="bookmark">Marque-page</button>
+    <button class="tab" data-filter="passatempi">Passatempi</button>
+    <button class="tab" data-filter="pronomi">Pronomi</button>
+    <button class="tab" data-filter="stagioni">Montagna/Mare + Saisons</button>
+  </nav>
 
   <div class="wrap">
 
-    <!-- ===== VERBES — AFFICHAGE DIRECT ===== -->
-    <section class="verbs" aria-label="Verbi da sapere">
+    <!-- VERBES -->
+    <section class="verbs" aria-label="Verbi da sapere" data-cat="verbs" id="verbs">
       <header><h2>⚙️ Verbi da sapere — présent de l’indicatif</h2></header>
-
       <div class="verbgrid">
-        <!-- FARE -->
         <div class="verbcard">
           <div class="verbhead">FARE — faire</div>
           <div class="row"><div>io <span class="it"><strong>faccio</strong></span></div><button class="speak" data-say="io faccio"></button></div>
@@ -144,7 +130,6 @@
           <div class="row"><div>loro <span class="it"><strong>fanno</strong></span></div><button class="speak" data-say="loro fanno"></button></div>
         </div>
 
-        <!-- POTERE -->
         <div class="verbcard">
           <div class="verbhead">POTERE — pouvoir</div>
           <div class="row"><div>io <span class="it"><strong>posso</strong></span></div><button class="speak" data-say="io posso"></button></div>
@@ -155,7 +140,6 @@
           <div class="row"><div>loro <span class="it"><strong>possono</strong></span></div><button class="speak" data-say="loro possono"></button></div>
         </div>
 
-        <!-- ANDARE -->
         <div class="verbcard">
           <div class="verbhead">ANDARE — aller</div>
           <div class="row"><div>io <span class="it"><strong>vado</strong></span></div><button class="speak" data-say="io vado"></button></div>
@@ -166,7 +150,6 @@
           <div class="row"><div>loro <span class="it"><strong>vanno</strong></span></div><button class="speak" data-say="loro vanno"></button></div>
         </div>
 
-        <!-- CHIAMARSI -->
         <div class="verbcard">
           <div class="verbhead">CHIAMARSI — s’appeler</div>
           <div class="row"><div>io <span class="it"><strong>mi chiamo</strong></span></div><button class="speak" data-say="io mi chiamo"></button></div>
@@ -177,7 +160,6 @@
           <div class="row"><div>loro <span class="it"><strong>si chiamano</strong></span></div><button class="speak" data-say="loro si chiamano"></button></div>
         </div>
 
-        <!-- ESSERE -->
         <div class="verbcard">
           <div class="verbhead">ESSERE — être</div>
           <div class="row"><div>io <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="io sono"></button></div>
@@ -188,7 +170,6 @@
           <div class="row"><div>loro <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="loro sono"></button></div>
         </div>
 
-        <!-- AVERE -->
         <div class="verbcard">
           <div class="verbhead">AVERE — avoir</div>
           <div class="row"><div>io <span class="it"><strong>ho</strong></span></div><button class="speak" data-say="io ho"></button></div>
@@ -207,44 +188,43 @@
       </div>
     </section>
 
-    <!-- ===== EXPRESSIONS DU MARQUE-PAGE ===== -->
-    <details>
+    <!-- MARQUE-PAGE -->
+    <details data-cat="bookmark" id="bookmark">
       <summary>📑 Expressions du marque-page <span class="badge">parler en classe</span></summary>
       <div class="list">
-        <!-- Politesse -->
         <div class="item"><div><span class="it">Per favore</span> — <span class="fr">S’il vous plaît</span></div><button class="speak" data-say="Per favore"></button></div>
         <div class="item"><div><span class="it">Grazie</span> — <span class="fr">Merci</span></div><button class="speak" data-say="Grazie"></button></div>
         <div class="item"><div><span class="it">Prego / Di niente</span> — <span class="fr">De rien</span></div><button class="speak" data-say="Prego. Di niente."></button></div>
-        <div class="item"><div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon / Excusez-moi</span></div><button class="speak" data-say="Scusa. Scusi."></button></div>
-        <!-- Incompréhension -->
+        <div class="item"><div><span class="it">Scusa / Scusi</span> — <span class="fr">Pardon</span></div><button class="speak" data-say="Scusa. Scusi."></button></div>
+
         <div class="item"><div><span class="it">Non ho capito / Non ho sentito</span> — <span class="fr">Je n’ai pas compris / entendu</span></div><button class="speak" data-say="Non ho capito. Non ho sentito."></button></div>
         <div class="item"><div><span class="it">Può / puoi ripetere?</span> — <span class="fr">Pouvez-vous / tu peux répéter ?</span></div><button class="speak" data-say="Può ripetere? Puoi ripetere?"></button></div>
         <div class="item"><div><span class="it">Non lo so</span> — <span class="fr">Je ne sais pas</span></div><button class="speak" data-say="Non lo so"></button></div>
         <div class="item"><div><span class="it">Come si dice … in italiano / francese?</span> — <span class="fr">Comment dit-on … ?</span></div><button class="speak" data-say="Come si dice in italiano? Come si dice in francese?"></button></div>
         <div class="item"><div><span class="it">Cosa significa … ?</span> — <span class="fr">Que signifie … ?</span></div><button class="speak" data-say="Cosa significa?"></button></div>
-        <!-- Autorisation -->
+
         <div class="item"><div><span class="it">Posso andare in bagno?</span> — <span class="fr">Puis-je aller aux toilettes ?</span></div><button class="speak" data-say="Posso andare in bagno?"></button></div>
         <div class="item"><div><span class="it">Posso buttare la carta?</span> — <span class="fr">Puis-je jeter le papier ?</span></div><button class="speak" data-say="Posso buttare la carta?"></button></div>
         <div class="item"><div><span class="it">Posso aprire / chiudere la finestra?</span> — <span class="fr">Puis-je ouvrir / fermer la fenêtre ?</span></div><button class="speak" data-say="Posso aprire la finestra? Posso chiudere la finestra?"></button></div>
         <div class="item"><div><span class="it">Posso bere?</span> — <span class="fr">Puis-je boire ?</span></div><button class="speak" data-say="Posso bere?"></button></div>
         <div class="item"><div><span class="it">Posso entrare? / Posso uscire?</span> — <span class="fr">Puis-je entrer ? / sortir ?</span></div><button class="speak" data-say="Posso entrare? Posso uscire?"></button></div>
-        <!-- Matériel -->
+
         <div class="item"><div><span class="it">Posso avere una colla?</span> — <span class="fr">Puis-je avoir une colle ?</span></div><button class="speak" data-say="Posso avere una colla?"></button></div>
         <div class="item"><div><span class="it">Posso avere un fazzoletto?</span> — <span class="fr">Puis-je avoir un mouchoir ?</span></div><button class="speak" data-say="Posso avere un fazzoletto?"></button></div>
         <div class="item"><div><span class="it">Posso avere una penna?</span> — <span class="fr">Puis-je avoir un stylo ?</span></div><button class="speak" data-say="Posso avere una penna?"></button></div>
-        <!-- Fin d’activité -->
+
         <div class="item"><div><span class="it">Ho finito!</span> — <span class="fr">J’ai terminé !</span></div><button class="speak" data-say="Ho finito!"></button></div>
         <div class="item"><div><span class="it">Fatto!</span> — <span class="fr">C’est fait !</span></div><button class="speak" data-say="Fatto!"></button></div>
         <div class="item"><div><span class="it">Posso fare qualcos’altro?</span> — <span class="fr">Puis-je faire autre chose ?</span></div><button class="speak" data-say="Posso fare qualcos'altro?"></button></div>
-        <!-- S’excuser -->
+
         <div class="item"><div><span class="it">Non ho fatto i compiti</span> — <span class="fr">Je n’ai pas fait les devoirs</span></div><button class="speak" data-say="Non ho fatto i compiti"></button></div>
         <div class="item"><div><span class="it">Ho dimenticato il quaderno</span> — <span class="fr">J’ai oublié le cahier</span></div><button class="speak" data-say="Ho dimenticato il quaderno"></button></div>
         <div class="item"><div><span class="it">Scusa / Scusi per il ritardo</span> — <span class="fr">Pardon pour le retard</span></div><button class="speak" data-say="Scusa per il ritardo. Scusi per il ritardo."></button></div>
       </div>
     </details>
 
-    <!-- ===== I PASSATEMPI ===== -->
-    <details>
+    <!-- PASSATEMPI -->
+    <details data-cat="passatempi" id="passatempi">
       <summary>🎯 I passatempi <span class="badge">loisirs (1–16)</span></summary>
       <div class="list">
         <div class="item"><div><span class="it">Fare yoga</span> — <span class="fr">faire du yoga</span></div><button class="speak" data-say="Fare yoga"></button></div>
@@ -266,8 +246,8 @@
       </div>
     </details>
 
-    <!-- ===== PRONOMES INTERROGATIFS ===== -->
-    <details>
+    <!-- PRONOMI -->
+    <details data-cat="pronomi" id="pronomi">
       <summary>❓ Pronomi interrogativi</summary>
       <div class="list">
         <div class="item"><div><span class="it">perché</span> — <span class="fr">pourquoi</span></div><button class="speak" data-say="perché"></button></div>
@@ -281,8 +261,8 @@
       </div>
     </details>
 
-    <!-- ===== EXPRESSIONS & SAISONS ===== -->
-    <details>
+    <!-- MONTAGNA/MARE + SAISONS -->
+    <details data-cat="stagioni" id="stagioni">
       <summary>🌄 Andare in montagna / al mare • ❀ Le stagioni</summary>
       <div class="list">
         <div class="item"><div><span class="it">andare in montagna</span> — <span class="fr">aller à la montagne</span></div><button class="speak" data-say="andare in montagna"></button></div>
@@ -294,54 +274,37 @@
       </div>
     </details>
 
-    <p class="note">Astuce mobile : si rien ne se lance sur iPhone/iPad, touchez d’abord “Tester l’audio”, laissez la page visible (pas en arrière-plan) et montez le volume.</p>
+    <p class="note">Astuce mobile : si l’audio ne part pas, appuie d’abord sur “Tester l’audio”, garde la page à l’écran et monte le volume.</p>
   </div>
 
   <script>
-    // ===== Speech synthesis (robuste mobile) =====
-    const voiceSel = document.getElementById('voiceSel');
-    const slow = document.getElementById('slow');
+    // ===== Voix italienne auto + lecture =====
     const btnTest = document.getElementById('btnTest');
     const btnStop = document.getElementById('btnStop');
+    const slow    = document.getElementById('slow');
 
     let voices = [];
     let itVoice = null;
 
-    function loadVoices() {
+    function chooseItalianVoice(list){
+      return list.find(v => (v.lang||'').toLowerCase().startsWith('it')) || list[0] || null;
+    }
+    function loadVoices(){
       voices = speechSynthesis.getVoices();
-      voiceSel.innerHTML = "";
-      const opts = voices.map(v => ({ v, ok: v.lang && v.lang.toLowerCase().startsWith('it') }))
-                         .sort((a,b)=> (b.ok?1:0) - (a.ok?1:0));
-      opts.forEach(({v})=>{
-        const o = document.createElement('option');
-        o.value = v.name; o.textContent = `${v.name} — ${v.lang}`;
-        voiceSel.appendChild(o);
-      });
-      const prefer = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('it'));
-      itVoice = prefer || voices[0] || null;
-      if (itVoice) {
-        const idx = [...voiceSel.options].findIndex(o=>o.value===itVoice.name);
-        if (idx>=0) voiceSel.selectedIndex = idx;
-      }
+      itVoice = chooseItalianVoice(voices);
     }
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
 
     function speak(text, btn){
-      if (!text) return;
+      if(!text) return;
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      const chosen = voices.find(v => v.name === voiceSel.value) || itVoice;
-      if (chosen) { u.voice = chosen; u.lang = chosen.lang; } else { u.lang = 'it-IT'; }
-      u.rate = slow.checked ? 0.88 : 1.0;
+      u.voice = itVoice;               // italien si dispo
+      u.lang  = (itVoice && itVoice.lang) || 'it-IT';
+      u.rate  = slow.checked ? 0.75 : 1.0;   // plus lent qu'avant
       u.pitch = 1; u.volume = 1;
-
-      // Effet “en lecture” sur le bouton
-      if (btn){
-        btn.classList.add('playing'); btn.classList.add('pulse');
-        u.onend = u.onerror = () => { btn.classList.remove('playing'); btn.classList.remove('pulse'); };
-        u.onstart = () => btn.classList.add('playing');
-      }
+      if(btn){ btn.classList.add('playing'); u.onend = u.onerror = () => btn.classList.remove('playing'); }
       speechSynthesis.speak(u);
     }
 
@@ -355,10 +318,20 @@
       }, {passive:true});
     });
 
-    voiceSel.addEventListener('change', () => {
-      const name = voiceSel.value;
-      itVoice = voices.find(v => v.name === name) || itVoice;
-    });
+    // ===== Filtres catégories (onglets) =====
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('[data-cat]');
+    function setFilter(key){
+      tabs.forEach(b=>b.classList.toggle('active', b.dataset.filter===key));
+      sections.forEach(sec=>{
+        const show = key==='all' || sec.dataset.cat===key;
+        sec.classList.toggle('hidden', !show);
+        if(show && sec.tagName.toLowerCase()==='details'){ sec.open = true; }
+      });
+      window.scrollTo({top: document.querySelector('.bar').offsetHeight, behavior:'smooth'});
+    }
+    tabs.forEach(b=>b.addEventListener('click', ()=> setFilter(b.dataset.filter)));
+    setFilter('all'); // par défaut : tout
   </script>
 </body>
 </html>
