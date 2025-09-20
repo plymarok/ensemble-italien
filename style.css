@@ -1,1 +1,77 @@
+:root{
+  --bg:#0f172a; --panel:#0b1426; --muted:#94a3b8; --text:#e2e8f0;
+  --brand:#38bdf8; --brand-2:#a78bfa; --card:#16223a; --card-2:#1f2a44;
+  --ok:#10b981; --warn:#f59e0b; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --bg:#f8fafc; --panel:#eef2f7; --muted:#475569; --text:#0f172a;
+  --brand:#0ea5e9; --brand-2:#7c3aed; --card:#ffffff; --card-2:#f1f5f9;
+  --ok:#059669; --warn:#d97706; --shadow:0 8px 22px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial}
+header{
+  position:sticky; top:0; z-index:50;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  color:white; padding:18px 16px; text-align:center; font-weight:700; letter-spacing:.3px;
+  box-shadow:var(--shadow);
+}
+nav{
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  padding:10px 16px; background:rgba(255,255,255,.04); border-bottom:1px solid rgba(148,163,184,.15);
+  position:sticky; top:62px; z-index:40; backdrop-filter: blur(6px);
+}
+nav a{
+  color:var(--text); text-decoration:none; background:var(--card);
+  border:1px solid rgba(148,163,184,.25);
+  padding:10px 14px; border-radius:999px; box-shadow:var(--shadow);
+  transition:.2s transform, .2s background;
+}
+nav a:hover{transform:translateY(-1px); background:var(--card-2)}
+.controls{
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap; padding:8px 16px; background:transparent; margin-top:6px
+}
+.controls button, .button, button{
+  background:var(--brand); color:#001019; border:none; padding:10px 12px;
+  border-radius:14px; cursor:pointer; font-weight:700; letter-spacing:.2px;
+  box-shadow:var(--shadow); transition:.2s transform,.2s filter;
+}
+.controls button.ghost, button.ghost{background:transparent;color:var(--text);border:1px solid rgba(148,163,184,.35)}
+.controls button:hover, .button:hover, button:hover{transform:translateY(-1px); filter:brightness(1.06)}
+.badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
+  font-size:.9rem; background:rgba(16,185,129,.18); border:1px solid rgba(16,185,129,.4)}
+.badge.warn{background:rgba(245,158,11,.15); border-color:rgba(245,158,11,.5)}
+main{max-width:1100px; margin:20px auto; padding:0 16px}
+h1,h2{margin:24px 0 10px}
+h2{color:var(--brand)}
+.card{
+  background:var(--card); border:1px solid rgba(148,163,184,.2);
+  border-radius:var(--radius); padding:16px 18px; margin:12px 0; box-shadow:var(--shadow);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.card .text{font-size:1.05rem}
+.grid{display:grid; gap:12px; grid-template-columns: repeat(auto-fit,minmax(270px,1fr));}
+.searchbar{display:flex; gap:10px; margin:10px 0 16px; align-items:center; flex-wrap:wrap}
+.searchbar input{
+  flex:1; min-width:220px; padding:12px 14px; border-radius:14px; border:1px solid rgba(148,163,184,.35);
+  background:var(--panel); color:var(--text); outline:none;
+}
+.small{font-size:.95rem; color:var(--muted)}
+.details{background:var(--card-2); border:1px solid rgba(148,163,184,.25); border-radius:14px; padding:8px 10px; margin-top:8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0}
+.row .it{font-weight:600}
+.kbd{border:1px solid rgba(148,163,184,.35); background:var(--panel); padding:3px 8px; border-radius:8px; font-family:ui-monospace,Menlo,Consolas,monospace}
+.fr{opacity:.95}
+.hide-fr .fr{display:none}
+.footer{text-align:center; color:var(--muted); padding:40px 10px; font-size:.9rem}
+
+/* Quiz */
+.quiz{background:var(--card); border:1px dashed rgba(148,163,184,.4); border-radius:16px; padding:14px; margin:14px 0; box-shadow:var(--shadow)}
+.quiz .q{font-size:1.1rem; margin-bottom:10px}
+.quiz .opts{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.quiz .opts button{padding:10px 12px; background:var(--card-2)}
+.quiz .opts button.correct{background:rgba(16,185,129,.25); border:1px solid rgba(16,185,129,.6)}
+.quiz .opts button.wrong{background:rgba(239, 68, 68,.18); border:1px solid rgba(239,68,68,.45)}
+@media (max-width:560px){ nav{top:56px} header{padding:14px 10px}}
 
