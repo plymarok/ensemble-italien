@@ -1,1 +1,107 @@
+[
+  {
+    "verb": "FARE",
+    "translation": "faire",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io faccio", "fr": "je fais"},
+      {"it": "Tu fai", "fr": "tu fais"},
+      {"it": "Lui/lei fa", "fr": "il/elle fait"},
+      {"it": "Noi facciamo", "fr": "nous faisons"},
+      {"it": "Voi fate", "fr": "vous faites"},
+      {"it": "Loro fanno", "fr": "ils font"}
+    ]
+  },
+  {
+    "verb": "POTERE",
+    "translation": "pouvoir",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io posso", "fr": "je peux"},
+      {"it": "Tu puoi", "fr": "tu peux"},
+      {"it": "Lui/lei può", "fr": "il/elle peut"},
+      {"it": "Noi possiamo", "fr": "nous pouvons"},
+      {"it": "Voi potete", "fr": "vous pouvez"},
+      {"it": "Loro possono", "fr": "ils peuvent"}
+    ]
+  },
+  {
+    "verb": "ANDARE",
+    "translation": "aller",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io vado", "fr": "je vais"},
+      {"it": "Tu vai", "fr": "tu vas"},
+      {"it": "Lui/lei va", "fr": "il/elle va"},
+      {"it": "Noi andiamo", "fr": "nous allons"},
+      {"it": "Voi andate", "fr": "vous allez"},
+      {"it": "Loro vanno", "fr": "ils vont"}
+    ]
+  },
+  {
+    "verb": "CHIAMARSI",
+    "translation": "s’appeler",
+    "mood": "Presente indicativo (riflessivo)",
+    "forms": [
+      {"it": "Io mi chiamo", "fr": "je m’appelle"},
+      {"it": "Tu ti chiami", "fr": "tu t’appelles"},
+      {"it": "Lui/lei si chiama", "fr": "il/elle s’appelle"},
+      {"it": "Noi ci chiamiamo", "fr": "nous nous appelons"},
+      {"it": "Voi vi chiamate", "fr": "vous vous appelez"},
+      {"it": "Loro si chiamano", "fr": "ils s’appellent"}
+    ]
+  },
+  {
+    "verb": "ESSERE",
+    "translation": "être",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io sono", "fr": "je suis"},
+      {"it": "Tu sei", "fr": "tu es"},
+      {"it": "Lui/lei è", "fr": "il/elle est"},
+      {"it": "Noi siamo", "fr": "nous sommes"},
+      {"it": "Voi siete", "fr": "vous êtes"},
+      {"it": "Loro sono", "fr": "ils sont"}
+    ]
+  },
+  {
+    "verb": "AVERE",
+    "translation": "avoir",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io ho", "fr": "j’ai"},
+      {"it": "Tu hai", "fr": "tu as"},
+      {"it": "Lui/lei ha", "fr": "il/elle a"},
+      {"it": "Noi abbiamo", "fr": "nous avons"},
+      {"it": "Voi avete", "fr": "vous avez"},
+      {"it": "Loro hanno", "fr": "ils ont"}
+    ]
+  },
+  {
+    "verb": "PARLARE",
+    "translation": "parler (modèle -ARE)",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io parlo", "fr": "je parle"},
+      {"it": "Tu parli", "fr": "tu parles"},
+      {"it": "Lui/lei parla", "fr": "il/elle parle"},
+      {"it": "Noi parliamo", "fr": "nous parlons"},
+      {"it": "Voi parlate", "fr": "vous parlez"},
+      {"it": "Loro parlano", "fr": "ils parlent"}
+    ]
+  },
+  {
+    "verb": "SCRIVERE",
+    "translation": "écrire (modèle -ERE)",
+    "mood": "Presente indicativo",
+    "forms": [
+      {"it": "Io scrivo", "fr": "j’écris"},
+      {"it": "Tu scrivi", "fr": "tu écris"},
+      {"it": "Lui/lei scrive", "fr": "il/elle écrit"},
+      {"it": "Noi scriviamo", "fr": "nous écrivons"},
+      {"it": "Voi scrivete", "fr": "vous écrivez"},
+      {"it": "Loro scrivono", "fr": "ils écrivent"}
+    ]
+  }
+]
 
