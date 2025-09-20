@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Révisions Italien</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --accent: #38bdf8;
+      --text: #0f172a;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --radius: 12px;
+    }
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: var(--accent);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    section {
+      margin: 20px auto;
+      max-width: 900px;
+    }
+    h2 {
+      color: var(--accent);
+      margin-top: 40px;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 15px 20px;
+      margin: 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .text {
+      font-size: 1.1em;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0ea5e9;
+    }
+  </style>
+</head>
+<body>
+  <header>📘 Révisions Italien</header>
+  <section>
+    <h2>Formules de politesse</h2>
+    <div class="card"><div class="text">Per favore — S’il vous plaît</div><button onclick="speak('Per favore')">🔊</button></div>
+    <div class="card"><div class="text">Grazie — Merci</div><button onclick="speak('Grazie')">🔊</button></div>
+    <div class="card"><div class="text">Prego — De rien</div><button onclick="speak('Prego')">🔊</button></div>
+    <div class="card"><div class="text">Scusa / Scusi — Pardon</div><button onclick="speak('Scusa')">🔊</button></div>
+
+    <h2>Verbes essentiels</h2>
+    <div class="card"><div class="text"><b>FARE</b> — faire</div><button onclick="speak('fare')">🔊</button></div>
+    <div class="card"><div class="text">Io faccio — je fais</div><button onclick="speak('io faccio')">🔊</button></div>
+    <div class="card"><div class="text">Tu fai — tu fais</div><button onclick="speak('tu fai')">🔊</button></div>
+    <div class="card"><div class="text">Lui/lei fa — il/elle fait</div><button onclick="speak('lui fa')">🔊</button></div>
+    <div class="card"><div class="text">Noi facciamo — nous faisons</div><button onclick="speak('noi facciamo')">🔊</button></div>
+    <div class="card"><div class="text">Voi fate — vous faites</div><button onclick="speak('voi fate')">🔊</button></div>
+    <div class="card"><div class="text">Loro fanno — ils font</div><button onclick="speak('loro fanno')">🔊</button></div>
+
+    <!-- Répéter le même modèle pour POTERE, ANDARE, CHIAMARSI, ESSERE, AVERE -->
+
+    <h2>Pronoms interrogatifs</h2>
+    <div class="card"><div class="text">Perché — pourquoi</div><button onclick="speak('Perché')">🔊</button></div>
+    <div class="card"><div class="text">Quando — quand</div><button onclick="speak('Quando')">🔊</button></div>
+    <div class="card"><div class="text">Chi — qui</div><button onclick="speak('Chi')">🔊</button></div>
+    <div class="card"><div class="text">Dove — où</div><button onclick="speak('Dove')">🔊</button></div>
+    <div class="card"><div class="text">Come — comment</div><button onclick="speak('Come')">🔊</button></div>
+    <div class="card"><div class="text">Che cosa — quoi</div><button onclick="speak('Che cosa')">🔊</button></div>
+    <div class="card"><div class="text">Quanto — combien</div><button onclick="speak('Quanto')">🔊</button></div>
+    <div class="card"><div class="text">Quale — quel(le)</div><button onclick="speak('Quale')">🔊</button></div>
+
+    <h2>Expressions</h2>
+    <div class="card"><div class="text">Andare in montagna — Aller à la montagne</div><button onclick="speak('Andare in montagna')">🔊</button></div>
+    <div class="card"><div class="text">Andare al mare — Aller à la mer</div><button onclick="speak('Andare al mare')">🔊</button></div>
+
+    <h2>Les saisons</h2>
+    <div class="card"><div class="text">La primavera — le printemps</div><button onclick="speak('La primavera')">🔊</button></div>
+    <div class="card"><div class="text">L’estate — l’été</div><button onclick="speak('L estate')">🔊</button></div>
+    <div class="card"><div class="text">L’autunno — l’automne</div><button onclick="speak('L autunno')">🔊</button></div>
+    <div class="card"><div class="text">L’inverno — l’hiver</div><button onclick="speak('L inverno')">🔊</button></div>
+
+    <h2>I passatempi</h2>
+    <div class="card"><div class="text">Fare yoga — Faire du yoga 🧘</div><button onclick="speak('Fare yoga')">🔊</button></div>
+    <div class="card"><div class="text">Giocare a calcio — Jouer au foot ⚽</div><button onclick="speak('Giocare a calcio')">🔊</button></div>
+    <div class="card"><div class="text">Suonare la chitarra — Jouer de la guitare 🎸</div><button onclick="speak('Suonare la chitarra')">🔊</button></div>
+    <!-- Ajouter toutes les activités avec emoji -->
+
+  </section>
+
+  <script>
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "it-IT";
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>
 
