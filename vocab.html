@@ -11,11 +11,13 @@
       injectControls();
       const container = document.getElementById('container');
       renderSearch(container, (q) => filter(q));
-      const data = await loadJSON('data/vocab.json');
+
+      const data = await loadJSON('data/vocab.json');   // ✅ chemin correct
+      console.log("Loaded JSON vocab:", data);
+
       const list = document.createElement('div');
       container.appendChild(list);
 
-      // Flatten for quiz
       const flat = [];
       data.forEach(sec => sec.items.forEach(it => flat.push({it:it.it, fr:it.fr})));
       setupQuizHost(container, flat);
@@ -61,4 +63,3 @@
   </main>
 </body>
 </html>
-
