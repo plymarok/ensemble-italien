@@ -44,7 +44,7 @@
     @media (hover:hover){button:hover{filter:brightness(1.08); transform:translateY(-1px)}}
 
     .tabs{
-      position:sticky; top:56px; z-index:15; /* juste sous la barre */
+      position:sticky; top:56px; z-index:15;
       padding:10px 14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
       background:linear-gradient(180deg, rgba(15,23,42,.8), rgba(15,23,42,.6));
       border-bottom:1px solid #16213f; backdrop-filter:blur(6px)
@@ -86,9 +86,7 @@
     .row:first-child{border-top:0}
     .row .it strong{font-weight:900}
 
-    .vnote{padding:10px 14px; color:var(--muted); font-size:.94rem; border-top:1px dashed var(--divider)}
     .note{padding:10px 12px; color:var(--muted); font-size:.9rem; text-align:center}
-    /* util */
     .hidden{display:none!important}
   </style>
 </head>
@@ -104,7 +102,6 @@
     <label class="toggle"><input type="checkbox" id="slow"> Prononciation lente</label>
   </div>
 
-  <!-- Onglets catégories -->
   <nav class="tabs" aria-label="Catégories">
     <button class="tab active" data-filter="all">Tous</button>
     <button class="tab" data-filter="verbs">Verbes</button>
@@ -116,10 +113,11 @@
 
   <div class="wrap">
 
-    <!-- VERBES -->
+    <!-- ===== VERBES ===== -->
     <section class="verbs" aria-label="Verbi da sapere" data-cat="verbs" id="verbs">
       <header><h2>⚙️ Verbi da sapere — présent de l’indicatif</h2></header>
       <div class="verbgrid">
+        <!-- FARE -->
         <div class="verbcard">
           <div class="verbhead">FARE — faire</div>
           <div class="row"><div>io <span class="it"><strong>faccio</strong></span></div><button class="speak" data-say="io faccio"></button></div>
@@ -130,6 +128,7 @@
           <div class="row"><div>loro <span class="it"><strong>fanno</strong></span></div><button class="speak" data-say="loro fanno"></button></div>
         </div>
 
+        <!-- POTERE -->
         <div class="verbcard">
           <div class="verbhead">POTERE — pouvoir</div>
           <div class="row"><div>io <span class="it"><strong>posso</strong></span></div><button class="speak" data-say="io posso"></button></div>
@@ -140,6 +139,7 @@
           <div class="row"><div>loro <span class="it"><strong>possono</strong></span></div><button class="speak" data-say="loro possono"></button></div>
         </div>
 
+        <!-- ANDARE -->
         <div class="verbcard">
           <div class="verbhead">ANDARE — aller</div>
           <div class="row"><div>io <span class="it"><strong>vado</strong></span></div><button class="speak" data-say="io vado"></button></div>
@@ -150,6 +150,7 @@
           <div class="row"><div>loro <span class="it"><strong>vanno</strong></span></div><button class="speak" data-say="loro vanno"></button></div>
         </div>
 
+        <!-- CHIAMARSI -->
         <div class="verbcard">
           <div class="verbhead">CHIAMARSI — s’appeler</div>
           <div class="row"><div>io <span class="it"><strong>mi chiamo</strong></span></div><button class="speak" data-say="io mi chiamo"></button></div>
@@ -160,6 +161,7 @@
           <div class="row"><div>loro <span class="it"><strong>si chiamano</strong></span></div><button class="speak" data-say="loro si chiamano"></button></div>
         </div>
 
+        <!-- ESSERE -->
         <div class="verbcard">
           <div class="verbhead">ESSERE — être</div>
           <div class="row"><div>io <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="io sono"></button></div>
@@ -170,6 +172,7 @@
           <div class="row"><div>loro <span class="it"><strong>sono</strong></span></div><button class="speak" data-say="loro sono"></button></div>
         </div>
 
+        <!-- AVERE -->
         <div class="verbcard">
           <div class="verbhead">AVERE — avoir</div>
           <div class="row"><div>io <span class="it"><strong>ho</strong></span></div><button class="speak" data-say="io ho"></button></div>
@@ -179,16 +182,32 @@
           <div class="row"><div>voi <span class="it"><strong>avete</strong></span></div><button class="speak" data-say="voi avete"></button></div>
           <div class="row"><div>loro <span class="it"><strong>hanno</strong></span></div><button class="speak" data-say="loro hanno"></button></div>
         </div>
-      </div>
 
-      <div class="vnote">Modèles réguliers :</div>
-      <div class="verbcard" style="margin:14px">
-        <div class="row"><div><span class="it">parlare</span> — io parlo, tu parli, lui/lei parla, noi parliamo, voi parlate, loro parlano</div><button class="speak" data-say="io parlo, tu parli, lui parla, noi parliamo, voi parlate, loro parlano"></button></div>
-        <div class="row"><div><span class="it">leggere</span> — io leggo, tu leggi, lui/lei legge, noi leggiamo, voi leggete, loro leggono</div><button class="speak" data-say="io leggo, tu leggi, lui legge, noi leggiamo, voi leggete, loro leggono"></button></div>
+        <!-- PARLARE (modèle -ARE) -->
+        <div class="verbcard">
+          <div class="verbhead">PARLARE — parler (modèle -ARE)</div>
+          <div class="row"><div>io <span class="it"><strong>parlo</strong></span></div><button class="speak" data-say="io parlo"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>parli</strong></span></div><button class="speak" data-say="tu parli"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>parla</strong></span></div><button class="speak" data-say="lui parla. lei parla"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>parliamo</strong></span></div><button class="speak" data-say="noi parliamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>parlate</strong></span></div><button class="speak" data-say="voi parlate"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>parlano</strong></span></div><button class="speak" data-say="loro parlano"></button></div>
+        </div>
+
+        <!-- LEGGERE (modèle -ERE) -->
+        <div class="verbcard">
+          <div class="verbhead">LEGGERE — lire (modèle -ERE)</div>
+          <div class="row"><div>io <span class="it"><strong>leggo</strong></span></div><button class="speak" data-say="io leggo"></button></div>
+          <div class="row"><div>tu <span class="it"><strong>leggi</strong></span></div><button class="speak" data-say="tu leggi"></button></div>
+          <div class="row"><div>lui / lei <span class="it"><strong>legge</strong></span></div><button class="speak" data-say="lui legge. lei legge"></button></div>
+          <div class="row"><div>noi <span class="it"><strong>leggiamo</strong></span></div><button class="speak" data-say="noi leggiamo"></button></div>
+          <div class="row"><div>voi <span class="it"><strong>leggete</strong></span></div><button class="speak" data-say="voi leggete"></button></div>
+          <div class="row"><div>loro <span class="it"><strong>leggono</strong></span></div><button class="speak" data-say="loro leggono"></button></div>
+        </div>
       </div>
     </section>
 
-    <!-- MARQUE-PAGE -->
+    <!-- ===== MARQUE-PAGE ===== -->
     <details data-cat="bookmark" id="bookmark">
       <summary>📑 Expressions du marque-page <span class="badge">parler en classe</span></summary>
       <div class="list">
@@ -223,7 +242,7 @@
       </div>
     </details>
 
-    <!-- PASSATEMPI -->
+    <!-- ===== PASSATEMPI ===== -->
     <details data-cat="passatempi" id="passatempi">
       <summary>🎯 I passatempi <span class="badge">loisirs (1–16)</span></summary>
       <div class="list">
@@ -246,7 +265,7 @@
       </div>
     </details>
 
-    <!-- PRONOMI -->
+    <!-- ===== PRONOMI ===== -->
     <details data-cat="pronomi" id="pronomi">
       <summary>❓ Pronomi interrogativi</summary>
       <div class="list">
@@ -261,7 +280,7 @@
       </div>
     </details>
 
-    <!-- MONTAGNA/MARE + SAISONS -->
+    <!-- ===== MONTAGNA/MARE + SAISONS ===== -->
     <details data-cat="stagioni" id="stagioni">
       <summary>🌄 Andare in montagna / al mare • ❀ Le stagioni</summary>
       <div class="list">
@@ -300,9 +319,9 @@
       if(!text) return;
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.voice = itVoice;               // italien si dispo
+      u.voice = itVoice;
       u.lang  = (itVoice && itVoice.lang) || 'it-IT';
-      u.rate  = slow.checked ? 0.75 : 1.0;   // plus lent qu'avant
+      u.rate  = slow.checked ? 0.75 : 1.0;   // plus lent
       u.pitch = 1; u.volume = 1;
       if(btn){ btn.classList.add('playing'); u.onend = u.onerror = () => btn.classList.remove('playing'); }
       speechSynthesis.speak(u);
@@ -318,7 +337,7 @@
       }, {passive:true});
     });
 
-    // ===== Filtres catégories (onglets) =====
+    // ===== Filtres catégories =====
     const tabs = document.querySelectorAll('.tab');
     const sections = document.querySelectorAll('[data-cat]');
     function setFilter(key){
@@ -331,7 +350,7 @@
       window.scrollTo({top: document.querySelector('.bar').offsetHeight, behavior:'smooth'});
     }
     tabs.forEach(b=>b.addEventListener('click', ()=> setFilter(b.dataset.filter)));
-    setFilter('all'); // par défaut : tout
+    setFilter('all');
   </script>
 </body>
 </html>
